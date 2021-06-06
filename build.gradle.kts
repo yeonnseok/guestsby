@@ -17,6 +17,9 @@ repositories {
 }
 
 dependencies {
+	implementation("io.jsonwebtoken:jjwt:0.9.1")
+	implementation("com.google.code.gson:gson:2.8.6")
+	implementation("com.google.guava:guava:30.1.1-jre")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")

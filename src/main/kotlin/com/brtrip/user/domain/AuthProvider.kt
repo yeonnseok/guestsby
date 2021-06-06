@@ -1,0 +1,17 @@
+package com.brtrip.user.domain
+
+enum class AuthProvider {
+    GOOGLE,
+    KAKAO,
+    NAVER;
+
+    companion object {
+        fun of(provider: String): AuthProvider =
+            values()
+                .filter { it.name.equals(provider, ignoreCase = true) }
+                .first()
+    }
+
+    fun equalWith(provider: String) =
+        provider.equals(this.name, ignoreCase = true)
+}
