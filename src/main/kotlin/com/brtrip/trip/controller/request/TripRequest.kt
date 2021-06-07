@@ -3,9 +3,9 @@ package com.brtrip.trip.controller.request
 import com.brtrip.common.utils.yyyy_MM_dd_Formatter
 import com.brtrip.trip.domain.Trip
 
-data class TripCreateRequest(
+data class TripRequest(
     val title: String,
-    val stops: List<StopCreateRequest>,
+    val stops: List<StopRequest>,
     val startDate: String,
     val endDate: String,
     val memo: String? = null

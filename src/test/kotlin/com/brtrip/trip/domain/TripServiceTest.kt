@@ -1,10 +1,11 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.trip.controller.request.StopCreateRequest
-import com.brtrip.trip.controller.request.TripCreateRequest
+import com.brtrip.trip.controller.request.StopRequest
+import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -21,24 +22,28 @@ internal class TripServiceTest {
 
     private lateinit var tripFinder: TripFinder
 
+    private lateinit var tripUpdater: TripUpdater
+
     @BeforeEach
     fun setUp() {
         tripCreator = mockk(relaxed = true)
         tripFinder = mockk(relaxed = true)
-        sut = TripService(tripCreator, tripFinder)
+        tripUpdater = mockk(relaxed = true)
+
+        sut = TripService(tripCreator, tripFinder, tripUpdater)
     }
 
     @Test
     fun `여행 일정 생성`() {
         // given
-        val stopRequest = StopCreateRequest(
+        val stopRequest = StopRequest(
             lat = 123,
             lng = 456,
             name = "central park",
             stoppedAt = "2021-06-03 00:00:00"
         )
 
-        val request = TripCreateRequest(
+        val request = TripRequest(
             title = "first trip",
             stops = listOf(stopRequest),
             startDate = "2021-06-01",
@@ -79,7 +84,7 @@ internal class TripServiceTest {
                 endDate = LocalDate.of(2021, 8, 1)
             )
         )
-        trips[0].stops = listOf(
+        trips[0].stops = mutableListOf(
             Stop(
                 trip = trips[0],
                 name = "central park",
@@ -98,7 +103,7 @@ internal class TripServiceTest {
             )
         )
 
-        trips[1].stops = listOf(
+        trips[1].stops = mutableListOf(
             Stop(
                 trip = trips[1],
                 name = "rainbow cafe",
@@ -133,7 +138,7 @@ internal class TripServiceTest {
             endDate = LocalDate.of(2021, 6, 5)
         )
 
-        trip.stops = listOf(
+        trip.stops = mutableListOf(
             Stop(
                 trip = trip,
                 name = "central park",
@@ -160,5 +165,52 @@ internal class TripServiceTest {
         // then
         result.title shouldBe "first trip"
         result.stops.size shouldBe 2
+    }
+
+    @Test
+    fun `여행 일정 수정`() {
+        // given
+        val request = TripRequest(
+            title = "new trip",
+            stops = listOf(
+                StopRequest(
+                   lat = 123,
+                   lng = 456,
+                   name = "grand canyon",
+                   stoppedAt = "2021-06-04 00:00:00"
+                ),
+                StopRequest(
+                    lat = 789,
+                    lng = 101,
+                    name = "rainbow cafe",
+                    stoppedAt = "2021-06-05 00:00:00"
+                )
+            ),
+            startDate = "2021-06-02",
+            endDate = "2021-06-06",
+            memo = null
+        )
+
+        val trip = Trip(
+            userId = 1L,
+            title = "first trip",
+            startDate = LocalDate.of(2021,6,1),
+            endDate = LocalDate.of(2021,6,5),
+            memo = "first trip"
+        )
+
+        every { tripFinder.findById(any()) } returns trip
+
+        // when
+        sut.update(1L, 1L, request)
+
+        // then
+        verify { tripFinder.findById(1L) }
+        verify { tripUpdater.update(1L, request) }
+    }
+
+    @Test
+    fun `여행 일정 삭제`() {
+
     }
 }

@@ -1,7 +1,7 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.trip.controller.request.StopCreateRequest
-import com.brtrip.trip.controller.request.TripCreateRequest
+import com.brtrip.trip.controller.request.StopRequest
+import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,14 +19,14 @@ internal class TripCreatorTest {
     @Test
     fun `여행 일정 저장`() {
         // given
-        val stopRequest = StopCreateRequest(
+        val stopRequest = StopRequest(
             lat = 123,
             lng = 456,
             name = "central park",
             stoppedAt = "2021-06-03 00:00:00"
         )
 
-        val request = TripCreateRequest(
+        val request = TripRequest(
             title = "first trip",
             stops = listOf(stopRequest),
             startDate = "2021-06-01",

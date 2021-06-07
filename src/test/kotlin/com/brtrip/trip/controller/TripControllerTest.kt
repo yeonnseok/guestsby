@@ -13,7 +13,10 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
@@ -239,6 +242,95 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data.startDate").description("시작 일자"),
                         fieldWithPath("data.endDate").description("종료 일자"),
                         fieldWithPath("data.memo").description("메모")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun `여행 일정 수정`() {
+        // given
+        val trip = tripRepository.save(
+            Trip(
+                userId = userId!!,
+                title = "first trip",
+                startDate = LocalDate.of(2021,6,1),
+                endDate = LocalDate.of(2021,6,5)
+            )
+        )
+
+        val stops = stopRepository.saveAll(listOf(
+            Stop(
+                trip = trip,
+                name = "central park",
+                lat = 123,
+                lng = 456,
+                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                sequence = 1
+            ),
+            Stop(
+                trip = trip,
+                name = "grand canyon",
+                lat = 789,
+                lng = 101,
+                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                sequence = 2
+            )
+        ))
+
+        val stop2 = mapOf(
+            "lat" to "789",
+            "lng" to "101",
+            "name" to "grand canyon",
+            "stoppedAt" to "2021-06-04 00:00:00"
+        )
+
+        val stop3 = mapOf(
+            "lat" to "112",
+            "lng" to "131",
+            "name" to "rainbow cafe",
+            "stoppedAt" to "2021-06-05 00:00:00"
+        )
+
+        val body = mapOf(
+            "title" to "new trip",
+            "stops" to listOf(stop2, stop3),
+            "memo" to null,
+            "startDate" to "2021-06-02",
+            "endDate" to "2021-06-06"
+        )
+
+        // when
+        val result = mockMvc.perform(
+            RestDocumentationRequestBuilders.patch("/api/v1/trips/{id}", trip.id)
+                .header("Authorization", "Bearer $token")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsBytes(body))
+        )
+
+        // then
+        result
+            .andExpect(status().isNoContent)
+            .andDo(
+                document(
+                    "trip/update",
+                    requestHeaders(
+                        headerWithName("Authorization").description("인증 토큰"),
+                        headerWithName("Content-Type").description("전송 타입")
+                    ),
+                    pathParameters(
+                        parameterWithName("id").description("여행 일정 ID")
+                    ),
+                    requestFields(
+                        fieldWithPath("title").description("여행 일정 제목"),
+                        fieldWithPath("stops[].lat").description("위도"),
+                        fieldWithPath("stops[].lng").description("경도"),
+                        fieldWithPath("stops[].name").description("장소 이름"),
+                        fieldWithPath("stops[].stoppedAt").description("방문 시각"),
+                        fieldWithPath("startDate").description("시작 일자"),
+                        fieldWithPath("endDate").description("종료 일자"),
+                        fieldWithPath("memo").description("메모")
                     )
                 )
             )

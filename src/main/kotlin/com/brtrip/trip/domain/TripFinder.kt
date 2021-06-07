@@ -17,4 +17,9 @@ class TripFinder(
         return tripRepository.findFirstByUserIdOrderByCreatedAtDesc(userId)
             ?: throw NotFoundException("여행 일정이 없습니다.")
     }
+
+    fun findById(tripId: Long): Trip {
+        return tripRepository.findById(tripId)
+            .orElseThrow { NotFoundException("여행 일정이 없습니다.") }
+    }
 }

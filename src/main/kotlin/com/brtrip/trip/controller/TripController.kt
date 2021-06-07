@@ -2,7 +2,7 @@ package com.brtrip.trip.controller
 
 import com.brtrip.auth.domain.UserPrincipal
 import com.brtrip.common.response.ApiResponse
-import com.brtrip.trip.controller.request.TripCreateRequest
+import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.domain.TripService
 import com.brtrip.user.domain.LoginUser
 import org.springframework.http.ResponseEntity
@@ -18,7 +18,7 @@ class TripController(
     @PostMapping
     fun create(
         @LoginUser userPrincipal: UserPrincipal,
-        @Valid @RequestBody request: TripCreateRequest
+        @Valid @RequestBody request: TripRequest
     ): ResponseEntity<Void> {
         val tripId = tripService.create(userPrincipal.getId(), request)
 
@@ -53,5 +53,18 @@ class TripController(
                     data = trip
                 )
             )
+    }
+
+    @PatchMapping("/{id}")
+    fun update(
+        @LoginUser userPrincipal: UserPrincipal,
+        @PathVariable id: Long,
+        @Valid @RequestBody request: TripRequest
+    ): ResponseEntity<Void> {
+        tripService.update(userPrincipal.getId(), id, request)
+
+        return ResponseEntity
+            .noContent()
+            .build()
     }
 }

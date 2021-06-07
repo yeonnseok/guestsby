@@ -4,7 +4,7 @@ import com.brtrip.common.utils.yyyy_MM_dd_HH_mm_SS_Formatter
 import com.brtrip.trip.domain.Stop
 import com.brtrip.trip.domain.Trip
 
-data class StopCreateRequest(
+data class StopRequest(
     val lat: Long,
     val lng: Long,
     val name: String,

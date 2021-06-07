@@ -1,7 +1,6 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.user.domain.User
 import java.time.LocalDate
 import javax.persistence.*
 
@@ -23,8 +22,12 @@ data class Trip(
     var endDate: LocalDate,
 
     @Column(name = "memo")
-    var memo: String? = null,
-
+    var memo: String? = null
+) : BaseEntity() {
     @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    var stops: List<Stop>? = null
-) : BaseEntity()
+    var stops: MutableList<Stop> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
+}
