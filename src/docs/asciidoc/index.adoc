@@ -34,11 +34,11 @@ operation::trip/create[snippets='http-request,http-response,request-headers,requ
 
 [[resources-trip-find-all]]
 === 내 모든 여행 일정 조회
-operation::trip/find-all-my[snippets='http-request,http-response,request-headers,request-parameters,response-fields']
+operation::trip/find-all-my[snippets='http-request,http-response,request-headers,response-fields']
 
 [[resources-trip-find-recent]]
 === 내 최근 여행 일정 조회
-operation::trip/find-recent[snippets='http-request,http-response,request-headers,request-parameters,response-fields']
+operation::trip/find-recent[snippets='http-request,http-response,request-headers,response-fields']
 
 [[resources-trip-update]]
 === 여행 일정 수정

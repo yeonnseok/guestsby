@@ -23,7 +23,7 @@ internal class TripCreatorTest {
             lat = 123,
             lng = 456,
             name = "central park",
-            stoppedAt = "2021-06-03T00:00:00"
+            stoppedAt = "2021-06-03 00:00:00"
         )
 
         val request = TripCreateRequest(
