@@ -58,8 +58,9 @@ class Oauth2AuthenticationSuccessHandler(
             throw BadRequestException()
         }
 
-        val targetUrl = redirectUri ?: defaultTargetUrl
+//        val targetUrl = redirectUri ?: defaultTargetUrl
 
+        val targetUrl = "http://localhost:8080"
         val token = tokenProvider.createToken(authentication)
 
         return UriComponentsBuilder.fromUriString(targetUrl)
