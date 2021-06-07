@@ -5,7 +5,5 @@ abstract class OAuth2UserInfo(
 ) {
     abstract fun getOAuthId() : String
 
-    abstract fun getNickName() : String
-
     abstract fun getEmail() : String
 }

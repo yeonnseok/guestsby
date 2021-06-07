@@ -3,7 +3,6 @@ package com.brtrip.auth.domain.dto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-
 class KakaoOAuth2UserInfo(
     override val attributes: Map<String, Any>
 ) : OAuth2UserInfo(attributes) {
@@ -11,13 +10,6 @@ class KakaoOAuth2UserInfo(
     private val mapType = object : TypeToken<Map<String, Any>>() {}.type
 
     override fun getOAuthId() = attributes.get("id").toString()
-
-    override fun getNickName(): String {
-        val properties: Map<String, Any> =
-            Gson().fromJson(attributes.get("properties").toString(), mapType)
-
-        return properties.get("nickname").toString()
-    }
 
     override fun getEmail(): String {
         val accounts: Map<String, Any> =
