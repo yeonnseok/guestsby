@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.5.0"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id("org.asciidoctor.convert") version "1.5.12"
 	kotlin("jvm") version "1.5.10"
 	kotlin("plugin.spring") version "1.5.10"
 	kotlin("plugin.jpa") version "1.5.10"
@@ -21,6 +22,7 @@ dependencies {
 	implementation("com.google.code.gson:gson:2.8.6")
 	implementation("com.google.guava:guava:30.1.1-jre")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -30,6 +32,9 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")
+	asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
+	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+	testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 }
@@ -43,4 +48,28 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+val snippetsDir = file("build/generated-snippets")
+
+tasks {
+	test {
+		outputs.dir(snippetsDir)
+	}
+
+	asciidoctor {
+		inputs.dir(snippetsDir)
+		dependsOn(test)
+	}
+
+	asciidoctor {
+		copy {
+			from("${asciidoctor.get().outputDir}/html5")
+			into("src/main/resources/static/docs")
+		}
+	}
+
+	build {
+		dependsOn(asciidoctor)
+	}
 }

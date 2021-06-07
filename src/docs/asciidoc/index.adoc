@@ -1,0 +1,50 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectlinks:
+:operation-http-request-title: Example Request
+:operation-http-response-title: Example Response
+
+[[resources]]
+= Resources
+
+[[resources-users]]
+== 회원 관리
+
+[[resources-user-find]]
+=== 로그인 유저 조회
+operation::users/me[snippets='http-request,http-response,request-headers,response-fields']
+
+[[resources-user-update]]
+=== 로그인 유저 정보 수정
+operation::users/update[snippets='http-request,http-response,request-headers,request-fields']
+
+
+[[resources-trip]]
+== 여행 일정 관리
+
+[[resources-trip-create]]
+=== 여행 일정 생성
+operation::trip/create[snippets='http-request,http-response,request-headers,request-fields']
+
+[[resources-trip-find-all]]
+=== 내 모든 여행 일정 조회
+operation::trip/find-all-my[snippets='http-request,http-response,request-headers,request-parameters,response-fields']
+
+[[resources-trip-find-recent]]
+=== 내 최근 여행 일정 조회
+operation::trip/find-recent[snippets='http-request,http-response,request-headers,request-parameters,response-fields']
+
+[[resources-trip-update]]
+=== 여행 일정 수정
+operation::trip/update[snippets='http-request,http-response,request-headers,path-parameters,request-fields']
+
+[[resources-trip-delete]]
+=== 여행 일정 삭제
+operation::trip/delete[snippets='http-request,http-response,request-headers,path-parameters']
+
