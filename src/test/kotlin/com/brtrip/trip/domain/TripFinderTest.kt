@@ -1,7 +1,6 @@
 package com.brtrip.trip.domain
 
 import io.kotlintest.shouldBe
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -62,9 +61,9 @@ internal class TripFinderTest {
         // then
         trips.size shouldBe 1
         trips[0].title shouldBe "first trip"
-        trips[0].stops!!.size shouldBe 2
-        trips[0].stops!![0].name shouldBe "central park"
-        trips[0].stops!![1].name shouldBe "grand canyon"
+        trips[0].stops.size shouldBe 2
+        trips[0].stops[0].name shouldBe "central park"
+        trips[0].stops[1].name shouldBe "grand canyon"
     }
 
     @Test
@@ -104,8 +103,8 @@ internal class TripFinderTest {
 
         // then
         result.title shouldBe "first trip"
-        result.stops!!.size shouldBe 2
-        result.stops!![0].name shouldBe "central park"
-        result.stops!![1].name shouldBe "grand canyon"
+        result.stops.size shouldBe 2
+        result.stops[0].name shouldBe "central park"
+        result.stops[1].name shouldBe "grand canyon"
     }
 }

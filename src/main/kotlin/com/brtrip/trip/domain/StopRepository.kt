@@ -2,6 +2,5 @@ package com.brtrip.trip.domain
 
 import org.springframework.data.jpa.repository.JpaRepository
 
-interface StopRepository : JpaRepository<Stop, Long> {
-    fun findByLatAndLng(lat: Long, lng: Long) : Stop?
-}
+interface StopRepository : JpaRepository<Stop, Long>
+

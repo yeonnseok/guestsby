@@ -10,16 +10,16 @@ class TripFinder(
     private val tripRepository: TripRepository
 ) {
     fun findByUserId(userId: Long): List<Trip> {
-        return tripRepository.findByUserId(userId)
+        return tripRepository.findByUserIdAndDeleted(userId, false)
     }
 
     fun findRecent(userId: Long): Trip {
-        return tripRepository.findFirstByUserIdOrderByCreatedAtDesc(userId)
+        return tripRepository.findFirstByUserIdAndDeletedOrderByCreatedAtDesc(userId, false)
             ?: throw NotFoundException("여행 일정이 없습니다.")
     }
 
     fun findById(tripId: Long): Trip {
-        return tripRepository.findById(tripId)
-            .orElseThrow { NotFoundException("여행 일정이 없습니다.") }
+        return tripRepository.findByIdAndDeleted(tripId, false)
+            ?: throw NotFoundException("여행 일정이 없습니다.")
     }
 }

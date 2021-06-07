@@ -24,13 +24,16 @@ internal class TripServiceTest {
 
     private lateinit var tripUpdater: TripUpdater
 
+    private lateinit var tripDeleter: TripDeleter
+
     @BeforeEach
     fun setUp() {
         tripCreator = mockk(relaxed = true)
         tripFinder = mockk(relaxed = true)
         tripUpdater = mockk(relaxed = true)
+        tripDeleter = mockk(relaxed = true)
 
-        sut = TripService(tripCreator, tripFinder, tripUpdater)
+        sut = TripService(tripCreator, tripFinder, tripUpdater, tripDeleter)
     }
 
     @Test
@@ -211,6 +214,22 @@ internal class TripServiceTest {
 
     @Test
     fun `여행 일정 삭제`() {
+        // given
+        val trip = Trip(
+            userId = 1L,
+            title = "first trip",
+            startDate = LocalDate.of(2021,6,1),
+            endDate = LocalDate.of(2021,6,5),
+            memo = "first trip"
+        )
 
+        every { tripFinder.findById(any()) } returns trip
+
+        // when
+        sut.delete(1L, 1L)
+
+        // then
+        verify { tripFinder.findById(1L) }
+        verify { tripDeleter.delete(1L) }
     }
 }

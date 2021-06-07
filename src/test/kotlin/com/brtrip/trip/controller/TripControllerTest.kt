@@ -24,7 +24,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-
 class TripControllerTest : LoginUserControllerTest() {
 
     @Autowired
@@ -331,6 +330,61 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("startDate").description("시작 일자"),
                         fieldWithPath("endDate").description("종료 일자"),
                         fieldWithPath("memo").description("메모")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun `여행 일정 삭제`() {
+        // given
+        val trip = tripRepository.save(
+            Trip(
+                userId = userId!!,
+                title = "first trip",
+                startDate = LocalDate.of(2021,6,1),
+                endDate = LocalDate.of(2021,6,5)
+            )
+        )
+
+        val stops = stopRepository.saveAll(listOf(
+            Stop(
+                trip = trip,
+                name = "central park",
+                lat = 123,
+                lng = 456,
+                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                sequence = 1
+            ),
+            Stop(
+                trip = trip,
+                name = "grand canyon",
+                lat = 789,
+                lng = 101,
+                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                sequence = 2
+            )
+        ))
+
+        // when
+        val result = mockMvc.perform(
+            RestDocumentationRequestBuilders.delete("/api/v1/trips/{id}", trip.id)
+                .header("Authorization", "Bearer $token")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+        )
+
+        // then
+        result
+            .andExpect(status().isNoContent)
+            .andDo(
+                document(
+                    "trip/delete",
+                    requestHeaders(
+                        headerWithName("Authorization").description("인증 토큰")
+                    ),
+                    pathParameters(
+                        parameterWithName("id").description("여행 일정 ID")
                     )
                 )
             )

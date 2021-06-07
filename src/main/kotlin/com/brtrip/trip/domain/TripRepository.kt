@@ -4,7 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface TripRepository : JpaRepository<Trip, Long> {
 
-    fun findByUserId(userId: Long): List<Trip>
+    fun findByUserIdAndDeleted(userId: Long, deleted: Boolean): List<Trip>
 
-    fun findFirstByUserIdOrderByCreatedAtDesc(userId: Long): Trip?
+    fun findFirstByUserIdAndDeletedOrderByCreatedAtDesc(userId: Long, deleted: Boolean): Trip?
+
+    fun findByIdAndDeleted(tripId: Long, deleted: Boolean): Trip?
 }

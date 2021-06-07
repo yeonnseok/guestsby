@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service
 class TripService(
     private val tripCreator: TripCreator,
     private val tripFinder: TripFinder,
-    private val tripUpdater: TripUpdater
+    private val tripUpdater: TripUpdater,
+    private val tripDeleter: TripDeleter
 ) {
     fun create(userId: Long, request: TripRequest): Long {
         val trip = tripCreator.create(userId, request)
@@ -28,7 +29,6 @@ class TripService(
 
     fun update(userId: Long, tripId: Long, request: TripRequest) {
         validateAuthorization(userId, tripId)
-
         tripUpdater.update(tripId, request)
     }
 
@@ -37,5 +37,10 @@ class TripService(
         if (trip.userId != userId) {
             throw AuthorizationException("수정 권한이 없습니다.")
         }
+    }
+
+    fun delete(userId: Long, tripId: Long) {
+        validateAuthorization(userId, tripId)
+        tripDeleter.delete(tripId)
     }
 }

@@ -47,7 +47,7 @@ internal class TripCreatorTest {
         result.title shouldBe trip.title
         result.userId shouldBe trip.userId
 
-        result.stops!!.size shouldBe 1
-        result.stops!![0].trip.title shouldBe trip.title
+        result.stops.size shouldBe 1
+        result.stops[0].trip.title shouldBe trip.title
     }
 }

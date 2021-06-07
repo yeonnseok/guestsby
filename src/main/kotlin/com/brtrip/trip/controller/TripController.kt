@@ -62,9 +62,15 @@ class TripController(
         @Valid @RequestBody request: TripRequest
     ): ResponseEntity<Void> {
         tripService.update(userPrincipal.getId(), id, request)
+        return ResponseEntity.noContent().build()
+    }
 
-        return ResponseEntity
-            .noContent()
-            .build()
+    @DeleteMapping("/{id}")
+    fun delete(
+        @LoginUser userPrincipal: UserPrincipal,
+        @PathVariable id: Long
+    ): ResponseEntity<Void> {
+        tripService.delete(userPrincipal.getId(), id)
+        return ResponseEntity.noContent().build()
     }
 }
