@@ -38,7 +38,7 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")
-//	asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
+	asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -56,7 +56,6 @@ tasks.withType<Test> {
 	useJUnitPlatform()
 }
 
-@Internal
 val snippetsDir = file("build/generated-snippets")
 
 tasks {
