@@ -60,7 +60,7 @@ internal class UserServiceTest {
     @Test
     fun `유저 삭제`() {
         // when
-        sut.delete(1L)
+        sut.delete(user!!.id!!)
 
         // then
         shouldThrow<NotFoundException> { sut.find(user!!.id!!) }
