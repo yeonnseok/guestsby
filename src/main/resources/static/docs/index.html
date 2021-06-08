@@ -440,7 +440,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#resources-users">회원 관리</a></li>
+<li><a href="#resources-users">회원 관리</a>
+<ul class="sectlevel2">
+<li><a href="#resources-user-find">로그인 유저 조회</a></li>
+<li><a href="#resources-user-update">유저 정보 수정</a></li>
+<li><a href="#resources-user-delete">유저 삭제</a></li>
+</ul>
+</li>
 <li><a href="#resources-trip">여행 일정 관리</a>
 <ul class="sectlevel2">
 <li><a href="#resources-trip-create">여행 일정 생성</a></li>
@@ -457,7 +463,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect1">
 <h2 id="resources-users"><a class="link" href="#resources-users">회원 관리</a></h2>
 <div class="sectionbody">
-
+<div class="sect2">
+<h3 id="resources-user-find"><a class="link" href="#resources-user-find">로그인 유저 조회</a></h3>
+<div class="paragraph">
+<p>operation::users/me[snippets='http-request,http-response,request-headers,response-fields']</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-user-update"><a class="link" href="#resources-user-update">유저 정보 수정</a></h3>
+<div class="paragraph">
+<p>operation::users/update[snippets='http-request,http-response,request-headers']</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="resources-user-delete"><a class="link" href="#resources-user-delete">유저 삭제</a></h3>
+<div class="paragraph">
+<p>operation::users/delete[snippets='http-request,http-response,request-headers']</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -499,7 +522,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-06-08 11:06:16 +0900
+Last updated 2021-06-08 13:05:08 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">
