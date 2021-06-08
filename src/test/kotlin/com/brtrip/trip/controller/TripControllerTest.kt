@@ -6,6 +6,7 @@ import com.brtrip.trip.domain.Stop
 import com.brtrip.trip.domain.StopRepository
 import com.brtrip.trip.domain.Trip
 import com.brtrip.trip.domain.TripRepository
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -184,7 +185,7 @@ class TripControllerTest : LoginUserControllerTest() {
             )
         )
 
-        val stops = stopRepository.saveAll(listOf(
+        stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
                 name = "central park",
@@ -258,7 +259,7 @@ class TripControllerTest : LoginUserControllerTest() {
             )
         )
 
-        val stops = stopRepository.saveAll(listOf(
+        stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
                 name = "central park",
@@ -347,7 +348,7 @@ class TripControllerTest : LoginUserControllerTest() {
             )
         )
 
-        val stops = stopRepository.saveAll(listOf(
+        stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
                 name = "central park",

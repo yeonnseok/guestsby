@@ -14,7 +14,7 @@ data class TripResponse(
         fun of(trip: Trip): TripResponse {
             return TripResponse(
                 title = trip.title,
-                stops = trip.stops!!.map { StopResponse.of(it) },
+                stops = trip.stops.map { StopResponse.of(it) },
                 startDate = trip.startDate.format_yyyy_MM_dd(),
                 endDate = trip.endDate.format_yyyy_MM_dd(),
                 memo = trip.memo

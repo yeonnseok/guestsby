@@ -1,40 +1,35 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
-import org.junit.jupiter.api.BeforeEach
+import io.kotlintest.shouldNotBe
+import io.kotlintest.shouldThrow
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.jdbc.Sql
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-@ExtendWith(MockitoExtension::class)
+@SpringBootTest
+@Transactional
+@Sql("/truncate.sql")
 internal class TripServiceTest {
 
+    @Autowired
     private lateinit var sut: TripService
 
-    private lateinit var tripCreator: TripCreator
-
+    @Autowired
     private lateinit var tripFinder: TripFinder
 
-    private lateinit var tripUpdater: TripUpdater
+    @Autowired
+    private lateinit var tripRepository: TripRepository
 
-    private lateinit var tripDeleter: TripDeleter
-
-    @BeforeEach
-    fun setUp() {
-        tripCreator = mockk(relaxed = true)
-        tripFinder = mockk(relaxed = true)
-        tripUpdater = mockk(relaxed = true)
-        tripDeleter = mockk(relaxed = true)
-
-        sut = TripService(tripCreator, tripFinder, tripUpdater, tripDeleter)
-    }
+    @Autowired
+    private lateinit var stopRepository: StopRepository
 
     @Test
     fun `여행 일정 생성`() {
@@ -53,27 +48,17 @@ internal class TripServiceTest {
             endDate = "2021-06-05"
         )
 
-        val trip = Trip(
-            id = 1L,
-            userId = 1L,
-            title = "first trip",
-            startDate = LocalDate.of(2021, 6, 1),
-            endDate = LocalDate.of(2021, 6, 5)
-        )
-
-        every { tripCreator.create(any(), any()) } returns trip
-
         // when
         val tripId = sut.create(1L, request)
 
         // then
-        tripId shouldBe 1L
+        tripId shouldNotBe null
     }
 
     @Test
     fun `내 모든 여행 일정 조회`() {
         // given
-        val trips = listOf(
+        val trips = tripRepository.saveAll(listOf(
             Trip(
                 userId = 1L,
                 title = "first trip",
@@ -86,38 +71,42 @@ internal class TripServiceTest {
                 startDate = LocalDate.of(2021, 8, 1),
                 endDate = LocalDate.of(2021, 8, 1)
             )
-        )
+        ))
         trips[0].stops = mutableListOf(
-            Stop(
-                trip = trips[0],
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
-                sequence = 1
+            stopRepository.save(
+                Stop(
+                    trip = trips[0],
+                    name = "central park",
+                    lat = 123,
+                    lng = 456,
+                    stoppedAt = LocalDateTime.of(2021, 6, 3, 0, 0, 0),
+                    sequence = 1
+                )
             ),
-            Stop(
-                trip = trips[0],
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
-                sequence = 2
+            stopRepository.save(
+                Stop(
+                    trip = trips[0],
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101,
+                    stoppedAt = LocalDateTime.of(2021, 6, 4, 0, 0, 0),
+                    sequence = 2
+                )
             )
         )
 
         trips[1].stops = mutableListOf(
-            Stop(
-                trip = trips[1],
-                name = "rainbow cafe",
-                lat = 987,
-                lng = 654,
-                stoppedAt = LocalDateTime.of(2021,8,1,0,0,0),
-                sequence = 1
+            stopRepository.save(
+                Stop(
+                    trip = trips[1],
+                    name = "rainbow cafe",
+                    lat = 987,
+                    lng = 654,
+                    stoppedAt = LocalDateTime.of(2021, 8, 1, 0, 0, 0),
+                    sequence = 1
+                )
             )
         )
-
-        every { tripFinder.findByUserId(any()) } returns trips
 
         // when
         val myTrips = sut.findMyTrips(1L)
@@ -134,33 +123,37 @@ internal class TripServiceTest {
     @Test
     fun `내 최근 여행 일정 조회`() {
         // given
-        val trip = Trip(
-            userId = 1L,
-            title = "first trip",
-            startDate = LocalDate.of(2021, 6, 1),
-            endDate = LocalDate.of(2021, 6, 5)
-        )
-
-        trip.stops = mutableListOf(
-            Stop(
-                trip = trip,
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
-                sequence = 1
-            ),
-            Stop(
-                trip = trip,
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
-                sequence = 2
+        val trip = tripRepository.save(
+            Trip(
+                userId = 1L,
+                title = "first trip",
+                startDate = LocalDate.of(2021, 6, 1),
+                endDate = LocalDate.of(2021, 6, 5)
             )
         )
 
-        every { tripFinder.findRecent(any()) } returns trip
+        trip.stops = mutableListOf(
+            stopRepository.save(
+                Stop(
+                    trip = trip,
+                    name = "central park",
+                    lat = 123,
+                    lng = 456,
+                    stoppedAt = LocalDateTime.of(2021, 6, 3, 0, 0, 0),
+                    sequence = 1
+                )
+            ),
+            stopRepository.save(
+                Stop(
+                    trip = trip,
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101,
+                    stoppedAt = LocalDateTime.of(2021, 6, 4, 0, 0, 0),
+                    sequence = 2
+                )
+            )
+        )
 
         // when
         val result = sut.findRecentTrip(1L)
@@ -173,14 +166,24 @@ internal class TripServiceTest {
     @Test
     fun `여행 일정 수정`() {
         // given
+        val trip = tripRepository.save(
+            Trip(
+                userId = 1L,
+                title = "first trip",
+                startDate = LocalDate.of(2021, 6, 1),
+                endDate = LocalDate.of(2021, 6, 5),
+                memo = "first trip"
+            )
+        )
+
         val request = TripRequest(
             title = "new trip",
             stops = listOf(
                 StopRequest(
-                   lat = 123,
-                   lng = 456,
-                   name = "grand canyon",
-                   stoppedAt = "2021-06-04 00:00:00"
+                    lat = 123,
+                    lng = 456,
+                    name = "grand canyon",
+                    stoppedAt = "2021-06-04 00:00:00"
                 ),
                 StopRequest(
                     lat = 789,
@@ -194,42 +197,33 @@ internal class TripServiceTest {
             memo = null
         )
 
-        val trip = Trip(
-            userId = 1L,
-            title = "first trip",
-            startDate = LocalDate.of(2021,6,1),
-            endDate = LocalDate.of(2021,6,5),
-            memo = "first trip"
-        )
-
-        every { tripFinder.findById(any()) } returns trip
-
         // when
-        sut.update(1L, 1L, request)
+        sut.update(1L, trip.id!!, request)
+        val result = tripFinder.findById(trip.id!!)
 
         // then
-        verify { tripFinder.findById(1L) }
-        verify { tripUpdater.update(1L, request) }
+        result.title shouldBe "new trip"
+        result.startDate shouldBe LocalDate.of(2021,6,2)
+        result.endDate shouldBe LocalDate.of(2021,6,6)
     }
 
     @Test
     fun `여행 일정 삭제`() {
         // given
-        val trip = Trip(
-            userId = 1L,
-            title = "first trip",
-            startDate = LocalDate.of(2021,6,1),
-            endDate = LocalDate.of(2021,6,5),
-            memo = "first trip"
+        val trip = tripRepository.save(
+            Trip(
+                userId = 1L,
+                title = "first trip",
+                startDate = LocalDate.of(2021, 6, 1),
+                endDate = LocalDate.of(2021, 6, 5),
+                memo = "first trip"
+            )
         )
 
-        every { tripFinder.findById(any()) } returns trip
-
         // when
-        sut.delete(1L, 1L)
+        sut.delete(1L, trip.id!!)
 
         // then
-        verify { tripFinder.findById(1L) }
-        verify { tripDeleter.delete(1L) }
+        shouldThrow<NotFoundException> { tripFinder.findById(trip.id!!) }
     }
 }
