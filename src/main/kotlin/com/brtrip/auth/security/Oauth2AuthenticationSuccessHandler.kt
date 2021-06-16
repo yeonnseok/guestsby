@@ -1,9 +1,13 @@
 package com.brtrip.auth.security
 
+import com.brtrip.auth.domain.dto.TokenResponse
 import com.brtrip.common.exceptions.BadRequestException
 import com.brtrip.common.utils.CookieUtils
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.MediaType
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.server.ServletServerHttpResponse
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.stereotype.Component
@@ -34,9 +38,16 @@ class Oauth2AuthenticationSuccessHandler(
             return
         }
 
-        clearAuthenticationAttributes(request, response);
-        getRedirectStrategy().sendRedirect(request, response, targetUrl)
+        val jsonConverter = MappingJackson2HttpMessageConverter();
+        val jsonMimeType = MediaType.APPLICATION_JSON;
 
+        val token = TokenResponse(tokenProvider.createToken(authentication))
+        if (jsonConverter.canWrite(token::class.java, jsonMimeType)) {
+            jsonConverter.write(token, jsonMimeType, ServletServerHttpResponse(response))
+        }
+
+        clearAuthenticationAttributes(request, response)
+//        getRedirectStrategy().sendRedirect(request, response, targetUrl)
     }
 
     fun clearAuthenticationAttributes(request: HttpServletRequest, response: HttpServletResponse) {
@@ -61,10 +72,9 @@ class Oauth2AuthenticationSuccessHandler(
 //        val targetUrl = redirectUri ?: defaultTargetUrl
 
         val targetUrl = "http://localhost:8080"
-        val token = tokenProvider.createToken(authentication)
 
         return UriComponentsBuilder.fromUriString(targetUrl)
-            .queryParam("token", token)
+            .queryParam("token", "123123r")
             .build().toUriString()
     }
 
