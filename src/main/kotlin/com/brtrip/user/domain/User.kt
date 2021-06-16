@@ -15,6 +15,9 @@ data class User(
     @Column(name = "email", unique = true, nullable = false)
     var email: String,
 
+    @Column(name = "password", nullable = false)
+    var password: String,
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     var role: RoleType,

@@ -1,6 +1,5 @@
 package com.brtrip.config
 
-import com.brtrip.auth.domain.CustomOAuth2UserService
 import com.brtrip.auth.domain.CustomUserDetailsService
 import com.brtrip.auth.security.*
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
@@ -29,11 +28,7 @@ import org.springframework.web.filter.CorsFilter
 @EnableWebSecurity
 class SecurityConfig(
         private val tokenAuthenticationFilter: TokenAuthenticationFilter,
-        private val customUserDetailsService: CustomUserDetailsService,
-        private val customOAuth2UserService: CustomOAuth2UserService,
-        private val oauth2AuthenticationSuccessHandler: Oauth2AuthenticationSuccessHandler,
-        private val oauth2AuthenticationFailureHandler: Oauth2AuthenticationFailureHandler,
-        private val cookieOAuth2AuthorizationRequestRepository: HttpCookieOAuth2AuthorizationRequestRepository
+        private val customUserDetailsService: CustomUserDetailsService
 ) : WebSecurityConfigurerAdapter() {
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
@@ -71,16 +66,6 @@ class SecurityConfig(
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated()
-
-        http.oauth2Login()
-                .authorizationEndpoint()
-                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository)
-                .and()
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService)
-                .and()
-                .successHandler(oauth2AuthenticationSuccessHandler)
-                .failureHandler(oauth2AuthenticationFailureHandler)
 
         http
                 .addFilterBefore(

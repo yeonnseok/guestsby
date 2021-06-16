@@ -17,8 +17,6 @@ class JwtTokenProvider(
 
     @Value("\${app.jwt.token.expire-length:3000000}")
     val validityInMilliseconds: Long,
-
-    private val userDetailsService: CustomUserDetailsService
 ) {
     fun createToken(authentication: Authentication?): String =
         Jwts.builder().let {

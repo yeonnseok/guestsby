@@ -33,6 +33,7 @@ class LoginUserControllerTest : ControllerTest() {
                 User(
                         nickName = "tester",
                         email = "test@test.com",
+                        password = "test123",
                         role = RoleType.ROLE_USER,
                         authProvider = AuthProvider.KAKAO
                 )

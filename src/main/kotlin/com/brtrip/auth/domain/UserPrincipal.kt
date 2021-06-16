@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User
 class UserPrincipal(
     private val id: Long,
     private val email: String,
+    private val password: String,
     private val deleted: Boolean,
     private val authorities: Collection<GrantedAuthority>,
     private val attributes: Map<String, Any>? = null
@@ -18,6 +19,7 @@ class UserPrincipal(
             return UserPrincipal(
                 id = user.id!!,
                 email = user.email,
+                password = user.password,
                 authorities = listOf(SimpleGrantedAuthority(user.role.name)),
                 deleted = user.deleted
             )
@@ -27,6 +29,7 @@ class UserPrincipal(
             return UserPrincipal(
                 id = user.id!!,
                 email = user.email,
+                password = user.password,
                 authorities = listOf(SimpleGrantedAuthority(user.role.name)),
                 attributes = attributes,
                 deleted = user.deleted
@@ -42,7 +45,7 @@ class UserPrincipal(
 
     override fun getAuthorities() = this.authorities
 
-    override fun getPassword() = null
+    override fun getPassword() = this.password
 
     override fun getUsername() = this.email
 

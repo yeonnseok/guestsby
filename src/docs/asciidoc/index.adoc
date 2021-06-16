@@ -13,6 +13,21 @@ endif::[]
 [[resources]]
 = Resources
 
+[[resources-auth]]
+== 회원가입/로그인
+
+[[resources-auth-email]]
+=== 이메일 체크
+operation::auth/email[snippets='http-request,http-response,request-headers,request-fields,response-fields']
+
+[[resources-auth-signup]]
+=== 회원가입
+operation::auth/signup[snippets='http-request,http-response,request-headers,request-fields,response-fields']
+
+[[resources-auth-login]]
+=== 로그인
+operation::auth/login[snippets='http-request,http-response,request-headers,request-fields,response-fields']
+
 [[resources-users]]
 == 회원 관리
 

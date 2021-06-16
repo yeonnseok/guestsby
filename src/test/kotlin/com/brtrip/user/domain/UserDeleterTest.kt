@@ -27,6 +27,7 @@ internal class UserDeleterTest {
             User(
                 nickName = "여행가",
                 email = "trip@com",
+                password = "test123",
                 role = RoleType.ROLE_USER,
                 authProvider = AuthProvider.KAKAO
             )

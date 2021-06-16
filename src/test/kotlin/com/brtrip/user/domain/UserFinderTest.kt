@@ -23,6 +23,7 @@ internal class UserFinderTest {
                 nickName = "여행가",
                 email = "trip@com",
                 role = RoleType.ROLE_USER,
+                password = "test123",
                 authProvider = AuthProvider.KAKAO
             )
         )

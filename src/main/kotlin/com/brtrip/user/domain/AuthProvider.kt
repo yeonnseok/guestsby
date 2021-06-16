@@ -1,6 +1,7 @@
 package com.brtrip.user.domain
 
 enum class AuthProvider {
+    LOCAL,
     GOOGLE,
     KAKAO,
     NAVER;
