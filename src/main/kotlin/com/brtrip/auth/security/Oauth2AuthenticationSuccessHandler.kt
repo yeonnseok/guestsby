@@ -10,11 +10,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.http.server.ServletServerHttpResponse
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import org.springframework.security.web.savedrequest.RequestCache
 import org.springframework.stereotype.Component
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
 
 @Component
 class Oauth2AuthenticationSuccessHandler(
@@ -24,6 +27,8 @@ class Oauth2AuthenticationSuccessHandler(
     private val authorizedRedirectUri: String
 ) : SimpleUrlAuthenticationSuccessHandler() {
 
+    private var requestCache: RequestCache = HttpSessionRequestCache()
+
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun onAuthenticationSuccess(
@@ -31,6 +36,13 @@ class Oauth2AuthenticationSuccessHandler(
         response: HttpServletResponse,
         authentication: Authentication
     ) {
+        val savedRequest = requestCache.getRequest(request, response);
+
+        if (savedRequest != null) {
+            requestCache.removeRequest(request, response)
+            clearAuthenticationAttributes(request, response)
+        }
+
         val targetUrl = determineTargetUrl(request, response, authentication)
 
         if (response.isCommitted) {
@@ -45,8 +57,6 @@ class Oauth2AuthenticationSuccessHandler(
         if (jsonConverter.canWrite(token::class.java, jsonMimeType)) {
             jsonConverter.write(token, jsonMimeType, ServletServerHttpResponse(response))
         }
-
-        clearAuthenticationAttributes(request, response)
 //        getRedirectStrategy().sendRedirect(request, response, targetUrl)
     }
 
