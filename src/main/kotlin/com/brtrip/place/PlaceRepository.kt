@@ -1,7 +1,8 @@
 package com.brtrip.place
 
 import org.springframework.data.jpa.repository.JpaRepository
+import java.math.BigDecimal
 
 interface PlaceRepository : JpaRepository<Place, Long> {
-    fun findByLatAndLngAndName(lat: Long, lng: Long, name: String): Place?
+    fun findByLatAndLng(lat: BigDecimal, lng: BigDecimal): Place?
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 import java.time.LocalDate
 
 @SpringBootTest
@@ -35,8 +36,8 @@ internal class TripServiceTest {
     fun `여행 일정 생성`() {
         // given
         val stopRequest = StopRequest(
-            lat = 123,
-            lng = 456,
+            lat = BigDecimal(123),
+            lng = BigDecimal(456),
             name = "central park"
         )
 
@@ -77,8 +78,8 @@ internal class TripServiceTest {
                     trip = trips[0],
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 )
@@ -88,8 +89,8 @@ internal class TripServiceTest {
                     trip = trips[0],
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 )
@@ -102,8 +103,8 @@ internal class TripServiceTest {
                     trip = trips[1],
                     place = Place(
                         name = "rainbow cafe",
-                        lat = 987,
-                        lng = 654
+                        lat = BigDecimal(987),
+                        lng = BigDecimal(654)
                     ),
                     sequence = 1
                 )
@@ -140,8 +141,8 @@ internal class TripServiceTest {
                     trip = trip,
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 )
@@ -151,8 +152,8 @@ internal class TripServiceTest {
                     trip = trip,
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 )
@@ -184,13 +185,13 @@ internal class TripServiceTest {
             title = "new trip",
             stops = listOf(
                 StopRequest(
-                    lat = 123,
-                    lng = 456,
+                    lat = BigDecimal(123),
+                    lng = BigDecimal(456),
                     name = "grand canyon"
                 ),
                 StopRequest(
-                    lat = 789,
-                    lng = 101,
+                    lat = BigDecimal(789),
+                    lng = BigDecimal(101),
                     name = "rainbow cafe"
                 )
             ),
@@ -227,5 +228,10 @@ internal class TripServiceTest {
 
         // then
         shouldThrow<NotFoundException> { tripFinder.findById(trip.id!!) }
+    }
+
+    @Test
+    fun `추천 경로 조회`() {
+        // TODO
     }
 }

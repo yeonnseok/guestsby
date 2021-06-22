@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
 import java.time.LocalDate
 
 @SpringBootTest
@@ -45,8 +46,8 @@ internal class TripUpdaterTest {
                 trip = trip,
                 place = Place(
                     name = "central park",
-                    lat = 123,
-                    lng = 456
+                    lat = BigDecimal(123),
+                    lng = BigDecimal(456)
                 ),
                 sequence = 1
             ),
@@ -54,8 +55,8 @@ internal class TripUpdaterTest {
                 trip = trip,
                 place = Place(
                     name = "grand canyon",
-                    lat = 789,
-                    lng = 101
+                    lat = BigDecimal(789),
+                    lng = BigDecimal(101)
                 ),
                 sequence = 2
             )
@@ -66,13 +67,13 @@ internal class TripUpdaterTest {
             title = "new trip",
             stops = listOf(
                 StopRequest(
-                    lat = 123,
-                    lng = 456,
+                    lat = BigDecimal(123),
+                    lng = BigDecimal(456),
                     name = "grand canyon"
                 ),
                 StopRequest(
-                    lat = 789,
-                    lng = 101,
+                    lat = BigDecimal(789),
+                    lng = BigDecimal(101),
                     name = "rainbow cafe"
                 )
             ),

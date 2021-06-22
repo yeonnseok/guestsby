@@ -20,10 +20,9 @@ class StopCreator(
     }
 
     private fun setPlace(stop: Stop) {
-        val place = placeRepository.findByLatAndLngAndName(
+        val place = placeRepository.findByLatAndLng(
             stop.place.lat,
             stop.place.lng,
-            stop.place.name
         )
 
         if (place != null) {

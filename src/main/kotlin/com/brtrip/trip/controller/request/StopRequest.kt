@@ -3,10 +3,11 @@ package com.brtrip.trip.controller.request
 import com.brtrip.place.Place
 import com.brtrip.trip.domain.Stop
 import com.brtrip.trip.domain.Trip
+import java.math.BigDecimal
 
 data class StopRequest(
-    val lat: Long,
-    val lng: Long,
+    val lat: BigDecimal,
+    val lng: BigDecimal,
     val name: String
 ) {
     fun toEntity(trip: Trip, sequence: Int): Stop {

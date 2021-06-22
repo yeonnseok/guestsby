@@ -1,11 +1,12 @@
 package com.brtrip.trip.controller.response
 
 import com.brtrip.trip.domain.Stop
+import java.math.BigDecimal
 
 data class StopResponse(
     val name: String,
-    val lat: Long,
-    val lng: Long,
+    val lat: BigDecimal,
+    val lng: BigDecimal,
     val sequence: Int
 ) {
     companion object {

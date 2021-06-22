@@ -16,12 +16,12 @@ import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
-import org.springframework.restdocs.request.RequestDocumentation.pathParameters
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.math.BigDecimal
 import java.time.LocalDate
 
 class TripControllerTest : LoginUserControllerTest() {
@@ -114,8 +114,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[0],
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 ),
@@ -123,8 +123,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[0],
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 ),
@@ -132,8 +132,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[1],
                     place = Place(
                         name = "rainbow cafe",
-                        lat = 987,
-                        lng = 654,
+                        lat = BigDecimal(987),
+                        lng = BigDecimal(654),
                     ),
                     sequence = 1
                 )
@@ -193,8 +193,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 ),
@@ -202,8 +202,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 )
@@ -270,8 +270,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 ),
@@ -279,8 +279,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 )
@@ -360,8 +360,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "central park",
-                        lat = 123,
-                        lng = 456
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
                     ),
                     sequence = 1
                 ),
@@ -369,8 +369,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trip,
                     place = Place(
                         name = "grand canyon",
-                        lat = 789,
-                        lng = 101
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
                     ),
                     sequence = 2
                 )
@@ -396,6 +396,82 @@ class TripControllerTest : LoginUserControllerTest() {
                     ),
                     pathParameters(
                         parameterWithName("id").description("여행 일정 ID")
+                    )
+                )
+            )
+    }
+
+    @Test
+    fun `특정 장소가 포함된 경로의 trip 불러오기`() {
+        val trip = tripRepository.save(
+            Trip(
+                userId = userId!!,
+                title = "first trip",
+                startDate = LocalDate.of(2021, 6, 1),
+                endDate = LocalDate.of(2021, 6, 5)
+            )
+        )
+
+        stopRepository.saveAll(
+            listOf(
+                Stop(
+                    trip = trip,
+                    place = Place(
+                        name = "central park",
+                        lat = BigDecimal(123),
+                        lng = BigDecimal(456)
+                    ),
+                    sequence = 1
+                ),
+                Stop(
+                    trip = trip,
+                    place = Place(
+                        name = "grand canyon",
+                        lat = BigDecimal(789),
+                        lng = BigDecimal(101)
+                    ),
+                    sequence = 2
+                )
+            )
+        )
+
+        // when
+        val result = mockMvc.perform(
+            get("/api/v1/trips?lat=789&lng=101")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON_VALUE)
+        )
+
+        // then
+        result
+            .andExpect(status().isOk)
+            .andExpect(jsonPath("result").value(ResultType.SUCCESS.name))
+            .andExpect(jsonPath("statusCode").value(HttpStatus.OK.value()))
+            .andExpect(jsonPath("data[0].title").value("first trip"))
+            .andExpect(jsonPath("data[0].stops[0].lat").value(123))
+            .andExpect(jsonPath("data[0].stops[0].lng").value(456))
+            .andExpect(jsonPath("data[0].stops[0].name").value("central park"))
+            .andExpect(jsonPath("data[0].startDate").value("2021-06-01"))
+            .andExpect(jsonPath("data[0].endDate").value("2021-06-05"))
+            .andExpect(jsonPath("data[0].memo").isEmpty)
+            .andDo(
+                document(
+                    "trip/find-recommendation",
+                    requestParameters(
+                        parameterWithName("lat").description("포함할 장소의 위도"),
+                        parameterWithName("lng").description("포함할 장소의 경도")
+                    ),
+                    responseFields(
+                        fieldWithPath("result").description("응답 결과"),
+                        fieldWithPath("statusCode").description("상태 코드"),
+                        fieldWithPath("data[].title").description("여행 일정 제목"),
+                        fieldWithPath("data[].stops[].lat").description("위도"),
+                        fieldWithPath("data[].stops[].lng").description("경도"),
+                        fieldWithPath("data[].stops[].name").description("장소 이름"),
+                        fieldWithPath("data[].stops[].sequence").description("일정 순서"),
+                        fieldWithPath("data[].startDate").description("시작 일자"),
+                        fieldWithPath("data[].endDate").description("종료 일자"),
+                        fieldWithPath("data[].memo").description("메모")
                     )
                 )
             )

@@ -1,6 +1,7 @@
 package com.brtrip.place
 
 import com.brtrip.common.BaseEntity
+import java.math.BigDecimal
 import javax.persistence.*
 
 @Entity
@@ -10,10 +11,10 @@ class Place(
     var id: Long? = null,
 
     @Column(name = "lat", nullable = false)
-    var lat: Long,
+    var lat: BigDecimal,
 
     @Column(name = "lng", nullable = false)
-    var lng: Long,
+    var lng: BigDecimal,
 
     @Column(name = "title", nullable = false)
     var name: String
