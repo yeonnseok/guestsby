@@ -17,8 +17,6 @@ class TripUpdater(
         val trip = tripFinder.findById(tripId)
 
         trip.title = request.title
-        trip.startDate = request.startDate.yyyy_MM_dd_Formatter()
-        trip.endDate = request.endDate.yyyy_MM_dd_Formatter()
         trip.memo = request.memo
 
         trip.stops = IntStream.range(0, request.stops.size)

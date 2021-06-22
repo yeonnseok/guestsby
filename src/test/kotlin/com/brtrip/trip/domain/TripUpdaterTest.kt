@@ -35,9 +35,7 @@ internal class TripUpdaterTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021,6,1),
-                endDate = LocalDate.of(2021,6,5)
+                title = "first trip"
             )
         )
 
@@ -77,8 +75,6 @@ internal class TripUpdaterTest {
                     name = "rainbow cafe"
                 )
             ),
-            startDate = "2021-06-02",
-            endDate = "2021-06-06",
             memo = null
         )
 
@@ -88,8 +84,6 @@ internal class TripUpdaterTest {
 
         // then
         updated.title shouldBe "new trip"
-        updated.startDate shouldBe LocalDate.of(2021,6,2)
-        updated.endDate shouldBe LocalDate.of(2021,6,6)
         updated.memo shouldBe null
 
         updated.stops.size shouldBe 2
