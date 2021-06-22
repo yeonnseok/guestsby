@@ -1,5 +1,6 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.place.Place
 import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
@@ -9,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @SpringBootTest
 @Transactional
@@ -43,18 +43,20 @@ internal class TripUpdaterTest {
         val stops = stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                place = Place(
+                    name = "central park",
+                    lat = 123,
+                    lng = 456
+                ),
                 sequence = 1
             ),
             Stop(
                 trip = trip,
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                place = Place(
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101
+                ),
                 sequence = 2
             )
         ))
@@ -66,14 +68,12 @@ internal class TripUpdaterTest {
                 StopRequest(
                     lat = 123,
                     lng = 456,
-                    name = "grand canyon",
-                    stoppedAt = "2021-06-04 00:00:00"
+                    name = "grand canyon"
                 ),
                 StopRequest(
                     lat = 789,
                     lng = 101,
-                    name = "rainbow cafe",
-                    stoppedAt = "2021-06-05 00:00:00"
+                    name = "rainbow cafe"
                 )
             ),
             startDate = "2021-06-02",
@@ -93,8 +93,8 @@ internal class TripUpdaterTest {
 
         updated.stops.size shouldBe 2
         updated.stops[0].sequence shouldBe 1
-        updated.stops[0].name shouldBe "grand canyon"
+        updated.stops[0].place.name shouldBe "grand canyon"
         updated.stops[1].sequence shouldBe 2
-        updated.stops[1].name shouldBe "rainbow cafe"
+        updated.stops[1].place.name shouldBe "rainbow cafe"
     }
 }

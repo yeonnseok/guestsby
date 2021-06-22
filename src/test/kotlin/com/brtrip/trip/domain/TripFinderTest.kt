@@ -1,5 +1,6 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.place.Place
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -7,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @SpringBootTest
 @Transactional
@@ -38,18 +38,20 @@ internal class TripFinderTest {
         val stops = stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                place = Place(
+                    name = "central park",
+                    lat = 123,
+                    lng = 456
+                ),
                 sequence = 1
             ),
             Stop(
                 trip = trip,
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                place = Place(
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101
+                ),
                 sequence = 2
             )
         ))
@@ -62,8 +64,8 @@ internal class TripFinderTest {
         trips.size shouldBe 1
         trips[0].title shouldBe "first trip"
         trips[0].stops.size shouldBe 2
-        trips[0].stops[0].name shouldBe "central park"
-        trips[0].stops[1].name shouldBe "grand canyon"
+        trips[0].stops[0].place.name shouldBe "central park"
+        trips[0].stops[1].place.name shouldBe "grand canyon"
     }
 
     @Test
@@ -81,18 +83,20 @@ internal class TripFinderTest {
         val stops = stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                place = Place(
+                    name = "central park",
+                    lat = 123,
+                    lng = 456
+                ),
                 sequence = 1
             ),
             Stop(
                 trip = trip,
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                place = Place(
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101
+                ),
                 sequence = 2
             )
         ))
@@ -104,7 +108,7 @@ internal class TripFinderTest {
         // then
         result.title shouldBe "first trip"
         result.stops.size shouldBe 2
-        result.stops[0].name shouldBe "central park"
-        result.stops[1].name shouldBe "grand canyon"
+        result.stops[0].place.name shouldBe "central park"
+        result.stops[1].place.name shouldBe "grand canyon"
     }
 }

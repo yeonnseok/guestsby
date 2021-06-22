@@ -1,6 +1,7 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.place.Place
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @SpringBootTest
 @Transactional
@@ -39,18 +39,20 @@ internal class TripDeleterTest {
         val stops = stopRepository.saveAll(listOf(
             Stop(
                 trip = trip,
-                name = "central park",
-                lat = 123,
-                lng = 456,
-                stoppedAt = LocalDateTime.of(2021,6,3,0,0,0),
+                place = Place(
+                    name = "central park",
+                    lat = 123,
+                    lng = 456
+                ),
                 sequence = 1
             ),
             Stop(
                 trip = trip,
-                name = "grand canyon",
-                lat = 789,
-                lng = 101,
-                stoppedAt = LocalDateTime.of(2021,6,4,0,0,0),
+                place = Place(
+                    name = "grand canyon",
+                    lat = 789,
+                    lng = 101
+                ),
                 sequence = 2
             )
         ))

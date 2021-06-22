@@ -1,6 +1,7 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.place.Place
 import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
@@ -12,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @SpringBootTest
 @Transactional
@@ -37,8 +37,7 @@ internal class TripServiceTest {
         val stopRequest = StopRequest(
             lat = 123,
             lng = 456,
-            name = "central park",
-            stoppedAt = "2021-06-03 00:00:00"
+            name = "central park"
         )
 
         val request = TripRequest(
@@ -76,20 +75,22 @@ internal class TripServiceTest {
             stopRepository.save(
                 Stop(
                     trip = trips[0],
-                    name = "central park",
-                    lat = 123,
-                    lng = 456,
-                    stoppedAt = LocalDateTime.of(2021, 6, 3, 0, 0, 0),
+                    place = Place(
+                        name = "central park",
+                        lat = 123,
+                        lng = 456
+                    ),
                     sequence = 1
                 )
             ),
             stopRepository.save(
                 Stop(
                     trip = trips[0],
-                    name = "grand canyon",
-                    lat = 789,
-                    lng = 101,
-                    stoppedAt = LocalDateTime.of(2021, 6, 4, 0, 0, 0),
+                    place = Place(
+                        name = "grand canyon",
+                        lat = 789,
+                        lng = 101
+                    ),
                     sequence = 2
                 )
             )
@@ -99,10 +100,11 @@ internal class TripServiceTest {
             stopRepository.save(
                 Stop(
                     trip = trips[1],
-                    name = "rainbow cafe",
-                    lat = 987,
-                    lng = 654,
-                    stoppedAt = LocalDateTime.of(2021, 8, 1, 0, 0, 0),
+                    place = Place(
+                        name = "rainbow cafe",
+                        lat = 987,
+                        lng = 654
+                    ),
                     sequence = 1
                 )
             )
@@ -136,20 +138,22 @@ internal class TripServiceTest {
             stopRepository.save(
                 Stop(
                     trip = trip,
-                    name = "central park",
-                    lat = 123,
-                    lng = 456,
-                    stoppedAt = LocalDateTime.of(2021, 6, 3, 0, 0, 0),
+                    place = Place(
+                        name = "central park",
+                        lat = 123,
+                        lng = 456
+                    ),
                     sequence = 1
                 )
             ),
             stopRepository.save(
                 Stop(
                     trip = trip,
-                    name = "grand canyon",
-                    lat = 789,
-                    lng = 101,
-                    stoppedAt = LocalDateTime.of(2021, 6, 4, 0, 0, 0),
+                    place = Place(
+                        name = "grand canyon",
+                        lat = 789,
+                        lng = 101
+                    ),
                     sequence = 2
                 )
             )
@@ -182,14 +186,12 @@ internal class TripServiceTest {
                 StopRequest(
                     lat = 123,
                     lng = 456,
-                    name = "grand canyon",
-                    stoppedAt = "2021-06-04 00:00:00"
+                    name = "grand canyon"
                 ),
                 StopRequest(
                     lat = 789,
                     lng = 101,
-                    name = "rainbow cafe",
-                    stoppedAt = "2021-06-05 00:00:00"
+                    name = "rainbow cafe"
                 )
             ),
             startDate = "2021-06-02",

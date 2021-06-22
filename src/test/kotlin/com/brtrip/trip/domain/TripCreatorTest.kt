@@ -22,8 +22,7 @@ internal class TripCreatorTest {
         val stopRequest = StopRequest(
             lat = 123,
             lng = 456,
-            name = "central park",
-            stoppedAt = "2021-06-03 00:00:00"
+            name = "central park"
         )
 
         val request = TripRequest(
