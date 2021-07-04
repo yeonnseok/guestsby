@@ -19,5 +19,8 @@ data class Stop(
     var place: Place,
 
     @Column(name = "sequence", nullable = false)
-    var sequence: Int
+    var sequence: Int,
+
+    @Column(name = "memo")
+    var memo: String? = null
 ) : BaseEntity()
