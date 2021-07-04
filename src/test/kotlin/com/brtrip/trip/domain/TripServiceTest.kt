@@ -43,9 +43,7 @@ internal class TripServiceTest {
 
         val request = TripRequest(
             title = "first trip",
-            stops = listOf(stopRequest),
-            startDate = "2021-06-01",
-            endDate = "2021-06-05"
+            stops = listOf(stopRequest)
         )
 
         // when
@@ -61,15 +59,11 @@ internal class TripServiceTest {
         val trips = tripRepository.saveAll(listOf(
             Trip(
                 userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021, 6, 1),
-                endDate = LocalDate.of(2021, 6, 5)
+                title = "first trip"
             ),
             Trip(
                 userId = 1L,
-                title = "second trip",
-                startDate = LocalDate.of(2021, 8, 1),
-                endDate = LocalDate.of(2021, 8, 1)
+                title = "second trip"
             )
         ))
         trips[0].stops = mutableListOf(
@@ -129,9 +123,7 @@ internal class TripServiceTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021, 6, 1),
-                endDate = LocalDate.of(2021, 6, 5)
+                title = "first trip"
             )
         )
 
@@ -175,8 +167,6 @@ internal class TripServiceTest {
             Trip(
                 userId = 1L,
                 title = "first trip",
-                startDate = LocalDate.of(2021, 6, 1),
-                endDate = LocalDate.of(2021, 6, 5),
                 memo = "first trip"
             )
         )
@@ -195,8 +185,6 @@ internal class TripServiceTest {
                     name = "rainbow cafe"
                 )
             ),
-            startDate = "2021-06-02",
-            endDate = "2021-06-06",
             memo = null
         )
 
@@ -206,8 +194,6 @@ internal class TripServiceTest {
 
         // then
         result.title shouldBe "new trip"
-        result.startDate shouldBe LocalDate.of(2021,6,2)
-        result.endDate shouldBe LocalDate.of(2021,6,6)
     }
 
     @Test
@@ -217,8 +203,6 @@ internal class TripServiceTest {
             Trip(
                 userId = 1L,
                 title = "first trip",
-                startDate = LocalDate.of(2021, 6, 1),
-                endDate = LocalDate.of(2021, 6, 5),
                 memo = "first trip"
             )
         )
