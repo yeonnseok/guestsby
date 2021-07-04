@@ -52,6 +52,8 @@ class TripControllerTest : LoginUserControllerTest() {
             "title" to "first trip",
             "stops" to listOf(stop1, stop2),
             "memo" to "first trip",
+            "startDate" to "2021-05-05",
+            "endDate" to "2021-05-08"
         )
 
         // when
@@ -78,6 +80,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("stops[].lat").description("위도"),
                         fieldWithPath("stops[].lng").description("경도"),
                         fieldWithPath("stops[].name").description("장소 이름"),
+                        fieldWithPath("startDate").description("시작 일자"),
+                        fieldWithPath("endDate").description("종료 일자"),
                         fieldWithPath("memo").description("메모")
                     )
                 )
@@ -92,10 +96,14 @@ class TripControllerTest : LoginUserControllerTest() {
                 Trip(
                     userId = userId!!,
                     title = "first trip",
+                    startDate = LocalDate.of(2021,5,5),
+                    endDate = LocalDate.of(2021,5,8)
                 ),
                 Trip(
                     userId = userId!!,
                     title = "second trip",
+                    startDate = LocalDate.of(2021,6,5),
+                    endDate = LocalDate.of(2021,6,8)
                 )
             )
         )
@@ -159,6 +167,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data[].stops[].lng").description("경도"),
                         fieldWithPath("data[].stops[].name").description("장소 이름"),
                         fieldWithPath("data[].stops[].sequence").description("일정 순서"),
+                        fieldWithPath("data[].startDate").description("시작 일자"),
+                        fieldWithPath("data[].endDate").description("종료 일자"),
                         fieldWithPath("data[].memo").description("메모")
                     )
                 )
@@ -171,7 +181,9 @@ class TripControllerTest : LoginUserControllerTest() {
         val trip = tripRepository.save(
             Trip(
                 userId = userId!!,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -230,6 +242,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data.stops[].lng").description("경도"),
                         fieldWithPath("data.stops[].name").description("장소 이름"),
                         fieldWithPath("data.stops[].sequence").description("일정 순서"),
+                        fieldWithPath("data.startDate").description("시작 일자"),
+                        fieldWithPath("data.endDate").description("종료 일자"),
                         fieldWithPath("data.memo").description("메모")
                     )
                 )
@@ -242,7 +256,9 @@ class TripControllerTest : LoginUserControllerTest() {
         val trip = tripRepository.save(
             Trip(
                 userId = userId!!,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -284,6 +300,8 @@ class TripControllerTest : LoginUserControllerTest() {
         val body = mapOf(
             "title" to "new trip",
             "stops" to listOf(stop2, stop3),
+            "startDate" to "2021-05-05",
+            "endDate" to "2021-05-08",
             "memo" to null
         )
 
@@ -314,6 +332,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("stops[].lat").description("위도"),
                         fieldWithPath("stops[].lng").description("경도"),
                         fieldWithPath("stops[].name").description("장소 이름"),
+                        fieldWithPath("startDate").description("시작 일자"),
+                        fieldWithPath("endDate").description("종료 일자"),
                         fieldWithPath("memo").description("메모")
                     )
                 )
@@ -326,7 +346,9 @@ class TripControllerTest : LoginUserControllerTest() {
         val trip = tripRepository.save(
             Trip(
                 userId = userId!!,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -382,7 +404,9 @@ class TripControllerTest : LoginUserControllerTest() {
         val trip = tripRepository.save(
             Trip(
                 userId = userId!!,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -441,6 +465,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data[].stops[].lng").description("경도"),
                         fieldWithPath("data[].stops[].name").description("장소 이름"),
                         fieldWithPath("data[].stops[].sequence").description("일정 순서"),
+                        fieldWithPath("data[].startDate").description("시작 일자"),
+                        fieldWithPath("data[].endDate").description("종료 일자"),
                         fieldWithPath("data[].memo").description("메모")
                     )
                 )

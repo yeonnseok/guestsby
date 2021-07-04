@@ -15,6 +15,12 @@ data class Trip(
     @Column(name = "title", nullable = false)
     var title: String,
 
+    @Column(name = "start_date", nullable = false)
+    var startDate: LocalDate,
+
+    @Column(name = "end_date", nullable = false)
+    var endDate: LocalDate,
+
     @Column(name = "memo")
     var memo: String? = null
 ) : BaseEntity() {

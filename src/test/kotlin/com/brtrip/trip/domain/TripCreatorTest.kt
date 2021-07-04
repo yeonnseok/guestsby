@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import java.math.BigDecimal
+import java.time.LocalDate
 
 @SpringBootTest
 @Sql("/truncate.sql")
@@ -27,12 +28,16 @@ internal class TripCreatorTest {
 
         val request = TripRequest(
             title = "first trip",
-            stops = listOf(stopRequest)
+            stops = listOf(stopRequest),
+            startDate = "2021-05-05",
+            endDate = "2021-05-08"
         )
 
         val trip = Trip(
             userId = 1L,
-            title = "first trip"
+            title = "first trip",
+            startDate = LocalDate.of(2021,5,5),
+            endDate = LocalDate.of(2021,5,8)
         )
 
         // when

@@ -30,7 +30,9 @@ internal class TripFinderTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -73,7 +75,9 @@ internal class TripFinderTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 

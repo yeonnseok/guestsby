@@ -31,7 +31,9 @@ internal class TripDeleterTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 

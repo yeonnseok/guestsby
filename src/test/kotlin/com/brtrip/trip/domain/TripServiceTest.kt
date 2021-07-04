@@ -43,7 +43,9 @@ internal class TripServiceTest {
 
         val request = TripRequest(
             title = "first trip",
-            stops = listOf(stopRequest)
+            stops = listOf(stopRequest),
+            startDate = "2021-05-05",
+            endDate = "2021-05-08"
         )
 
         // when
@@ -59,11 +61,15 @@ internal class TripServiceTest {
         val trips = tripRepository.saveAll(listOf(
             Trip(
                 userId = 1L,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             ),
             Trip(
                 userId = 1L,
-                title = "second trip"
+                title = "second trip",
+                startDate = LocalDate.of(2021,6,5),
+                endDate = LocalDate.of(2021,6,8)
             )
         ))
         trips[0].stops = mutableListOf(
@@ -123,7 +129,9 @@ internal class TripServiceTest {
         val trip = tripRepository.save(
             Trip(
                 userId = 1L,
-                title = "first trip"
+                title = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -167,7 +175,9 @@ internal class TripServiceTest {
             Trip(
                 userId = 1L,
                 title = "first trip",
-                memo = "first trip"
+                memo = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
@@ -185,6 +195,8 @@ internal class TripServiceTest {
                     name = "rainbow cafe"
                 )
             ),
+            startDate = "2021-05-05",
+            endDate = "2021-05-08",
             memo = null
         )
 
@@ -203,7 +215,9 @@ internal class TripServiceTest {
             Trip(
                 userId = 1L,
                 title = "first trip",
-                memo = "first trip"
+                memo = "first trip",
+                startDate = LocalDate.of(2021,5,5),
+                endDate = LocalDate.of(2021,5,8)
             )
         )
 
