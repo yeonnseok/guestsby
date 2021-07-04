@@ -77,7 +77,7 @@ operation::trip/find-recommendation[snippets='http-request,http-response,request
 
 [[resources-like-create]]
 === 좋아요 생성
-operation::trip/create[snippets='http-request,http-response,request-headers,request-fields']
+operation::like/create[snippets='http-request,http-response,request-headers,request-fields']
 
 [[resources-like-delete]]
 === 좋아요 취소
