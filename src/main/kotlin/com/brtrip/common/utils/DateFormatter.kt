@@ -10,8 +10,8 @@ fun String.yyyy_MM_dd_Formatter() =
 fun String.yyyy_MM_dd_HH_mm_SS_Formatter() =
     LocalDateTime.parse(this, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
 
-fun LocalDate.format_yyyy_MM_dd() =
+fun LocalDate.format_yyyy_MM_dd(): String =
     this.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
 
-fun LocalDateTime.format_yyyy_MM_dd_hh_mm_ss() =
-    this.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+fun LocalDateTime?.format_yyyy_MM_dd_hh_mm_ss(): String? =
+    this?.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

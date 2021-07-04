@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
-import java.time.LocalDate
+import java.math.BigDecimal
 
 @SpringBootTest
 @Sql("/truncate.sql")
@@ -20,24 +20,19 @@ internal class TripCreatorTest {
     fun `여행 일정 저장`() {
         // given
         val stopRequest = StopRequest(
-            lat = 123,
-            lng = 456,
-            name = "central park",
-            stoppedAt = "2021-06-03 00:00:00"
+            lat = BigDecimal(123),
+            lng = BigDecimal(456),
+            name = "central park"
         )
 
         val request = TripRequest(
             title = "first trip",
-            stops = listOf(stopRequest),
-            startDate = "2021-06-01",
-            endDate = "2021-06-05"
+            stops = listOf(stopRequest)
         )
 
         val trip = Trip(
             userId = 1L,
-            title = "first trip",
-            startDate = LocalDate.of(2021, 6, 1),
-            endDate = LocalDate.of(2021, 6, 5)
+            title = "first trip"
         )
 
         // when

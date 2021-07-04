@@ -8,6 +8,7 @@ import com.brtrip.user.domain.LoginUser
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.math.BigDecimal
 import javax.validation.Valid
 
 @RestController
@@ -72,5 +73,18 @@ class TripController(
     ): ResponseEntity<Void> {
         tripService.delete(userPrincipal.getId(), id)
         return ResponseEntity.noContent().build()
+    }
+
+    @GetMapping
+    fun recommend(
+        @RequestParam lat: BigDecimal,
+        @RequestParam lng: BigDecimal
+    ): ResponseEntity<ApiResponse> {
+        val trips = tripService.search(lat, lng)
+        return ResponseEntity.ok(
+            ApiResponse(
+                data = trips
+            )
+        )
     }
 }

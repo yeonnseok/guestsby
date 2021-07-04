@@ -1,16 +1,19 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.AuthorizationException
+import com.brtrip.place.PlaceFinder
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.controller.response.TripResponse
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 
 @Service
 class TripService(
     private val tripCreator: TripCreator,
     private val tripFinder: TripFinder,
     private val tripUpdater: TripUpdater,
-    private val tripDeleter: TripDeleter
+    private val tripDeleter: TripDeleter,
+    private val placeFinder: PlaceFinder
 ) {
     fun create(userId: Long, request: TripRequest): Long {
         val trip = tripCreator.create(userId, request)
@@ -42,5 +45,11 @@ class TripService(
     fun delete(userId: Long, tripId: Long) {
         validateAuthorization(userId, tripId)
         tripDeleter.delete(tripId)
+    }
+
+    fun search(lat: BigDecimal, lng: BigDecimal): List<TripResponse> {
+        val place = placeFinder.findByPosition(lat, lng)
+        return tripFinder.findIncludePlace(place)
+            .map { TripResponse.of(it) }
     }
 }

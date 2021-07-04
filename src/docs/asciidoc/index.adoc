@@ -67,3 +67,7 @@ operation::trip/update[snippets='http-request,http-response,request-headers,path
 === 여행 일정 삭제
 operation::trip/delete[snippets='http-request,http-response,request-headers,path-parameters']
 
+[[resources-trip-recommend]]
+=== 여행 일정 추천
+operation::trip/find-recommendation[snippets='http-request,http-response,request-parameters,response-fields']
+

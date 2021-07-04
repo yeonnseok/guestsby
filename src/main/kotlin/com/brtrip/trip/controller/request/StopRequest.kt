@@ -1,22 +1,23 @@
 package com.brtrip.trip.controller.request
 
-import com.brtrip.common.utils.yyyy_MM_dd_HH_mm_SS_Formatter
+import com.brtrip.place.Place
 import com.brtrip.trip.domain.Stop
 import com.brtrip.trip.domain.Trip
+import java.math.BigDecimal
 
 data class StopRequest(
-    val lat: Long,
-    val lng: Long,
-    val name: String,
-    val stoppedAt: String
+    val lat: BigDecimal,
+    val lng: BigDecimal,
+    val name: String
 ) {
     fun toEntity(trip: Trip, sequence: Int): Stop {
         return Stop(
             trip = trip,
-            lat = lat,
-            lng = lng,
-            name = name,
-            stoppedAt = stoppedAt.yyyy_MM_dd_HH_mm_SS_Formatter(),
+            place = Place(
+                lat = lat,
+                lng = lng,
+                name = name
+            ),
             sequence = sequence
         )
     }

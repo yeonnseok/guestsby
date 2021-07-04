@@ -10,16 +10,14 @@ import kotlin.streams.toList
 @Transactional
 class TripCreator(
     private val tripRepository: TripRepository,
-    private val stopRepository: StopRepository
+    private val stopCreator: StopCreator
 ) {
     fun create(userId: Long, request: TripRequest): Trip {
         val trip = tripRepository.save(request.toEntity(userId))
 
         val stops = IntStream.range(0, request.stops.size)
             .mapToObj {
-                val stop = request.stops[it]
-                    .toEntity(trip, it + 1)
-                stopRepository.save(stop)
+                stopCreator.create(trip, request.stops, it)
             }
             .toList() as MutableList
 

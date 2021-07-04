@@ -1,7 +1,7 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.BaseEntity
-import java.time.LocalDateTime
+import com.brtrip.place.Place
 import javax.persistence.*
 
 @Entity
@@ -14,17 +14,9 @@ data class Stop(
     @JoinColumn(name = "trip_id")
     var trip: Trip,
 
-    @Column(name = "lat", nullable = false)
-    var lat: Long,
-
-    @Column(name = "lng", nullable = false)
-    var lng: Long,
-
-    @Column(name = "title", nullable = false)
-    var name: String,
-
-    @Column(name = "stoppedAt", nullable = false)
-    var stoppedAt: LocalDateTime,
+    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @JoinColumn(name = "place_id")
+    var place: Place,
 
     @Column(name = "sequence", nullable = false)
     var sequence: Int
