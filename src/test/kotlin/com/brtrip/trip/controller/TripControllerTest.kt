@@ -82,7 +82,7 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("stops[].name").description("장소 이름"),
                         fieldWithPath("startDate").description("시작 일자"),
                         fieldWithPath("endDate").description("종료 일자"),
-                        fieldWithPath("memo").description("메모")
+                        fieldWithPath("memo").description("메모"),
                     )
                 )
             )
@@ -169,7 +169,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data[].stops[].sequence").description("일정 순서"),
                         fieldWithPath("data[].startDate").description("시작 일자"),
                         fieldWithPath("data[].endDate").description("종료 일자"),
-                        fieldWithPath("data[].memo").description("메모")
+                        fieldWithPath("data[].memo").description("메모"),
+                        fieldWithPath("data[].likeCount").description("좋아요 수")
                     )
                 )
             )
@@ -244,7 +245,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data.stops[].sequence").description("일정 순서"),
                         fieldWithPath("data.startDate").description("시작 일자"),
                         fieldWithPath("data.endDate").description("종료 일자"),
-                        fieldWithPath("data.memo").description("메모")
+                        fieldWithPath("data.memo").description("메모"),
+                        fieldWithPath("data.likeCount").description("좋아요 수")
                     )
                 )
             )
@@ -453,6 +455,9 @@ class TripControllerTest : LoginUserControllerTest() {
             .andDo(
                 document(
                     "trip/find-recommendation",
+                    requestHeaders(
+                        headerWithName("Content-Type").description("전송 타입")
+                    ),
                     requestParameters(
                         parameterWithName("lat").description("포함할 장소의 위도"),
                         parameterWithName("lng").description("포함할 장소의 경도")
@@ -467,7 +472,8 @@ class TripControllerTest : LoginUserControllerTest() {
                         fieldWithPath("data[].stops[].sequence").description("일정 순서"),
                         fieldWithPath("data[].startDate").description("시작 일자"),
                         fieldWithPath("data[].endDate").description("종료 일자"),
-                        fieldWithPath("data[].memo").description("메모")
+                        fieldWithPath("data[].memo").description("메모"),
+                        fieldWithPath("data[].likeCount").description("좋아요 수")
                     )
                 )
             )

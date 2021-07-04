@@ -8,7 +8,8 @@ data class TripResponse(
     val stops: List<StopResponse>,
     val startDate: String,
     val endDate: String,
-    val memo: String?
+    val memo: String?,
+    val likeCount: Long
 ) {
     companion object {
         fun of(trip: Trip): TripResponse {
@@ -17,7 +18,8 @@ data class TripResponse(
                 stops = trip.stops.map { StopResponse.of(it) },
                 startDate = trip.startDate.format_yyyy_MM_dd(),
                 endDate = trip.endDate.format_yyyy_MM_dd(),
-                memo = trip.memo
+                memo = trip.memo,
+                likeCount = trip.likeCount
             )
         }
     }

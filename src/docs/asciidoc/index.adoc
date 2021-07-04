@@ -71,3 +71,16 @@ operation::trip/delete[snippets='http-request,http-response,request-headers,path
 === 여행 일정 추천
 operation::trip/find-recommendation[snippets='http-request,http-response,request-parameters,response-fields']
 
+
+[[resources-like]]
+== 좋아요(찜) 관리
+
+[[resources-like-create]]
+=== 좋아요 생성
+operation::trip/create[snippets='http-request,http-response,request-headers,request-fields']
+
+[[resources-like-delete]]
+=== 좋아요 취소
+operation::like/delete[snippets='http-request,http-response,request-headers,request-fields']
+
+
