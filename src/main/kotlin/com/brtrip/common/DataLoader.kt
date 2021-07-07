@@ -61,8 +61,8 @@ class DataLoader(
                     trip = trip,
                     place = Place(
                         name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
+                        lat = "123",
+                        lng = "456"
                     ),
                     sequence = 1
                 ),
@@ -70,8 +70,8 @@ class DataLoader(
                     trip = trip,
                     place = Place(
                         name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
+                        lat = "789",
+                        lng = "101"
                     ),
                     sequence = 2
                 )
@@ -103,8 +103,8 @@ class DataLoader(
                     trip = trip2,
                     place = Place(
                         name = "river park",
-                        lat = BigDecimal(456.456456),
-                        lng = BigDecimal(123.12321)
+                        lat = "456.456",
+                        lng = "123.123"
                     ),
                     sequence = 1
                 ),
@@ -112,8 +112,8 @@ class DataLoader(
                     trip = trip2,
                     place = Place(
                         name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
+                        lat = "123",
+                        lng = "456"
                     ),
                     sequence = 2
                 ),
@@ -121,8 +121,8 @@ class DataLoader(
                     trip = trip2,
                     place = Place(
                         name = "sapoon sapoon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
+                        lat = "789",
+                        lng = "101"
                     ),
                     sequence = 3
                 )

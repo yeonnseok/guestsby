@@ -77,8 +77,8 @@ class TripController(
 
     @GetMapping
     fun recommend(
-        @RequestParam lat: BigDecimal,
-        @RequestParam lng: BigDecimal
+        @RequestParam lat: String,
+        @RequestParam lng: String
     ): ResponseEntity<ApiResponse> {
         val trips = tripService.search(lat, lng)
         return ResponseEntity.ok(

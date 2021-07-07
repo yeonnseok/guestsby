@@ -1,5 +1,6 @@
 package com.brtrip.like.controller
 
+import com.brtrip.TestDataLoader
 import com.brtrip.like.domain.Like
 import com.brtrip.like.domain.LikeRepository
 import com.brtrip.place.Place
@@ -26,6 +27,9 @@ import java.time.LocalDate
 internal class LikeControllerTest : LoginUserControllerTest() {
 
     @Autowired
+    private lateinit var testDataLoader: TestDataLoader
+
+    @Autowired
     private lateinit var tripRepository: TripRepository
 
     @Autowired
@@ -40,37 +44,8 @@ internal class LikeControllerTest : LoginUserControllerTest() {
     @Test
     fun `좋아요 하기`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021, 5, 5),
-                endDate = LocalDate.of(2021, 5, 8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         val body = mapOf(
             "tripId" to trip.id!!
@@ -105,37 +80,8 @@ internal class LikeControllerTest : LoginUserControllerTest() {
     @Test
     fun `좋아요 취소하기`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021, 5, 5),
-                endDate = LocalDate.of(2021, 5, 8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         val user = userFinder.findById(userId!!)
         likeRepository.save(Like(trip = trip, user = user))

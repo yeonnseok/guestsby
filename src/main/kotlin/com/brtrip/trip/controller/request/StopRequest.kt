@@ -6,8 +6,8 @@ import com.brtrip.trip.domain.Trip
 import java.math.BigDecimal
 
 data class StopRequest(
-    val lat: BigDecimal,
-    val lng: BigDecimal,
+    val lat: String,
+    val lng: String,
     val name: String
 ) {
     fun toEntity(trip: Trip, sequence: Int): Stop {

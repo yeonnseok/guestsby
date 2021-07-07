@@ -1,5 +1,6 @@
 package com.brtrip.trip.controller
 
+import com.brtrip.TestDataLoader
 import com.brtrip.common.response.ResultType
 import com.brtrip.place.Place
 import com.brtrip.restdocs.LoginUserControllerTest
@@ -32,6 +33,8 @@ class TripControllerTest : LoginUserControllerTest() {
     @Autowired
     private lateinit var stopRepository: StopRepository
 
+    @Autowired
+    private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `여행 일정 생성`() {
@@ -114,8 +117,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[0],
                     place = Place(
                         name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
+                        lat = "123",
+                        lng = "456"
                     ),
                     sequence = 1
                 ),
@@ -123,8 +126,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[0],
                     place = Place(
                         name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
+                        lat = "789",
+                        lng = "101"
                     ),
                     sequence = 2
                 ),
@@ -132,8 +135,8 @@ class TripControllerTest : LoginUserControllerTest() {
                     trip = trips[1],
                     place = Place(
                         name = "rainbow cafe",
-                        lat = BigDecimal(987),
-                        lng = BigDecimal(654),
+                        lat = "987",
+                        lng = "654",
                     ),
                     sequence = 1
                 )
@@ -179,37 +182,8 @@ class TripControllerTest : LoginUserControllerTest() {
     @Test
     fun `내 최근 여행 일정 조회`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(
@@ -255,37 +229,8 @@ class TripControllerTest : LoginUserControllerTest() {
     @Test
     fun `여행 일정 수정`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         val stop2 = mapOf(
             "lat" to "789",
@@ -345,37 +290,8 @@ class TripControllerTest : LoginUserControllerTest() {
     @Test
     fun `여행 일정 삭제`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(
@@ -403,37 +319,8 @@ class TripControllerTest : LoginUserControllerTest() {
 
     @Test
     fun `특정 장소가 포함된 경로의 trip 불러오기`() {
-        val trip = tripRepository.save(
-            Trip(
-                userId = userId!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(userId!!)
+        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(

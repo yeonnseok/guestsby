@@ -1,5 +1,6 @@
 package com.brtrip.user.domain
 
+import com.brtrip.TestDataLoader
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,19 +15,11 @@ internal class UserFinderTest {
     private lateinit var sut: UserFinder
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `유저 정보 조회`() {
-        val user = userRepository.save(
-            User(
-                nickName = "여행가",
-                email = "trip@com",
-                role = RoleType.ROLE_USER,
-                password = "test123",
-                authProvider = AuthProvider.KAKAO
-            )
-        )
+        val user = testDataLoader.sample_user()
 
         // when
         val result = sut.findById(user.id!!)

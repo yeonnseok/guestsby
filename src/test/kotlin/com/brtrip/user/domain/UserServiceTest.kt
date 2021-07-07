@@ -1,5 +1,6 @@
 package com.brtrip.user.domain
 
+import com.brtrip.TestDataLoader
 import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.user.controller.request.UserUpdateRequest
 import io.kotlintest.shouldBe
@@ -18,22 +19,13 @@ internal class UserServiceTest {
     private lateinit var sut: UserService
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    private lateinit var testDataLoader: TestDataLoader
 
     private var user: User? = null
 
     @BeforeEach
     fun setUp() {
-        user = userRepository.save(
-            User(
-                id = 1L,
-                nickName = "여행가",
-                email = "trip@com",
-                password = "test123",
-                role = RoleType.ROLE_USER,
-                authProvider = AuthProvider.KAKAO
-            )
-        )
+        user = testDataLoader.sample_user()
     }
 
     @Test

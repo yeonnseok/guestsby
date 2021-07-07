@@ -1,5 +1,6 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.TestDataLoader
 import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.place.Place
 import io.kotlintest.shouldBe
@@ -8,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigDecimal
-import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
@@ -23,40 +22,13 @@ internal class TripDeleterTest {
     private lateinit var tripRepository: TripRepository
 
     @Autowired
-    private lateinit var stopRepository: StopRepository
+    private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `여행 일정 삭제`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        val stops = stopRepository.saveAll(listOf(
-            Stop(
-                trip = trip,
-                place = Place(
-                    name = "central park",
-                    lat = BigDecimal(123),
-                    lng = BigDecimal(456)
-                ),
-                sequence = 1
-            ),
-            Stop(
-                trip = trip,
-                place = Place(
-                    name = "grand canyon",
-                    lat = BigDecimal(789),
-                    lng = BigDecimal(101)
-                ),
-                sequence = 2
-            )
-        ))
+        val trip = testDataLoader.sample_trip_first(1L)
+        val stops = testDataLoader.sample_stops_first(trip)
         trip.stops = stops
 
         // when

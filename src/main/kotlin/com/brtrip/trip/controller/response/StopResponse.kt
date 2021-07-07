@@ -5,8 +5,8 @@ import java.math.BigDecimal
 
 data class StopResponse(
     val name: String,
-    val lat: BigDecimal,
-    val lng: BigDecimal,
+    val lat: String,
+    val lng: String,
     val sequence: Int
 ) {
     companion object {

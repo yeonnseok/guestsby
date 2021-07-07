@@ -1,5 +1,6 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.TestDataLoader
 import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.place.Place
 import com.brtrip.trip.controller.request.StopRequest
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @SpringBootTest
@@ -32,12 +32,15 @@ internal class TripServiceTest {
     @Autowired
     private lateinit var stopRepository: StopRepository
 
+    @Autowired
+    private lateinit var testDataLoader: TestDataLoader
+
     @Test
     fun `여행 일정 생성`() {
         // given
         val stopRequest = StopRequest(
-            lat = BigDecimal(123),
-            lng = BigDecimal(456),
+            lat = "123",
+            lng = "456",
             name = "central park"
         )
 
@@ -72,30 +75,7 @@ internal class TripServiceTest {
                 endDate = LocalDate.of(2021,6,8)
             )
         ))
-        trips[0].stops = mutableListOf(
-            stopRepository.save(
-                Stop(
-                    trip = trips[0],
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                )
-            ),
-            stopRepository.save(
-                Stop(
-                    trip = trips[0],
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        trips[0].stops = testDataLoader.sample_stops_first(trips[0])
 
         trips[1].stops = mutableListOf(
             stopRepository.save(
@@ -103,8 +83,8 @@ internal class TripServiceTest {
                     trip = trips[1],
                     place = Place(
                         name = "rainbow cafe",
-                        lat = BigDecimal(987),
-                        lng = BigDecimal(654)
+                        lat = "987",
+                        lng = "654"
                     ),
                     sequence = 1
                 )
@@ -126,39 +106,8 @@ internal class TripServiceTest {
     @Test
     fun `내 최근 여행 일정 조회`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        trip.stops = mutableListOf(
-            stopRepository.save(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = BigDecimal(123),
-                        lng = BigDecimal(456)
-                    ),
-                    sequence = 1
-                )
-            ),
-            stopRepository.save(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = BigDecimal(789),
-                        lng = BigDecimal(101)
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+        val trip = testDataLoader.sample_trip_first(1L)
+        trip.stops = testDataLoader.sample_stops_first(trip)
 
         // when
         val result = sut.findRecentTrip(1L)
@@ -185,13 +134,13 @@ internal class TripServiceTest {
             title = "new trip",
             stops = listOf(
                 StopRequest(
-                    lat = BigDecimal(123),
-                    lng = BigDecimal(456),
+                    lat = "123",
+                    lng = "456",
                     name = "grand canyon"
                 ),
                 StopRequest(
-                    lat = BigDecimal(789),
-                    lng = BigDecimal(101),
+                    lat = "789",
+                    lng = "101",
                     name = "rainbow cafe"
                 )
             ),

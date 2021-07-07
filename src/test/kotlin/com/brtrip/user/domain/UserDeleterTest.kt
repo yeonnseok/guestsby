@@ -1,5 +1,6 @@
 package com.brtrip.user.domain
 
+import com.brtrip.TestDataLoader
 import com.brtrip.common.exceptions.NotFoundException
 import io.kotlintest.shouldThrow
 import org.junit.jupiter.api.Test
@@ -18,20 +19,12 @@ internal class UserDeleterTest {
     private lateinit var userFinder: UserFinder
 
     @Autowired
-    private lateinit var userRepository: UserRepository
+    private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `유저 삭제`() {
         // given
-        val user = userRepository.save(
-            User(
-                nickName = "여행가",
-                email = "trip@com",
-                password = "test123",
-                role = RoleType.ROLE_USER,
-                authProvider = AuthProvider.KAKAO
-            )
-        )
+        val user = testDataLoader.sample_user()
 
         // when
         sut.delete(user.id!!)

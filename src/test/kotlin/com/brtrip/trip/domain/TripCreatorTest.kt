@@ -21,8 +21,8 @@ internal class TripCreatorTest {
     fun `여행 일정 저장`() {
         // given
         val stopRequest = StopRequest(
-            lat = BigDecimal(123),
-            lng = BigDecimal(456),
+            lat = "123",
+            lng = "456",
             name = "central park"
         )
 

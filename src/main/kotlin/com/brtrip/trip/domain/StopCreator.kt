@@ -2,6 +2,7 @@ package com.brtrip.trip.domain
 
 import com.brtrip.place.PlaceRepository
 import com.brtrip.trip.controller.request.StopRequest
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -22,7 +23,7 @@ class StopCreator(
     private fun setPlace(stop: Stop) {
         val place = placeRepository.findByLatAndLng(
             stop.place.lat,
-            stop.place.lng,
+            stop.place.lng
         )
 
         if (place != null) {

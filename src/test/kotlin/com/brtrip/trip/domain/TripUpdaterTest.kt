@@ -1,5 +1,6 @@
 package com.brtrip.trip.domain
 
+import com.brtrip.TestDataLoader
 import com.brtrip.place.Place
 import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
@@ -24,56 +25,26 @@ internal class TripUpdaterTest {
     private lateinit var tripFinder: TripFinder
 
     @Autowired
-    private lateinit var tripRepository: TripRepository
-
-    @Autowired
-    private lateinit var stopRepository: StopRepository
+    private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `여행 일정 수정`() {
         // given
-        val trip = tripRepository.save(
-            Trip(
-                userId = 1L,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-        val stops = stopRepository.saveAll(listOf(
-            Stop(
-                trip = trip,
-                place = Place(
-                    name = "central park",
-                    lat = BigDecimal(123),
-                    lng = BigDecimal(456)
-                ),
-                sequence = 1
-            ),
-            Stop(
-                trip = trip,
-                place = Place(
-                    name = "grand canyon",
-                    lat = BigDecimal(789),
-                    lng = BigDecimal(101)
-                ),
-                sequence = 2
-            )
-        ))
+        val trip = testDataLoader.sample_trip_first(1L)
+        val stops = testDataLoader.sample_stops_first(trip)
         trip.stops = stops
 
         val request = TripRequest(
             title = "new trip",
             stops = listOf(
                 StopRequest(
-                    lat = BigDecimal(123),
-                    lng = BigDecimal(456),
+                    lat = "123",
+                    lng = "456",
                     name = "grand canyon"
                 ),
                 StopRequest(
-                    lat = BigDecimal(789),
-                    lng = BigDecimal(101),
+                    lat = "789",
+                    lng = "101",
                     name = "rainbow cafe"
                 )
             ),
