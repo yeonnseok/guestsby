@@ -16,5 +16,8 @@ class Place(
     var lng: String,
 
     @Column(name = "title", nullable = false)
-    var name: String
+    var name: String,
+
+    @Column(name = "content")
+    var content: String? = null
 ): BaseEntity()
