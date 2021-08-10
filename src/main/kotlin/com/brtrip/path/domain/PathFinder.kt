@@ -23,7 +23,9 @@ class PathFinder(
         }
     }
 
-    fun findByTripId(tripId: Long): List<TripPath> {
-        return tripPathRepository.findByTripId(tripId)
+    fun findPathIdBy(tripId: Long): List<Long> {
+        return tripPathRepository.findByTripId(tripId).map {
+            it.path.id!!
+        }
     }
 }

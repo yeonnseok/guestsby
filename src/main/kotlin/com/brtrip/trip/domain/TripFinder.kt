@@ -1,6 +1,7 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.path.domain.PathPlaceRepository
 import com.brtrip.place.Place
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

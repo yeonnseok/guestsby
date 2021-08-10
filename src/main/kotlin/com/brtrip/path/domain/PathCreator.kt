@@ -23,4 +23,19 @@ class PathCreator(
         }
         return path
     }
+
+    fun createPathWithinTrip(request: List<PathRequest>, idx: Int): Path {
+        val pathRequest = request[idx]
+        val path = pathRepository.findById(pathRequest.id!!)
+
+        pathRequest.places.forEachIndexed { index, place ->
+            pathPlaceRepository.save(PathPlace(
+                path = path.get(),
+                place = place,
+                sequence = index.toLong()
+            ))
+        }
+
+        return path.get()
+    }
 }

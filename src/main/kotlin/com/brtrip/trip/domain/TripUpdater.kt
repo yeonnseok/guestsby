@@ -1,14 +1,11 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.path.domain.PathFinder
-import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceFinder
 import com.brtrip.place.PlaceFinder
 import com.brtrip.trip.controller.request.TripRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import kotlin.io.path.Path
 
 @Component
 @Transactional
@@ -37,15 +34,17 @@ class TripUpdater(
 //            }
 //        }
 
-//        // 2. path 수정
-//        // 1) tripId로 List<tripPath>를 가져온다
-//        // 2) pathId로 List<PathPlace>를 가져온다
-//        // 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
-//          // 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
-//              // 3-1-1) 달라진 Path가 DB에 있으면, likeCount를 1 증가시키고 PathPlace, TripPlace를 업데이트한다
-//                  // 이전 Path는 likeCount를 1 감소시키고, likeCount가 0이라면 삭제한다.
-//              // 3-1-2) 달라진 Path가 DB에 없으면, 새로 Path를 저장하고, PathPlace, TripPlace를 업데이트한다
-//          // 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다
+        // 2. path 수정
+        // 1) tripId로 List<tripPath>를 가져온다
+        val pathIdList = pathFinder.findPathIdBy(tripId)
+        // 2) pathId로 List<PathPlace>를 가져온다
+        request.paths[0].places
+        // 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
+          // 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
+              // 3-1-1) 달라진 Path가 DB에 있으면, likeCount를 1 증가시키고, 기존 TripPath를 지우고 새 TripPath를 생성
+                  // 이전 Path는 likeCount를 1 감소시킨다
+              // 3-1-2) 달라진 Path가 DB에 없으면, 새로 Path를 저장하고, 새 PathPlace를 만들고 TripPath를 추가한다
+          // 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다
 
 //        val tripPaths = pathFinder.findByTripId(tripId)
 //        tripPaths.forEach { tp ->
