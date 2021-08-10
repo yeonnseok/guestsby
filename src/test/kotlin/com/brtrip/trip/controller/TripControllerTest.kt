@@ -4,8 +4,6 @@ import com.brtrip.TestDataLoader
 import com.brtrip.common.response.ResultType
 import com.brtrip.place.Place
 import com.brtrip.restdocs.LoginUserControllerTest
-import com.brtrip.trip.domain.Stop
-import com.brtrip.trip.domain.StopRepository
 import com.brtrip.trip.domain.Trip
 import com.brtrip.trip.domain.TripRepository
 import org.junit.jupiter.api.Test
@@ -22,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import java.math.BigDecimal
 import java.time.LocalDate
 
 class TripControllerTest : LoginUserControllerTest() {
@@ -30,8 +27,8 @@ class TripControllerTest : LoginUserControllerTest() {
     @Autowired
     private lateinit var tripRepository: TripRepository
 
-    @Autowired
-    private lateinit var stopRepository: StopRepository
+//    @Autowired
+//    private lateinit var stopRepository: StopRepository
 
     @Autowired
     private lateinit var testDataLoader: TestDataLoader
@@ -111,37 +108,37 @@ class TripControllerTest : LoginUserControllerTest() {
             )
         )
 
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trips[0],
-                    place = Place(
-                        name = "central park",
-                        lat = "123",
-                        lng = "456"
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trips[0],
-                    place = Place(
-                        name = "grand canyon",
-                        lat = "789",
-                        lng = "101"
-                    ),
-                    sequence = 2
-                ),
-                Stop(
-                    trip = trips[1],
-                    place = Place(
-                        name = "rainbow cafe",
-                        lat = "987",
-                        lng = "654",
-                    ),
-                    sequence = 1
-                )
-            )
-        )
+//        stopRepository.saveAll(
+//            listOf(
+//                Stop(
+//                    trip = trips[0],
+//                    place = Place(
+//                        name = "central park",
+//                        lat = "123",
+//                        lng = "456"
+//                    ),
+//                    sequence = 1
+//                ),
+//                Stop(
+//                    trip = trips[0],
+//                    place = Place(
+//                        name = "grand canyon",
+//                        lat = "789",
+//                        lng = "101"
+//                    ),
+//                    sequence = 2
+//                ),
+//                Stop(
+//                    trip = trips[1],
+//                    place = Place(
+//                        name = "rainbow cafe",
+//                        lat = "987",
+//                        lng = "654",
+//                    ),
+//                    sequence = 1
+//                )
+//            )
+//        )
 
         // when
         val result = mockMvc.perform(
@@ -183,7 +180,7 @@ class TripControllerTest : LoginUserControllerTest() {
     fun `내 최근 여행 일정 조회`() {
         // given
         val trip = testDataLoader.sample_trip_first(userId!!)
-        testDataLoader.sample_stops_first(trip)
+//        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(
@@ -230,7 +227,7 @@ class TripControllerTest : LoginUserControllerTest() {
     fun `여행 일정 수정`() {
         // given
         val trip = testDataLoader.sample_trip_first(userId!!)
-        testDataLoader.sample_stops_first(trip)
+//        testDataLoader.sample_stops_first(trip)
 
         val stop2 = mapOf(
             "lat" to "789",
@@ -291,7 +288,7 @@ class TripControllerTest : LoginUserControllerTest() {
     fun `여행 일정 삭제`() {
         // given
         val trip = testDataLoader.sample_trip_first(userId!!)
-        testDataLoader.sample_stops_first(trip)
+//        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(
@@ -320,7 +317,7 @@ class TripControllerTest : LoginUserControllerTest() {
     @Test
     fun `특정 장소가 포함된 경로의 trip 불러오기`() {
         val trip = testDataLoader.sample_trip_first(userId!!)
-        testDataLoader.sample_stops_first(trip)
+//        testDataLoader.sample_stops_first(trip)
 
         // when
         val result = mockMvc.perform(

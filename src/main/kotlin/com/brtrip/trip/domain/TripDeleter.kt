@@ -11,6 +11,5 @@ class TripDeleter(
     fun delete(tripId: Long) {
         val trip = tripFinder.findById(tripId)
         trip.delete()
-        trip.stops.forEach { it.delete() }
     }
 }

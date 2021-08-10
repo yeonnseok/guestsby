@@ -2,8 +2,8 @@ package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
 import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.place.Place
-import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import io.kotlintest.shouldNotBe
@@ -29,8 +29,8 @@ internal class TripServiceTest {
     @Autowired
     private lateinit var tripRepository: TripRepository
 
-    @Autowired
-    private lateinit var stopRepository: StopRepository
+//    @Autowired
+//    private lateinit var stopRepository: StopRepository
 
     @Autowired
     private lateinit var testDataLoader: TestDataLoader
@@ -38,17 +38,33 @@ internal class TripServiceTest {
     @Test
     fun `여행 일정 생성`() {
         // given
-        val stopRequest = StopRequest(
-            lat = "123",
-            lng = "456",
-            name = "central park"
-        )
+//        val stopRequest = StopRequest(
+//            lat = "123",
+//            lng = "456",
+//            name = "central park"
+//        )
 
         val request = TripRequest(
             title = "first trip",
-            stops = listOf(stopRequest),
             startDate = "2021-05-05",
-            endDate = "2021-05-08"
+            endDate = "2021-05-08",
+            paths = listOf(
+                PathRequest(
+                    id = 1,
+                    places = listOf(
+                        Place(
+                            lat = "123",
+                            lng = "456",
+                            name = "central park"
+                        ),
+                        Place(
+                            lat = "789",
+                            lng = "101",
+                            name = "grand canyon"
+                        )
+                    )
+                )
+            )
         )
 
         // when
@@ -75,21 +91,6 @@ internal class TripServiceTest {
                 endDate = LocalDate.of(2021,6,8)
             )
         ))
-        trips[0].stops = testDataLoader.sample_stops_first(trips[0])
-
-        trips[1].stops = mutableListOf(
-            stopRepository.save(
-                Stop(
-                    trip = trips[1],
-                    place = Place(
-                        name = "rainbow cafe",
-                        lat = "987",
-                        lng = "654"
-                    ),
-                    sequence = 1
-                )
-            )
-        )
 
         // when
         val myTrips = sut.findMyTrips(1L)
@@ -97,24 +98,20 @@ internal class TripServiceTest {
         // then
         myTrips.size shouldBe 2
         myTrips[0].title shouldBe "first trip"
-        myTrips[0].stops.size shouldBe 2
 
         myTrips[1].title shouldBe "second trip"
-        myTrips[1].stops.size shouldBe 1
     }
 
     @Test
     fun `내 최근 여행 일정 조회`() {
         // given
-        val trip = testDataLoader.sample_trip_first(1L)
-        trip.stops = testDataLoader.sample_stops_first(trip)
+        testDataLoader.sample_trip_first(1L)
 
         // when
         val result = sut.findRecentTrip(1L)
 
         // then
         result.title shouldBe "first trip"
-        result.stops.size shouldBe 2
     }
 
     @Test
@@ -132,21 +129,26 @@ internal class TripServiceTest {
 
         val request = TripRequest(
             title = "new trip",
-            stops = listOf(
-                StopRequest(
-                    lat = "123",
-                    lng = "456",
-                    name = "grand canyon"
-                ),
-                StopRequest(
-                    lat = "789",
-                    lng = "101",
-                    name = "rainbow cafe"
-                )
-            ),
             startDate = "2021-05-05",
             endDate = "2021-05-08",
-            memo = null
+            memo = null,
+            paths = listOf(
+                PathRequest(
+                    id = 1,
+                    places = listOf(
+                        Place(
+                            lat = "123",
+                            lng = "456",
+                            name = "central park"
+                        ),
+                        Place(
+                            lat = "789",
+                            lng = "101",
+                            name = "grand canyon"
+                        )
+                    )
+                )
+            )
         )
 
         // when

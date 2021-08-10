@@ -8,8 +8,7 @@ import org.springframework.transaction.annotation.Transactional
 @Component
 @Transactional(readOnly = true)
 class TripFinder(
-    private val tripRepository: TripRepository,
-    private val stopFinder: StopFinder
+    private val tripRepository: TripRepository
 ) {
     fun findByUserId(userId: Long): List<Trip> {
         return tripRepository.findByUserIdAndDeleted(userId, false)
@@ -25,10 +24,10 @@ class TripFinder(
             ?: throw NotFoundException("여행 일정이 없습니다.")
     }
 
-    fun findIncludePlace(place: Place): List<Trip> {
-        val tripIds = stopFinder.findByPlaceId(place.id!!)
-            .map { it.trip.id!! }
-
-        return tripRepository.findAllById(tripIds)
-    }
+//    fun findIncludePlace(place: Place): List<Trip> {
+//        val tripIds = stopFinder.findByPlaceId(place.id!!)
+//            .map { it.trip.id!! }
+//
+//        return tripRepository.findAllById(tripIds)
+//    }
 }

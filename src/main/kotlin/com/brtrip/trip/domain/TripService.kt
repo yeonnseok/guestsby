@@ -5,7 +5,6 @@ import com.brtrip.place.PlaceFinder
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.controller.response.TripResponse
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
 
 @Service
 class TripService(
@@ -47,9 +46,9 @@ class TripService(
         tripDeleter.delete(tripId)
     }
 
-    fun search(lat: String, lng: String): List<TripResponse> {
-        val place = placeFinder.findByPosition(lat, lng)
-        return tripFinder.findIncludePlace(place)
-            .map { TripResponse.of(it) }
-    }
+//    fun search(lat: String, lng: String): List<TripResponse> {
+//        val place = placeFinder.findByPosition(lat, lng)
+//        return tripFinder.findIncludePlace(place)
+//            .map { TripResponse.of(it) }
+//    }
 }

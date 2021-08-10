@@ -1,4 +1,13 @@
 package com.brtrip.path
 
-class Path {
-}
+import javax.persistence.*
+
+@Entity
+class Path(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
+    @Column(name = "like_count")
+    var likeCount: Long = 0
+)

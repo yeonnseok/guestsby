@@ -1,4 +1,8 @@
 package com.brtrip.path.controller.response
 
-class PathResponse {
-}
+import com.brtrip.place.Place
+
+class PathResponse(
+    val places: List<Place>,
+    val likeCount: Long
+)

@@ -63,6 +63,7 @@ class SecurityConfig(
                 .antMatchers("/api/v1/admin/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/auth/**", "/login/oauth2/**").permitAll()
                 .antMatchers("/api/v1/trips").permitAll()
+                .antMatchers("/api/v1/paths").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers("/").permitAll()

@@ -1,8 +1,8 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
+import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.place.Place
-import com.brtrip.trip.controller.request.StopRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
-import java.math.BigDecimal
-import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
@@ -31,26 +29,29 @@ internal class TripUpdaterTest {
     fun `여행 일정 수정`() {
         // given
         val trip = testDataLoader.sample_trip_first(1L)
-        val stops = testDataLoader.sample_stops_first(trip)
-        trip.stops = stops
 
         val request = TripRequest(
             title = "new trip",
-            stops = listOf(
-                StopRequest(
-                    lat = "123",
-                    lng = "456",
-                    name = "grand canyon"
-                ),
-                StopRequest(
-                    lat = "789",
-                    lng = "101",
-                    name = "rainbow cafe"
-                )
-            ),
             startDate = "2021-05-05",
             endDate = "2021-05-08",
-            memo = null
+            memo = null,
+            paths = listOf(
+                PathRequest(
+                    id = 1,
+                    places = listOf(
+                        Place(
+                            lat = "123",
+                            lng = "456",
+                            name = "central park"
+                        ),
+                        Place(
+                            lat = "789",
+                            lng = "101",
+                            name = "grand canyon"
+                        )
+                    )
+                )
+            )
         )
 
         // when
@@ -60,11 +61,5 @@ internal class TripUpdaterTest {
         // then
         updated.title shouldBe "new trip"
         updated.memo shouldBe null
-
-        updated.stops.size shouldBe 2
-        updated.stops[0].sequence shouldBe 1
-        updated.stops[0].place.name shouldBe "grand canyon"
-        updated.stops[1].sequence shouldBe 2
-        updated.stops[1].place.name shouldBe "rainbow cafe"
     }
 }

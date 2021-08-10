@@ -25,9 +25,7 @@ internal class TripFinderTest {
     @Test
     fun `내 모든 여행 일정 조회`() {
         // given
-        val trip = testDataLoader.sample_trip_first(1L)
-        val stops = testDataLoader.sample_stops_first(trip)
-        trip.stops = stops
+        testDataLoader.sample_trip_first(1L)
 
         // when
         val trips = sut.findByUserId(1L)
@@ -35,25 +33,17 @@ internal class TripFinderTest {
         // then
         trips.size shouldBe 1
         trips[0].title shouldBe "first trip"
-        trips[0].stops.size shouldBe 2
-        trips[0].stops[0].place.name shouldBe "central park"
-        trips[0].stops[1].place.name shouldBe "grand canyon"
     }
 
     @Test
     fun `내 최근 여행 일정 조회`() {
         // given
-        val trip = testDataLoader.sample_trip_first(1L)
-        val stops = testDataLoader.sample_stops_first(trip)
-        trip.stops = stops
+        testDataLoader.sample_trip_first(1L)
 
         // when
         val result = sut.findRecent(1L)
 
         // then
         result.title shouldBe "first trip"
-        result.stops.size shouldBe 2
-        result.stops[0].place.name shouldBe "central park"
-        result.stops[1].place.name shouldBe "grand canyon"
     }
 }

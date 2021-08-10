@@ -28,8 +28,6 @@ internal class TripDeleterTest {
     fun `여행 일정 삭제`() {
         // given
         val trip = testDataLoader.sample_trip_first(1L)
-        val stops = testDataLoader.sample_stops_first(trip)
-        trip.stops = stops
 
         // when
         sut.delete(trip.id!!)
@@ -38,8 +36,5 @@ internal class TripDeleterTest {
 
         // then
         deleted.deleted shouldBe true
-        deleted.stops.forEach {
-            it.deleted shouldBe true
-        }
     }
 }
