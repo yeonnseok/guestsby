@@ -1,8 +1,5 @@
 package com.brtrip.common
 
-import com.brtrip.place.Place
-import com.brtrip.trip.domain.Stop
-import com.brtrip.trip.domain.StopRepository
 import com.brtrip.trip.domain.Trip
 import com.brtrip.trip.domain.TripRepository
 import com.brtrip.user.domain.AuthProvider
@@ -13,7 +10,6 @@ import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @Component
@@ -21,7 +17,7 @@ class DataLoader(
     private val passwordEncoder: PasswordEncoder,
     private val userRepository: UserRepository,
     private val tripRepository: TripRepository,
-    private val stopRepository: StopRepository
+//    private val stopRepository: StopRepository
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments) {
 
@@ -55,28 +51,28 @@ class DataLoader(
             )
         )
 
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "central park",
-                        lat = "123",
-                        lng = "456"
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip,
-                    place = Place(
-                        name = "grand canyon",
-                        lat = "789",
-                        lng = "101"
-                    ),
-                    sequence = 2
-                )
-            )
-        )
+//        stopRepository.saveAll(
+//            listOf(
+//                Stop(
+//                    trip = trip,
+//                    place = Place(
+//                        name = "central park",
+//                        lat = "123",
+//                        lng = "456"
+//                    ),
+//                    sequence = 1
+//                ),
+//                Stop(
+//                    trip = trip,
+//                    place = Place(
+//                        name = "grand canyon",
+//                        lat = "789",
+//                        lng = "101"
+//                    ),
+//                    sequence = 2
+//                )
+//            )
+//        )
 
         val user3 = userRepository.save(
             User(
@@ -97,36 +93,36 @@ class DataLoader(
             )
         )
 
-        stopRepository.saveAll(
-            listOf(
-                Stop(
-                    trip = trip2,
-                    place = Place(
-                        name = "river park",
-                        lat = "456.456",
-                        lng = "123.123"
-                    ),
-                    sequence = 1
-                ),
-                Stop(
-                    trip = trip2,
-                    place = Place(
-                        name = "central park",
-                        lat = "123",
-                        lng = "456"
-                    ),
-                    sequence = 2
-                ),
-                Stop(
-                    trip = trip2,
-                    place = Place(
-                        name = "sapoon sapoon",
-                        lat = "789",
-                        lng = "101"
-                    ),
-                    sequence = 3
-                )
-            )
-        )
+//        stopRepository.saveAll(
+//            listOf(
+//                Stop(
+//                    trip = trip2,
+//                    place = Place(
+//                        name = "river park",
+//                        lat = "456.456",
+//                        lng = "123.123"
+//                    ),
+//                    sequence = 1
+//                ),
+//                Stop(
+//                    trip = trip2,
+//                    place = Place(
+//                        name = "central park",
+//                        lat = "123",
+//                        lng = "456"
+//                    ),
+//                    sequence = 2
+//                ),
+//                Stop(
+//                    trip = trip2,
+//                    place = Place(
+//                        name = "sapoon sapoon",
+//                        lat = "789",
+//                        lng = "101"
+//                    ),
+//                    sequence = 3
+//                )
+//            )
+//        )
     }
 }

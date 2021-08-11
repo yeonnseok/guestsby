@@ -26,11 +26,4 @@ data class Trip(
 
     @Column(name = "like_count")
     var likeCount: Long = 0
-) : BaseEntity() {
-    @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    var stops: MutableList<Stop> = mutableListOf()
-        set(value) {
-            field.clear()
-            field.addAll(value)
-        }
-}
+) : BaseEntity()
