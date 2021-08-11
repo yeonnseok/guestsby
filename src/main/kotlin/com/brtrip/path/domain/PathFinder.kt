@@ -30,32 +30,40 @@ class PathFinder(
             .orElseThrow { NotFoundException("해당 경로가 존재하지 않습니다.") }
     }
 
-    fun findBy(places: List<PlaceRequest>): Path {
-        val pathIdMap = mutableMapOf<Long, Int>()
-        var pathId: Long = 0
+    fun findBy(places: List<PlaceRequest>): Map<Boolean, Path> {
+        // k: pathId, v: pathId가 k인 path 안의 sequence가 일치하는 횟수 -> sequence가 모두 일치하면 새 place 목록을 가지는 경로가 기존에 존재하는것
+        val sequenceCheckMap = mutableMapOf<Long, Int>()
+        var pathId: Long = -1
 
-        places.forEach {
-            val place = placeRepository.findByLatAndLng(it.lat, it.lng)
+        // per: 요청으로 들어온 placeRequest
+        places.forEachIndexed { index, value ->
+            val place = placeRepository.findByLatAndLng(value.lat, value.lng)
             val pathPlaces = pathPlaceRepository.findByPlaceId(place?.id!!)
 
+            // per: DB에서 가져온 pathPlace
             pathPlaces.forEach { pathPlace ->
-                if (pathIdMap.getOrDefault(pathPlace.path.id, -1) == -1) {
-                    pathIdMap.put(pathPlace.path.id!!, 1)
-                } else {
-                    val prevVal = pathIdMap.get(pathPlace.path.id)
-                    if (prevVal != null) {
-                        pathIdMap.put(pathPlace.path.id!!, prevVal+1)
+                if (index+1 == pathPlace.sequence) {
+                    if (sequenceCheckMap.getOrDefault(pathPlace.path.id, -1) == -1) {
+                        sequenceCheckMap.put(pathPlace.path.id!!, 1)
+                    } else {
+                        sequenceCheckMap.put(pathPlace.path.id!!, sequenceCheckMap.get(pathPlace.path.id)!!+1)
                     }
                 }
             }
         }
-
-        pathIdMap.forEach { k, v ->
+        sequenceCheckMap.forEach { k, v ->
             if (v == places.size) {
                 pathId = k
             }
         }
 
-        return pathRepository.findById(pathId).orElseThrow { NotFoundException("해당 경로가 존재하지 않습니다.") }
+        if (pathId == -1L) {
+            return mapOf(
+                false to pathRepository.save(Path()))
+        }
+
+        return mapOf(
+            true to pathRepository.findById(pathId)
+                .orElseThrow { NotFoundException("해당하는 경로가 없습니다.") })
     }
 }

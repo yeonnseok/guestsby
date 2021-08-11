@@ -21,26 +21,24 @@ class TripUpdater(
     private val placeFinder: PlaceFinder,
     private val tripPathRepository: TripPathRepository,
     private val pathPlaceRepository: PathPlaceRepository,
-    private val placeRepository: PlaceRepository,
-    private val pathRepository: PathRepository,
-    private val pathCreator: PathCreator
+    private val placeRepository: PlaceRepository
 ) {
     fun update(tripId: Long, request: TripRequest) {
         // 1. trip 수정
-        // Path와 관련되지 않은 정보를 우선 업데이트한다
+        // Path와 관련되지 않은 정보를 우선 일괄 업데이트한다
         val trip = tripFinder.findById(tripId)
         trip.title = request.title
         trip.memo = request.memo
 
         // 2. path 수정
-        // 1) tripId로 List<tripPath>를 가져온다
-        // 2) pathId로 List<PathPlace>를 가져온다
-        // 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
-            // 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
-                // 3-1-1) 달라진 Path가 DB에 있으면, likeCount를 1 증가시키고, 기존 TripPath를 지우고 새 TripPath를 생성
-                    // 이전 Path는 likeCount를 1 감소시킨다
-                // 3-1-2) 달라진 Path가 DB에 없으면, 새로 Path를 저장하고, 새 PathPlace를 만들고 TripPath를 추가한다
-        // 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다
+            // 1) tripId로 List<tripPath>를 가져온다
+            // 2) pathId로 List<PathPlace>를 가져온다
+            // 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
+                // 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
+                    // 3-1-1) 달라진 Path가 DB에 있으면, likeCount를 1 증가시키고, 기존 TripPath를 지우고 새 TripPath를 생성한다
+                        // 이전 Path는 likeCount를 1 감소시킨다
+                    // 3-1-2) 달라진 Path가 DB에 없으면, 새로 Path를 저장하고, 새 PathPlace를 만들고 TripPath를 추가한다
+            // 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다
 
         request.paths.forEach {
             // db
@@ -48,17 +46,19 @@ class TripUpdater(
             val places = placeFinder.findByPathId(path.id!!)
 
             if (pathChanged(it.places, places)) {
-                val newPath = requestPathExist(it.places)
+                val pathExistChecker = requestPathExist(it.places)
+                val newPath: Path
                 // 3-1-1
-                if (newPath.id != -1L) {
+                if (pathExistChecker.getOrDefault(true, -1L) != -1L) {
+                    newPath = pathExistChecker.get(true)!!
                     tripPathRepository.deleteByTripAndPath(trip, path)
-                    val prevPath = pathFinder.findBy(it.places)
-                    prevPath.likeCount--
+                    path.likeCount--
                 // 3-1-2
                 } else {
+                    newPath = pathExistChecker.get(false)!!
                     it.places.forEachIndexed { index, placeRequest ->
                         pathPlaceRepository.save(PathPlace(
-                            path = pathCreator.createBy(),
+                            path = newPath,
                             place = placeRepository.findByLatAndLng(placeRequest.lat, placeRequest.lng)!!,
                             sequence = index
                         ))
@@ -70,13 +70,9 @@ class TripUpdater(
         }
     }
 
-    private fun requestPathExist(places: List<PlaceRequest>): Path {
-        val path = pathFinder.findBy(places)
-        if (path != null) {
-            return path
-        }
-        path.id = -1L
-        return path
+    // Path가 존재하면 true, 없으면 false를 key로 가지는 Map을 리턴
+    private fun requestPathExist(places: List<PlaceRequest>): Map<Boolean, Path> {
+        return pathFinder.findBy(places)
     }
 
     private fun pathChanged(placeRequests: List<PlaceRequest>, places: List<Place>): Boolean {

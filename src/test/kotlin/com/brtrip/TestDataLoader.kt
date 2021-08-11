@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDate
 
-@Component
+//@Component
 @ActiveProfiles("test")
 internal class TestDataLoader(
     private val tripRepository: TripRepository,
@@ -22,7 +22,7 @@ internal class TestDataLoader(
             userId = userId,
             title = "first trip",
             startDate = LocalDate.of(2021, 5, 5),
-            endDate = LocalDate.of(2021, 5, 8)
+            endDate = LocalDate.of(2021, 5, 8),
         )
     )
 
