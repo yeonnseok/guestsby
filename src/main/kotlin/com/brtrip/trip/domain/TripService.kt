@@ -1,6 +1,7 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.AuthorizationException
+import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.place.PlaceFinder
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.controller.response.TripResponse
@@ -44,6 +45,11 @@ class TripService(
     fun delete(userId: Long, tripId: Long) {
         validateAuthorization(userId, tripId)
         tripDeleter.delete(tripId)
+    }
+
+    fun deletePathInTrip(userId: Long, tripId: Long, pathRequest: PathRequest) {
+        validateAuthorization(userId, tripId)
+        tripDeleter.deletePathInTrip(tripId, pathRequest)
     }
 
 //    fun search(lat: String, lng: String): List<TripResponse> {

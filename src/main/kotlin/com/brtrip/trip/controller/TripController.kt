@@ -2,6 +2,7 @@ package com.brtrip.trip.controller
 
 import com.brtrip.auth.domain.UserPrincipal
 import com.brtrip.common.response.ApiResponse
+import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.domain.TripService
 import com.brtrip.user.domain.LoginUser
@@ -71,6 +72,16 @@ class TripController(
         @PathVariable id: Long
     ): ResponseEntity<Void> {
         tripService.delete(userPrincipal.getId(), id)
+        return ResponseEntity.noContent().build()
+    }
+
+    @DeleteMapping("/{id}/paths")
+    fun deletePathInTrip(
+        @LoginUser userPrincipal: UserPrincipal,
+        @PathVariable id: Long,
+        @Valid @RequestBody pathRequest: PathRequest
+    ): ResponseEntity<Void> {
+        tripService.deletePathInTrip(userPrincipal.getId(), id, pathRequest)
         return ResponseEntity.noContent().build()
     }
 

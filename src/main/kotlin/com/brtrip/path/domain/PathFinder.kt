@@ -25,12 +25,6 @@ class PathFinder(
         }
     }
 
-    fun findPathIdBy(tripId: Long): List<Long> {
-        return tripPathRepository.findByTripId(tripId).map {
-            it.path.id!!
-        }
-    }
-
     fun findById(id: Long): Path {
         return pathRepository.findById(id)
             .orElseThrow { NotFoundException("해당 경로가 존재하지 않습니다.") }
