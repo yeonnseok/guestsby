@@ -20,5 +20,5 @@ class PathPlace(
     var place: Place,
 
     @Column(name = "sequence", nullable = false)
-    var sequence: Long
+    var sequence: Int
 ): BaseEntity()
