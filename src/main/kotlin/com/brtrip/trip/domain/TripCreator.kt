@@ -32,7 +32,7 @@ class TripCreator(
             val newPath: Path
             if (tripUpdater.pathChanged(it.places, savedPlaces)) {
                 // path가 바뀌었으면, 해당 places들을 가지는 path가 있는지 다시 조회
-                val pathExistId = pathFinder.findByPlaces(it.places)
+                val pathExistId = pathFinder.findPathIdByPlaces(it.places)
                 if (pathExistId != -1L) {
                     val pathExist = pathRepository.findById(pathExistId!!)
                         .orElseThrow { NotFoundException("경로를 찾을 수 없습니다.") }
