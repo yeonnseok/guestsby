@@ -32,7 +32,7 @@ class PathFinder(
     fun findByPlacesToCheckPath(places: List<PlaceRequest>): Map<Boolean, Path> {
         // k: pathId, v: pathId가 k인 path 안의 sequence가 일치하는 횟수 -> sequence가 모두 일치하면 새 place 목록을 가지는 경로가 기존에 존재하는것
         val sequenceCheckMap = mutableMapOf<Long, Int>()
-        var pathId: Long = -1
+        var pathId: Long = 0
 
         // per: 요청으로 들어온 placeRequest
         places.forEachIndexed { index, placeRequest ->
@@ -54,7 +54,7 @@ class PathFinder(
             if (v == places.size) pathId = k
         }
 
-        if (pathId == -1L) {
+        if (pathId == 0L) {
             return mapOf(
                 false to pathRepository.save(Path())
             )
@@ -64,5 +64,34 @@ class PathFinder(
             true to pathRepository.findById(pathId)
                 .orElseThrow { NotFoundException("해당하는 경로가 없습니다.") }
         )
+    }
+
+    fun findByPlaces(places: List<PlaceRequest>): Long {
+        // k: pathId, v: pathId가 k인 path 안의 sequence가 일치하는 횟수 -> sequence가 모두 일치하면 새 place 목록을 가지는 경로가 기존에 존재하는것
+        val sequenceCheckMap = mutableMapOf<Long, Int>()
+        var pathId: Long = -1L
+
+        // per: 요청으로 들어온 placeRequest
+        places.forEachIndexed { index, placeRequest ->
+            val place = placeRepository.findByLatAndLng(placeRequest.lat, placeRequest.lng)
+            val pathPlaces = pathPlaceRepository.findByPlace(place!!)
+
+            // per: DB에서 가져온 pathPlace
+            pathPlaces.forEach { pathPlace ->
+                if (index+1 == pathPlace.sequence) {
+                    if (sequenceCheckMap.getOrDefault(pathPlace.path.id, -1) == -1) {
+                        sequenceCheckMap.put(pathPlace.path.id!!, 1)
+                    } else {
+                        sequenceCheckMap.put(pathPlace.path.id!!, sequenceCheckMap.get(pathPlace.path.id)!!+1)
+                    }
+                }
+            }
+        }
+        sequenceCheckMap.forEach { k, v ->
+            if (v == places.size) {
+                pathId = k
+            }
+        }
+        return pathId
     }
 }

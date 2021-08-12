@@ -73,7 +73,7 @@ class TripUpdater(
         return pathFinder.findByPlacesToCheckPath(places)
     }
 
-    private fun pathChanged(placeRequests: List<PlaceRequest>, savedPlaces: List<Place>): Boolean {
+    fun pathChanged(placeRequests: List<PlaceRequest>, savedPlaces: List<Place>): Boolean {
         if (placeRequests.size != savedPlaces.size) return true
 
         var isChanged: Boolean = false

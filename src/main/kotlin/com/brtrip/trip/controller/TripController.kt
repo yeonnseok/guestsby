@@ -20,7 +20,7 @@ class TripController(
     fun create(
         @LoginUser userPrincipal: UserPrincipal,
         @Valid @RequestBody request: TripRequest
-    ): ResponseEntity<Void> {
+        ): ResponseEntity<Void> {
         val tripId = tripService.create(userPrincipal.getId(), request)
 
         val location = ServletUriComponentsBuilder
