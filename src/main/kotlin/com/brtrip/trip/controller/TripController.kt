@@ -75,13 +75,13 @@ class TripController(
         return ResponseEntity.noContent().build()
     }
 
-    @DeleteMapping("/{id}/paths")
+    @DeleteMapping("/{tripid}/paths/{pathid}")
     fun deletePathInTrip(
         @LoginUser userPrincipal: UserPrincipal,
-        @PathVariable id: Long,
-        @Valid @RequestBody pathRequest: PathRequest
+        @PathVariable("tripid") tripId: Long,
+        @PathVariable("pathid") pathId: Long
     ): ResponseEntity<Void> {
-        tripService.deletePathInTrip(userPrincipal.getId(), id, pathRequest)
+        tripService.deletePathInTrip(userPrincipal.getId(), tripId, pathId)
         return ResponseEntity.noContent().build()
     }
 }

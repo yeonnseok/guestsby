@@ -45,8 +45,8 @@ class TripService(
         tripDeleter.delete(tripId)
     }
 
-    fun deletePathInTrip(userId: Long, tripId: Long, pathRequest: PathRequest) {
+    fun deletePathInTrip(userId: Long, tripId: Long, pathId: Long) {
         validateAuthorization(userId, tripId)
-        tripDeleter.deletePathInTrip(tripId, pathRequest)
+        tripDeleter.deletePathInTrip(tripId, pathId)
     }
 }

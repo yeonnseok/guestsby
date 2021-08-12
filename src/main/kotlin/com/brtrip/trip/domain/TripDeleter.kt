@@ -19,11 +19,11 @@ class TripDeleter(
         trip.delete()
     }
 
-    fun deletePathInTrip(tripId: Long, pathRequest: PathRequest) {
+    fun deletePathInTrip(tripId: Long, pathId: Long) {
         val trip = tripFinder.findById(tripId)
-        val path = pathRepository.findById(pathRequest.id!!)
-            .orElseThrow { NotFoundException("해당 경로를 찾을 수 없습니다.") }
-
+        val path = pathRepository.findById(pathId).orElseThrow { NotFoundException("해당 경로를 찾을 수 없습니다.") }
+        path.likeCount--
+        
         tripPathRepository.deleteByTripAndPath(trip, path)
     }
 }
