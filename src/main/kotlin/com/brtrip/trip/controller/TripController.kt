@@ -84,17 +84,4 @@ class TripController(
         tripService.deletePathInTrip(userPrincipal.getId(), id, pathRequest)
         return ResponseEntity.noContent().build()
     }
-
-//    @GetMapping
-//    fun recommend(
-//        @RequestParam lat: String,
-//        @RequestParam lng: String
-//    ): ResponseEntity<ApiResponse> {
-//        val trips = tripService.search(lat, lng)
-//        return ResponseEntity.ok(
-//            ApiResponse(
-//                data = trips
-//            )
-//        )
-//    }
 }

@@ -51,10 +51,4 @@ class TripService(
         validateAuthorization(userId, tripId)
         tripDeleter.deletePathInTrip(tripId, pathRequest)
     }
-
-//    fun search(lat: String, lng: String): List<TripResponse> {
-//        val place = placeFinder.findByPosition(lat, lng)
-//        return tripFinder.findIncludePlace(place)
-//            .map { TripResponse.of(it) }
-//    }
 }

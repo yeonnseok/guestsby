@@ -16,7 +16,6 @@ class TripCreator(
     fun create(userId: Long, request: TripRequest): Trip {
         val trip = tripRepository.save(request.toEntity(userId))
 
-        // List<Path> 저장
         IntStream.range(0, request.paths.size)
             .mapToObj {
                 val path = pathCreator.createPathWithinTrip(request.paths, it)

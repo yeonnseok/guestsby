@@ -1,8 +1,6 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.NotFoundException
-import com.brtrip.path.domain.PathPlaceRepository
-import com.brtrip.place.Place
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -24,11 +22,4 @@ class TripFinder(
         return tripRepository.findByIdAndDeleted(tripId, false)
             ?: throw NotFoundException("여행 일정이 없습니다.")
     }
-
-//    fun findIncludePlace(place: Place): List<Trip> {
-//        val tripIds = stopFinder.findByPlaceId(place.id!!)
-//            .map { it.trip.id!! }
-//
-//        return tripRepository.findAllById(tripIds)
-//    }
 }

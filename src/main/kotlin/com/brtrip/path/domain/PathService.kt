@@ -20,10 +20,10 @@ class PathService(
         // (위도, 경도) -> Place
         val place = placeFinder.findByPosition(lat, lng)
         // Place -> List<Path>
-        val paths = pathFinder.findByPlaceId(place.id!!)
+        val paths = pathFinder.findByPlacesToCheckPath(place)
         // List<Path> -> List<PathResponse>
         return paths.map {
-            var places = placeFinder.findByPathId(it.id!!)
+            var places = placeFinder.findByPath(it)
             PathResponse(places, it.likeCount)
         }
     }
