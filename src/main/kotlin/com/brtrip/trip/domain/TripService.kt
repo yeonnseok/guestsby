@@ -2,7 +2,6 @@ package com.brtrip.trip.domain
 
 import com.brtrip.common.exceptions.AuthorizationException
 import com.brtrip.path.controller.request.PathRequest
-import com.brtrip.place.PlaceFinder
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.controller.response.TripResponse
 import org.springframework.stereotype.Service
@@ -12,8 +11,7 @@ class TripService(
     private val tripCreator: TripCreator,
     private val tripFinder: TripFinder,
     private val tripUpdater: TripUpdater,
-    private val tripDeleter: TripDeleter,
-    private val placeFinder: PlaceFinder
+    private val tripDeleter: TripDeleter
 ) {
     fun create(userId: Long, request: TripRequest): Long {
         val trip = tripCreator.create(userId, request)
@@ -47,14 +45,8 @@ class TripService(
         tripDeleter.delete(tripId)
     }
 
-    fun deletePathInTrip(userId: Long, tripId: Long, pathRequest: PathRequest) {
+    fun deletePathInTrip(userId: Long, tripId: Long, pathId: Long) {
         validateAuthorization(userId, tripId)
-        tripDeleter.deletePathInTrip(tripId, pathRequest)
+        tripDeleter.deletePathInTrip(tripId, pathId)
     }
-
-//    fun search(lat: String, lng: String): List<TripResponse> {
-//        val place = placeFinder.findByPosition(lat, lng)
-//        return tripFinder.findIncludePlace(place)
-//            .map { TripResponse.of(it) }
-//    }
 }

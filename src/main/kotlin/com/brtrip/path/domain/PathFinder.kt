@@ -2,9 +2,9 @@ package com.brtrip.path.domain
 
 import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.path.Path
+import com.brtrip.place.Place
 import com.brtrip.place.PlaceRepository
 import com.brtrip.place.PlaceRequest
-import com.brtrip.trip.domain.TripPathRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -12,12 +12,11 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional(readOnly = true)
 class PathFinder(
     private val pathRepository: PathRepository,
-    private val tripPathRepository: TripPathRepository,
     private val pathPlaceRepository: PathPlaceRepository,
     private val placeRepository: PlaceRepository
 ) {
-    fun findByPlaceId(placeId: Long): List<Path> {
-        val pathPlaces = pathPlaceRepository.findByPlaceId(placeId)
+    fun findByPlacesToCheckPath(place: Place): List<Path> {
+        val pathPlaces = pathPlaceRepository.findByPlace(place)
 
         return pathPlaces.map {
             pathRepository.findById(it.path.id!!)
@@ -30,15 +29,19 @@ class PathFinder(
             .orElseThrow { NotFoundException("해당 경로가 존재하지 않습니다.") }
     }
 
-    fun findBy(places: List<PlaceRequest>): Map<Boolean, Path> {
-        // k: pathId, v: pathId가 k인 path 안의 sequence가 일치하는 횟수 -> sequence가 모두 일치하면 새 place 목록을 가지는 경로가 기존에 존재하는것
+    fun findPathIdByPlaces(places: List<PlaceRequest>): Long {
+        /*
+            k: pathId,
+            v: pathId가 k인 path 안의 sequence가 일치하는 횟수
+                -> sequence가 모두 일치하면 새 place 목록을 가지는 경로가 기존에 존재하는 것으로 판단
+         */
         val sequenceCheckMap = mutableMapOf<Long, Int>()
-        var pathId: Long = -1
+        var pathId: Long = -1L
 
         // per: 요청으로 들어온 placeRequest
-        places.forEachIndexed { index, value ->
-            val place = placeRepository.findByLatAndLng(value.lat, value.lng)
-            val pathPlaces = pathPlaceRepository.findByPlaceId(place?.id!!)
+        places.forEachIndexed { index, placeRequest ->
+            val place = placeRepository.findByLatAndLng(placeRequest.lat, placeRequest.lng)
+            val pathPlaces = pathPlaceRepository.findByPlace(place!!)
 
             // per: DB에서 가져온 pathPlace
             pathPlaces.forEach { pathPlace ->
@@ -56,14 +59,6 @@ class PathFinder(
                 pathId = k
             }
         }
-
-        if (pathId == -1L) {
-            return mapOf(
-                false to pathRepository.save(Path()))
-        }
-
-        return mapOf(
-            true to pathRepository.findById(pathId)
-                .orElseThrow { NotFoundException("해당하는 경로가 없습니다.") })
+        return pathId
     }
 }

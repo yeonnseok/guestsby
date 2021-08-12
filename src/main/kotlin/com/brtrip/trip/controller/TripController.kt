@@ -20,7 +20,7 @@ class TripController(
     fun create(
         @LoginUser userPrincipal: UserPrincipal,
         @Valid @RequestBody request: TripRequest
-    ): ResponseEntity<Void> {
+        ): ResponseEntity<Void> {
         val tripId = tripService.create(userPrincipal.getId(), request)
 
         val location = ServletUriComponentsBuilder
@@ -75,26 +75,13 @@ class TripController(
         return ResponseEntity.noContent().build()
     }
 
-    @DeleteMapping("/{id}/paths")
+    @DeleteMapping("/{tripid}/paths/{pathid}")
     fun deletePathInTrip(
         @LoginUser userPrincipal: UserPrincipal,
-        @PathVariable id: Long,
-        @Valid @RequestBody pathRequest: PathRequest
+        @PathVariable("tripid") tripId: Long,
+        @PathVariable("pathid") pathId: Long
     ): ResponseEntity<Void> {
-        tripService.deletePathInTrip(userPrincipal.getId(), id, pathRequest)
+        tripService.deletePathInTrip(userPrincipal.getId(), tripId, pathId)
         return ResponseEntity.noContent().build()
     }
-
-//    @GetMapping
-//    fun recommend(
-//        @RequestParam lat: String,
-//        @RequestParam lng: String
-//    ): ResponseEntity<ApiResponse> {
-//        val trips = tripService.search(lat, lng)
-//        return ResponseEntity.ok(
-//            ApiResponse(
-//                data = trips
-//            )
-//        )
-//    }
 }
