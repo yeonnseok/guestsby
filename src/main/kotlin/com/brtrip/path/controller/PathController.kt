@@ -1,11 +1,8 @@
 package com.brtrip.path.controller
 
-import com.brtrip.auth.domain.UserPrincipal
 import com.brtrip.common.response.ApiResponse
 import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.path.domain.PathService
-import com.brtrip.trip.controller.request.TripRequest
-import com.brtrip.user.domain.LoginUser
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -29,7 +26,7 @@ class PathController(
         return ResponseEntity.created(location).build()
     }
 
-    @GetMapping
+    @GetMapping("/recommend")
     fun recommend(
         @RequestParam lat: String,
         @RequestParam lng: String

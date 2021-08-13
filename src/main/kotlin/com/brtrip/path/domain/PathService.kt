@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 class PathService(
     private val pathCreator: PathCreator,
     private val pathFinder: PathFinder,
-    private val placeFinder: PlaceFinder,
+    private val placeFinder: PlaceFinder
 ) {
     fun create(request: PathRequest): Long {
         val path = pathCreator.create(request)
@@ -17,13 +17,10 @@ class PathService(
     }
 
     fun recommendPaths(lat: String, lng: String): List<PathResponse> {
-        // (위도, 경도) -> Place
         val place = placeFinder.findByPosition(lat, lng)
-        // Place -> List<Path>
         val paths = pathFinder.findByPlacesToCheckPath(place)
-        // List<Path> -> List<PathResponse>
         return paths.map {
-            var places = placeFinder.findByPath(it)
+            val places = placeFinder.findByPath(it)
             PathResponse(places, it.likeCount)
         }
     }

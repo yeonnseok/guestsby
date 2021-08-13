@@ -2,7 +2,6 @@ package com.brtrip.trip.controller
 
 import com.brtrip.auth.domain.UserPrincipal
 import com.brtrip.common.response.ApiResponse
-import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.trip.controller.request.TripRequest
 import com.brtrip.trip.domain.TripService
 import com.brtrip.user.domain.LoginUser
@@ -20,7 +19,7 @@ class TripController(
     fun create(
         @LoginUser userPrincipal: UserPrincipal,
         @Valid @RequestBody request: TripRequest
-        ): ResponseEntity<Void> {
+    ): ResponseEntity<Void> {
         val tripId = tripService.create(userPrincipal.getId(), request)
 
         val location = ServletUriComponentsBuilder
@@ -39,19 +38,6 @@ class TripController(
             .ok(
                 ApiResponse(
                     data = trips
-                )
-            )
-    }
-
-    @GetMapping("/recent")
-    fun findRecentTrip(
-        @LoginUser userPrincipal: UserPrincipal
-    ): ResponseEntity<ApiResponse> {
-        val trip = tripService.findRecentTrip(userPrincipal.getId())
-        return ResponseEntity
-            .ok(
-                ApiResponse(
-                    data = trip
                 )
             )
     }
