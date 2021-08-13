@@ -15,9 +15,7 @@ import java.time.LocalDate
 @Component
 class DataLoader(
     private val passwordEncoder: PasswordEncoder,
-    private val userRepository: UserRepository,
-    private val tripRepository: TripRepository,
-//    private val stopRepository: StopRepository
+    private val userRepository: UserRepository
 ) : ApplicationRunner {
     override fun run(args: ApplicationArguments) {
 
@@ -25,104 +23,11 @@ class DataLoader(
         val user = userRepository.save(
             User(
                 nickName = "admin",
-                email = "test@.com",
+                email = "test@com",
                 password = passwordEncoder.encode("test"),
                 role = RoleType.ROLE_ADMIN,
                 authProvider = AuthProvider.LOCAL
             )
         )
-
-        val user2 = userRepository.save(
-            User(
-                nickName = "nick",
-                email = "nick@com",
-                password = passwordEncoder.encode("nick"),
-                role = RoleType.ROLE_USER,
-                authProvider = AuthProvider.LOCAL
-            )
-        )
-
-        val trip = tripRepository.save(
-            Trip(
-                userId = user2.id!!,
-                title = "first trip",
-                startDate = LocalDate.of(2021,5,5),
-                endDate = LocalDate.of(2021,5,8)
-            )
-        )
-
-//        stopRepository.saveAll(
-//            listOf(
-//                Stop(
-//                    trip = trip,
-//                    place = Place(
-//                        name = "central park",
-//                        lat = "123",
-//                        lng = "456"
-//                    ),
-//                    sequence = 1
-//                ),
-//                Stop(
-//                    trip = trip,
-//                    place = Place(
-//                        name = "grand canyon",
-//                        lat = "789",
-//                        lng = "101"
-//                    ),
-//                    sequence = 2
-//                )
-//            )
-//        )
-
-        val user3 = userRepository.save(
-            User(
-                nickName = "jason",
-                email = "json@com",
-                password = passwordEncoder.encode("json"),
-                role = RoleType.ROLE_USER,
-                authProvider = AuthProvider.LOCAL
-            )
-        )
-
-        val trip2 = tripRepository.save(
-            Trip(
-                userId = user3.id!!,
-                title = "json trip",
-                startDate = LocalDate.of(2020,5,5),
-                endDate = LocalDate.of(2020,5,8)
-            )
-        )
-
-//        stopRepository.saveAll(
-//            listOf(
-//                Stop(
-//                    trip = trip2,
-//                    place = Place(
-//                        name = "river park",
-//                        lat = "456.456",
-//                        lng = "123.123"
-//                    ),
-//                    sequence = 1
-//                ),
-//                Stop(
-//                    trip = trip2,
-//                    place = Place(
-//                        name = "central park",
-//                        lat = "123",
-//                        lng = "456"
-//                    ),
-//                    sequence = 2
-//                ),
-//                Stop(
-//                    trip = trip2,
-//                    place = Place(
-//                        name = "sapoon sapoon",
-//                        lat = "789",
-//                        lng = "101"
-//                    ),
-//                    sequence = 3
-//                )
-//            )
-//        )
     }
 }
