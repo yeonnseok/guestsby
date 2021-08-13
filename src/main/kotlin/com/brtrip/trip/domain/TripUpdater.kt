@@ -9,7 +9,6 @@ import com.brtrip.place.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
-import java.util.stream.IntStream
 
 @Component
 @Transactional
@@ -22,66 +21,46 @@ class TripUpdater(
     private val placeRepository: PlaceRepository,
     private val pathRepository: PathRepository
 ) {
-    fun update(tripId: Long, request: TripRequest) {
-        // 1. trip 수정
-        // Path와 관련되지 않은 정보를 우선 일괄 업데이트한다
+    fun update(tripId: Long, request: TripRequest): Trip {
         val trip = tripFinder.findById(tripId)
         trip.title = request.title
         trip.memo = request.memo
 
-        // 2. path 수정
-            // 1) tripId로 List<tripPath>를 가져온다
-            // 2) pathId로 List<PathPlace>를 가져온다
-            // 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
-                // 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
-                    // 3-1-1) 달라진 Path가 DB에 있으면, 이전 Path의 likeCount를 1 감소시킨다
-                    // 3-1-2) 달라진 Path가 DB에 없으면, 새로운 Path와 PathPlace를 만든다
-                    // (공통)새로운 Path의 likeCount를 1 증가시키고, 기존 Path의 TripPath를 지우고, 새로운 TripPath를 만든다
-            // 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다
+        var changedFlag = false
+        request.paths.forEachIndexed { index, it ->
+            val priorPath = pathFinder.findById(it.id)
+            val savedPlaces = placeFinder.findByPath(priorPath)
+            val newPath = if (isPathChanged(it.places, savedPlaces)) {
+                changedFlag = true
+                pathFinder.findOrCreatePathByPlaces(it.places)
+            } else priorPath
 
-        request.paths.forEach {
-            val path = pathFinder.findById(it.id!!)
-            val places = placeFinder.findByPath(path)
-            // 3-1
-            if (pathChanged(it.places, places)) {
-                val pathExistId = requestPathExist(it.places)
-                val newPath: Path
-                // 3-1-1
-                if (pathExistId != -1L) {
-                    newPath = pathFinder.findById(pathExistId)
-                    path.likeCount--
-                // 3-1-2
-                } else {
-                    newPath = pathRepository.save(Path())
-                    it.places.forEachIndexed { index, placeRequest ->
-                        pathPlaceRepository.save(PathPlace(
-                            path = newPath,
-                            place = placeRepository.findByLatAndLng(placeRequest.lat, placeRequest.lng)!!,
-                            sequence = index+1
-                        ))
-                    }
-                }
-                newPath.likeCount++
-                tripPathRepository.deleteByTripAndPath(trip, path)
-                tripPathRepository.save(TripPath(trip = trip, path = newPath))
+            newPath.likeCount++
+            priorPath.likeCount--
+            if (changedFlag) {
+                tripPathRepository.deleteByTripAndPath(trip, priorPath)
+                tripPathRepository.save(TripPath(trip = trip, path = newPath, sequence = index + 1))
             }
         }
+        return trip
     }
 
-    // path가 존재하면 pathId, 존재하지 않으면 -1을 리턴
-    private fun requestPathExist(places: List<PlaceRequest>): Long {
-        return pathFinder.findPathIdByPlaces(places)
-    }
-
-    fun pathChanged(placeRequests: List<PlaceRequest>, savedPlaces: List<Place>): Boolean {
+    fun isPathChanged(placeRequests: List<PlaceRequest>, savedPlaces: List<Place>): Boolean {
         if (placeRequests.size != savedPlaces.size) return true
-
-        var isChanged: Boolean = false
-        IntStream.range(0, savedPlaces.size).forEach { i ->
-            if (savedPlaces[i].lat != placeRequests[i].lat || savedPlaces[i].lng != placeRequests[i].lng) {
-                isChanged = true
-            }
+        savedPlaces.forEachIndexed { index, place ->
+            if (place.lat != placeRequests[index].lat || place.lng != placeRequests[index].lng) return true
         }
-        return isChanged
+        return false
     }
 }
+
+
+// 2. path 수정
+// 1) tripId로 List<tripPath>를 가져온다
+// 2) pathId로 List<PathPlace>를 가져온다
+// 3) DB에 저장된 path의 place 목록과 요청으로 들어온 path의 place 목록을 비교한다
+// 3-1) place가 달라졌다면, 달라진 List<Place>를 가지는 Path가 DB에 있는지 조회한다
+// 3-1-1) 달라진 Path가 DB에 있으면, 이전 Path의 likeCount를 1 감소시킨다
+// 3-1-2) 달라진 Path가 DB에 없으면, 새로운 Path와 PathPlace를 만든다
+// (공통)새로운 Path의 likeCount를 1 증가시키고, 기존 Path의 TripPath를 지우고, 새로운 TripPath를 만든다
+// 3-2) place가 동일하다면, 다음 Path로 넘어가 3)부터의 작업을 반복한다

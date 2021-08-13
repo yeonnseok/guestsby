@@ -10,11 +10,13 @@ class TripPath(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "trip_id")
     var trip: Trip,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "path_id")
-    var path: Path
+    var path: Path,
+
+    var sequence: Int
 ): BaseEntity()

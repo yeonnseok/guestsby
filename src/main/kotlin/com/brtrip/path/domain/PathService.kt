@@ -3,6 +3,7 @@ package com.brtrip.path.domain
 import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.path.controller.response.PathResponse
 import com.brtrip.place.PlaceFinder
+import com.brtrip.place.dto.PlaceResponse
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,7 +21,7 @@ class PathService(
         val place = placeFinder.findByPosition(lat, lng)
         val paths = pathFinder.findByPlacesToCheckPath(place)
         return paths.map {
-            val places = placeFinder.findByPath(it)
+            val places = placeFinder.findByPath(it).map { place -> PlaceResponse.of(place) }
             PathResponse(places, it.likeCount)
         }
     }

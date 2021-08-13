@@ -55,10 +55,6 @@ operation::trip/create[snippets='http-request,http-response,request-headers,requ
 === 내 모든 여행 일정 조회
 operation::trip/find-all-my[snippets='http-request,http-response,request-headers,response-fields']
 
-[[resources-trip-find-recent]]
-=== 내 최근 여행 일정 조회
-operation::trip/find-recent[snippets='http-request,http-response,request-headers,response-fields']
-
 [[resources-trip-update]]
 === 여행 일정 수정
 operation::trip/update[snippets='http-request,http-response,request-headers,path-parameters,request-fields']
@@ -67,20 +63,13 @@ operation::trip/update[snippets='http-request,http-response,request-headers,path
 === 여행 일정 삭제
 operation::trip/delete[snippets='http-request,http-response,request-headers,path-parameters']
 
-[[resources-trip-recommend]]
-=== 여행 일정 추천
+[[resources-path]]
+== 경로 관리
+
+[[resources-path-create]]
+=== 경로 생성
+operation::trip/create[snippets='http-request,http-response,request-headers,request-fields']
+
+[[resources-path-recommend]]
+=== 경로 추천
 operation::trip/find-recommendation[snippets='http-request,http-response,request-parameters,response-fields']
-
-
-[[resources-like]]
-== 좋아요(찜) 관리
-
-[[resources-like-create]]
-=== 좋아요 생성
-operation::like/create[snippets='http-request,http-response,request-headers,request-fields']
-
-[[resources-like-delete]]
-=== 좋아요 취소
-operation::like/delete[snippets='http-request,http-response,request-headers,request-fields']
-
-

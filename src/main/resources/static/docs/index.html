@@ -458,16 +458,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#resources-trip-create">여행 일정 생성</a></li>
 <li><a href="#resources-trip-find-all">내 모든 여행 일정 조회</a></li>
-<li><a href="#resources-trip-find-recent">내 최근 여행 일정 조회</a></li>
 <li><a href="#resources-trip-update">여행 일정 수정</a></li>
 <li><a href="#resources-trip-delete">여행 일정 삭제</a></li>
-<li><a href="#resources-trip-recommend">여행 일정 추천</a></li>
 </ul>
 </li>
-<li><a href="#resources-like">좋아요(찜) 관리</a>
+<li><a href="#resources-path">경로 관리</a>
 <ul class="sectlevel2">
-<li><a href="#resources-like-create">좋아요 생성</a></li>
-<li><a href="#resources-like-delete">좋아요 취소</a></li>
+<li><a href="#resources-path-create">경로 생성</a></li>
+<li><a href="#resources-path-recommend">경로 추천</a></li>
 </ul>
 </li>
 </ul>
@@ -646,7 +644,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 201,
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ2LCJleHAiOjE2MjUzOTIxNDZ9.d-cjmjPiOtC7yxGm3INjZjEBjOhAeDI9oQ8JQd3GwFY"
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg5LCJleHAiOjE2Mjg4NTMzODl9.V7uV6j1s7SG_HMwrahua8ue_xREelwD9Cw-xtaiXtHM"
   }
 }</code></pre>
 </div>
@@ -792,7 +790,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 200,
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ2LCJleHAiOjE2MjUzOTIxNDZ9.kNogtl-ti8S6IpvyAKd0tHso4lvwrx8ugoYGr-joD90"
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg5LCJleHAiOjE2Mjg4NTMzODl9.iTWiCXWbpeuu4l8enl_25Mk6FkN8u9YS7r0FRgyEv6Q"
   }
 }</code></pre>
 </div>
@@ -895,7 +893,7 @@ X-Frame-Options: DENY
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/users/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQxLCJleHAiOjE2MjUzOTIxNDF9.2Ol4r0flurxedOugSoGWC02poq70NUF3fcodpt20tss
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg3LCJleHAiOjE2Mjg4NTMzODd9.7RKNsyzcnAT5cLCoq4Us0_Or4u90L1xw4POb5cXcW4g
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1004,7 +1002,7 @@ X-Frame-Options: DENY
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/v1/users/me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQxLCJleHAiOjE2MjUzOTIxNDF9.oVcke2bZCxNiJKfff7VN5LwHWqkXfUNsRENrOkRrzcA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg3LCJleHAiOjE2Mjg4NTMzODd9.wejn-aZoJp5FJo5KZ4P0PvjSoTFp9HPXwplQuEvj11g
 Accept: application/json
 Content-Length: 30
 Host: localhost:8080
@@ -1062,7 +1060,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/v1/users/me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQxLCJleHAiOjE2MjUzOTIxNDF9.oVcke2bZCxNiJKfff7VN5LwHWqkXfUNsRENrOkRrzcA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg3LCJleHAiOjE2Mjg4NTMzODd9.wejn-aZoJp5FJo5KZ4P0PvjSoTFp9HPXwplQuEvj11g
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -1120,25 +1118,26 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/trips HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ1LCJleHAiOjE2MjUzOTIxNDV9.jK8wMNXDYtqpwpCSmEvGNaCb6LO5z_H9UaK9uupWuqY
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg5LCJleHAiOjE2Mjg4NTMzODl9.V7uV6j1s7SG_HMwrahua8ue_xREelwD9Cw-xtaiXtHM
 Accept: application/json
-Content-Length: 273
+Content-Length: 276
 Host: localhost:8080
 
 {
   "title" : "first trip",
-  "stops" : [ {
-    "lat" : "123",
-    "lng" : "456",
-    "name" : "central park"
-  }, {
-    "lat" : "789",
-    "lng" : "101",
-    "name" : "grand canyon"
-  } ],
-  "memo" : "first trip",
-  "startDate" : "2021-05-05",
-  "endDate" : "2021-05-08"
+  "startDate" : "2021-08-10",
+  "endDate" : "2021-08-12",
+  "memo" : "test",
+  "paths" : [ {
+    "id" : 2,
+    "places" : [ {
+      "lat" : "123.123",
+      "lng" : "456.456"
+    }, {
+      "lat" : "789.789",
+      "lng" : "321.321"
+    } ]
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -1152,12 +1151,22 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Location: http://localhost:8080/api/v1/trips/1
+Content-Type: application/json
+Content-Length: 83
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
-X-Frame-Options: DENY</code></pre>
+X-Frame-Options: DENY
+
+{
+  "result" : "SUCCESS",
+  "statusCode" : 201,
+  "data" : {
+    "tripId" : 1
+  }
+}</code></pre>
 </div>
 </div>
 </div>
@@ -1181,633 +1190,153 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전송 타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">컨텐츠 타입</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-create_request_fields"><a class="link" href="#resources-trip-create_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메모</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet request-fields not found for operation::trip/create</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="resources-trip-find-all"><a class="link" href="#resources-trip-find-all">내 모든 여행 일정 조회</a></h3>
 <div class="sect3">
 <h4 id="resources-trip-find-all_http_request"><a class="link" href="#resources-trip-find-all_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/trips/my HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ0LCJleHAiOjE2MjUzOTIxNDR9.9mUFQid6eQlFiftKok3fzlRp7FQ0MJINJnWFO-uqDwo
-Accept: application/json
-Host: localhost:8080</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::trip/find-all-my</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-find-all_http_response"><a class="link" href="#resources-trip-find-all_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-ETag: "0d4ea8b222e3aff3b89aa2e5c70344eaa"
-Content-Length: 681
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-
-{
-  "result" : "SUCCESS",
-  "statusCode" : 200,
-  "data" : [ {
-    "title" : "first trip",
-    "stops" : [ {
-      "name" : "central park",
-      "lat" : 123.0,
-      "lng" : 456.0,
-      "sequence" : 1
-    }, {
-      "name" : "grand canyon",
-      "lat" : 789.0,
-      "lng" : 101.0,
-      "sequence" : 2
-    } ],
-    "startDate" : "2021-05-05",
-    "endDate" : "2021-05-08",
-    "memo" : null,
-    "likeCount" : 0
-  }, {
-    "title" : "second trip",
-    "stops" : [ {
-      "name" : "rainbow cafe",
-      "lat" : 987.0,
-      "lng" : 654.0,
-      "sequence" : 1
-    } ],
-    "startDate" : "2021-06-05",
-    "endDate" : "2021-06-08",
-    "memo" : null,
-    "likeCount" : 0
-  } ]
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::trip/find-all-my</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-find-all_request_headers"><a class="link" href="#resources-trip-find-all_request_headers">Request headers</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet request-headers not found for operation::trip/find-all-my</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-find-all_response_fields"><a class="link" href="#resources-trip-find-all_response_fields">Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">응답 결과</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>statusCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태 코드</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].sequence</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">일정 순서</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메모</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].likeCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::trip/find-all-my</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="resources-trip-find-recent"><a class="link" href="#resources-trip-find-recent">내 최근 여행 일정 조회</a></h3>
-<div class="sect3">
-<h4 id="resources-trip-find-recent_http_request"><a class="link" href="#resources-trip-find-recent_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/trips/recent HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ1LCJleHAiOjE2MjUzOTIxNDV9.EOtVLZ-otit55M-R6zk3LlERsmm9toJ6RNOcmZ1VTAc
-Accept: application/json
-Host: localhost:8080</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="resources-trip-find-recent_http_response"><a class="link" href="#resources-trip-find-recent_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json
-ETag: "0fb5cff91e239a91a24a29953c07ccefb"
-Content-Length: 419
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-
-{
-  "result" : "SUCCESS",
-  "statusCode" : 200,
-  "data" : {
-    "title" : "first trip",
-    "stops" : [ {
-      "name" : "central park",
-      "lat" : 123.0,
-      "lng" : 456.0,
-      "sequence" : 1
-    }, {
-      "name" : "grand canyon",
-      "lat" : 789.0,
-      "lng" : 101.0,
-      "sequence" : 2
-    } ],
-    "startDate" : "2021-05-05",
-    "endDate" : "2021-05-08",
-    "memo" : null,
-    "likeCount" : 0
-  }
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="resources-trip-find-recent_request_headers"><a class="link" href="#resources-trip-find-recent_request_headers">Request headers</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="resources-trip-find-recent_response_fields"><a class="link" href="#resources-trip-find-recent_response_fields">Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">응답 결과</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>statusCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태 코드</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.stops[].lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.stops[].lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.stops[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.stops[].sequence</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">일정 순서</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메모</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.likeCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 <div class="sect2">
 <h3 id="resources-trip-update"><a class="link" href="#resources-trip-update">여행 일정 수정</a></h3>
 <div class="sect3">
 <h4 id="resources-trip-update_http_request"><a class="link" href="#resources-trip-update_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/v1/trips/1 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ1LCJleHAiOjE2MjUzOTIxNDV9.jK8wMNXDYtqpwpCSmEvGNaCb6LO5z_H9UaK9uupWuqY
-Accept: application/json
-Content-Length: 263
-Host: localhost:8080
-
-{
-  "title" : "new trip",
-  "stops" : [ {
-    "lat" : "789",
-    "lng" : "101",
-    "name" : "grand canyon"
-  }, {
-    "lat" : "112",
-    "lng" : "131",
-    "name" : "rainbow cafe"
-  } ],
-  "startDate" : "2021-05-05",
-  "endDate" : "2021-05-08",
-  "memo" : null
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::trip/update</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-update_http_response"><a class="link" href="#resources-trip-update_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::trip/update</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-update_request_headers"><a class="link" href="#resources-trip-update_request_headers">Request headers</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전송 타입</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet request-headers not found for operation::trip/update</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-update_path_parameters"><a class="link" href="#resources-trip-update_path_parameters">Path parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/v1/trips/{id}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 ID</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet path-parameters not found for operation::trip/update</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-update_request_fields"><a class="link" href="#resources-trip-update_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>stops[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메모</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet request-fields not found for operation::trip/update</p>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="resources-trip-delete"><a class="link" href="#resources-trip-delete">여행 일정 삭제</a></h3>
 <div class="sect3">
 <h4 id="resources-trip-delete_http_request"><a class="link" href="#resources-trip-delete_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/v1/trips/2 HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQ1LCJleHAiOjE2MjUzOTIxNDV9.EOtVLZ-otit55M-R6zk3LlERsmm9toJ6RNOcmZ1VTAc
-Accept: application/json
-Host: localhost:8080</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::trip/delete</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-delete_http_response"><a class="link" href="#resources-trip-delete_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::trip/delete</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-delete_request_headers"><a class="link" href="#resources-trip-delete_request_headers">Request headers</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet request-headers not found for operation::trip/delete</p>
+</div>
 </div>
 <div class="sect3">
 <h4 id="resources-trip-delete_path_parameters"><a class="link" href="#resources-trip-delete_path_parameters">Path parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. /api/v1/trips/{id}</caption>
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 ID</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>Snippet path-parameters not found for operation::trip/delete</p>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources-path"><a class="link" href="#resources-path">경로 관리</a></h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="resources-trip-recommend"><a class="link" href="#resources-trip-recommend">여행 일정 추천</a></h3>
+<h3 id="resources-path-create"><a class="link" href="#resources-path-create">경로 생성</a></h3>
 <div class="sect3">
-<h4 id="resources-trip-recommend_http_request"><a class="link" href="#resources-trip-recommend_http_request">Example Request</a></h4>
+<h4 id="resources-path-create_http_request"><a class="link" href="#resources-path-create_http_request">Example Request</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/trips?lat=789&amp;lng=101 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/trips HTTP/1.1
 Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI4ODUwMzg5LCJleHAiOjE2Mjg4NTMzODl9.V7uV6j1s7SG_HMwrahua8ue_xREelwD9Cw-xtaiXtHM
 Accept: application/json
-Host: localhost:8080</code></pre>
+Content-Length: 276
+Host: localhost:8080
+
+{
+  "title" : "first trip",
+  "startDate" : "2021-08-10",
+  "endDate" : "2021-08-12",
+  "memo" : "test",
+  "paths" : [ {
+    "id" : 2,
+    "places" : [ {
+      "lat" : "123.123",
+      "lng" : "456.456"
+    }, {
+      "lat" : "789.789",
+      "lng" : "321.321"
+    } ]
+  } ]
+}</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="resources-trip-recommend_http_response"><a class="link" href="#resources-trip-recommend_http_response">Example Response</a></h4>
+<h4 id="resources-path-create_http_response"><a class="link" href="#resources-path-create_http_response">Example Response</a></h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 200 OK
+<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
+Location: http://localhost:8080/api/v1/trips/1
 Content-Type: application/json
-ETag: "096e437abd6b46e4b96343b6ff4c13ca9"
-Content-Length: 423
+Content-Length: 83
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1817,173 +1346,16 @@ X-Frame-Options: DENY
 
 {
   "result" : "SUCCESS",
-  "statusCode" : 200,
-  "data" : [ {
-    "title" : "first trip",
-    "stops" : [ {
-      "name" : "central park",
-      "lat" : 123.0,
-      "lng" : 456.0,
-      "sequence" : 1
-    }, {
-      "name" : "grand canyon",
-      "lat" : 789.0,
-      "lng" : 101.0,
-      "sequence" : 2
-    } ],
-    "startDate" : "2021-05-05",
-    "endDate" : "2021-05-08",
-    "memo" : null,
-    "likeCount" : 0
-  } ]
+  "statusCode" : 201,
+  "data" : {
+    "tripId" : 1
+  }
 }</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="resources-trip-recommend_request_parameters"><a class="link" href="#resources-trip-recommend_request_parameters">Request parameters</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Parameter</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">포함할 장소의 위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">포함할 장소의 경도</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect3">
-<h4 id="resources-trip-recommend_response_fields"><a class="link" href="#resources-trip-recommend_response_fields">Response fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>result</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">응답 결과</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>statusCode</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">상태 코드</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">여행 일정 제목</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].lat</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">위도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].lng</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">경도</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].name</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">장소 이름</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].stops[].sequence</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">일정 순서</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].startDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">시작 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].endDate</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">종료 일자</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].memo</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Null</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">메모</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].likeCount</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">좋아요 수</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="resources-like"><a class="link" href="#resources-like">좋아요(찜) 관리</a></h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="resources-like-create"><a class="link" href="#resources-like-create">좋아요 생성</a></h3>
-<div class="sect3">
-<h4 id="resources-like-create_http_request"><a class="link" href="#resources-like-create_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/likes HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTQxLCJleHAiOjE2MjUzOTIxNDF9.oVcke2bZCxNiJKfff7VN5LwHWqkXfUNsRENrOkRrzcA
-Accept: application/json
-Content-Length: 18
-Host: localhost:8080
-
-{
-  "tripId" : 2
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="resources-like-create_http_response"><a class="link" href="#resources-like-create_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Location: /api/v1/likes/2
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="resources-like-create_request_headers"><a class="link" href="#resources-like-create_request_headers">Request headers</a></h4>
+<h4 id="resources-path-create_request_headers"><a class="link" href="#resources-path-create_request_headers">Request headers</a></h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -2002,120 +1374,43 @@ X-Frame-Options: DENY</code></pre>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전송 타입</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">컨텐츠 타입</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect3">
-<h4 id="resources-like-create_request_fields"><a class="link" href="#resources-like-create_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tripId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찜할 여행 일정 ID</p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="resources-path-create_request_fields"><a class="link" href="#resources-path-create_request_fields">Request fields</a></h4>
+<div class="paragraph">
+<p>Snippet request-fields not found for operation::trip/create</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="resources-like-delete"><a class="link" href="#resources-like-delete">좋아요 취소</a></h3>
+<h3 id="resources-path-recommend"><a class="link" href="#resources-path-recommend">경로 추천</a></h3>
 <div class="sect3">
-<h4 id="resources-like-delete_http_request"><a class="link" href="#resources-like-delete_http_request">Example Request</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/v1/likes HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI1Mzg5MTM5LCJleHAiOjE2MjUzOTIxMzl9.M6c0HbH1Bs7zTq-ih2B63Nws8fbkFSQ0fpKrXzFm1l0
-Accept: application/json
-Content-Length: 18
-Host: localhost:8080
-
-{
-  "tripId" : 1
-}</code></pre>
-</div>
+<h4 id="resources-path-recommend_http_request"><a class="link" href="#resources-path-recommend_http_request">Example Request</a></h4>
+<div class="paragraph">
+<p>Snippet http-request not found for operation::trip/find-recommendation</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="resources-like-delete_http_response"><a class="link" href="#resources-like-delete_http_response">Example Response</a></h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">HTTP/1.1 204 No Content
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY</code></pre>
-</div>
+<h4 id="resources-path-recommend_http_response"><a class="link" href="#resources-path-recommend_http_response">Example Response</a></h4>
+<div class="paragraph">
+<p>Snippet http-response not found for operation::trip/find-recommendation</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="resources-like-delete_request_headers"><a class="link" href="#resources-like-delete_request_headers">Request headers</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 50%;">
-<col style="width: 50%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Name</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Authorization</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">인증 토큰</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">전송 타입</p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="resources-path-recommend_request_parameters"><a class="link" href="#resources-path-recommend_request_parameters">Request parameters</a></h4>
+<div class="paragraph">
+<p>Snippet request-parameters not found for operation::trip/find-recommendation</p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="resources-like-delete_request_fields"><a class="link" href="#resources-like-delete_request_fields">Request fields</a></h4>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Path</th>
-<th class="tableblock halign-left valign-top">Type</th>
-<th class="tableblock halign-left valign-top">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tripId</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">찜할 여행 일정 ID</p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="resources-path-recommend_response_fields"><a class="link" href="#resources-path-recommend_response_fields">Response fields</a></h4>
+<div class="paragraph">
+<p>Snippet response-fields not found for operation::trip/find-recommendation</p>
+</div>
 </div>
 </div>
 </div>
@@ -2124,7 +1419,7 @@ X-Frame-Options: DENY</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-07-04 17:58:06 +0900
+Last updated 2021-08-13 16:51:32 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">

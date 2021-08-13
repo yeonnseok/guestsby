@@ -49,7 +49,8 @@ internal class TestDataLoader(
     fun sample_trip_path_first(trip: Trip, path: Path) = tripPathRepository.save(
         TripPath(
             trip = trip,
-            path = path
+            path = path,
+            sequence = 1
         )
     )
 
