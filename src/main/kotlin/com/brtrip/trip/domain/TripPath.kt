@@ -1,15 +1,14 @@
-package com.brtrip.like.domain
+package com.brtrip.trip.domain
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.trip.domain.Trip
-import com.brtrip.user.domain.User
+import com.brtrip.path.Path
 import javax.persistence.*
 
 @Entity
-@Table(name = "likes")
-class Like(
+@Table(name = "trip_path")
+class TripPath(
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -17,6 +16,8 @@ class Like(
     var trip: Trip,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    var user: User
+    @JoinColumn(name = "path_id")
+    var path: Path,
+
+    var sequence: Int
 ): BaseEntity()

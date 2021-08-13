@@ -1,11 +1,13 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.common.BaseEntity
+import com.brtrip.path.domain.PathPlace
 import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-data class Trip(
+@Table(name = "trip")
+class Trip(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -22,13 +24,10 @@ data class Trip(
     var endDate: LocalDate,
 
     @Column(name = "memo")
-    var memo: String? = null,
-
-    @Column(name = "like_count")
-    var likeCount: Long = 0
+    var memo: String? = null
 ) : BaseEntity() {
-    @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
-    var stops: MutableList<Stop> = mutableListOf()
+    @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var tripPaths: MutableList<TripPath> = mutableListOf()
         set(value) {
             field.clear()
             field.addAll(value)
