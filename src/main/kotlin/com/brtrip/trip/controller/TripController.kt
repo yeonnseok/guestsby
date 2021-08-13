@@ -58,6 +58,7 @@ class TripController(
         @PathVariable id: Long,
         @Valid @RequestBody request: TripRequest
     ): ResponseEntity<ApiResponse> {
+        log.info("update start - {}", id)
         val updated = tripService.update(userPrincipal.getId(), id, request)
         log.info("trip response - {}", updated)
         log.info("tripPath - {}", updated.paths)
@@ -68,8 +69,8 @@ class TripController(
     fun delete(
         @LoginUser userPrincipal: UserPrincipal,
         @PathVariable id: Long
-    ): ResponseEntity<Void> {
+    ): ResponseEntity<ApiResponse> {
         tripService.delete(userPrincipal.getId(), id)
-        return ResponseEntity.noContent().build()
+        return ResponseEntity.ok(ApiResponse(data = null))
     }
 }

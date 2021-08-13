@@ -13,8 +13,8 @@ data class TripResponse(
 ) {
     companion object {
         fun of(trip: Trip): TripResponse {
-            val paths = trip.tripPaths!!.map { it.path }
-            val places = paths.map { path -> path.pathPlaces!!.map { it.place } }
+            val paths = trip.tripPaths.map { it.path }
+            val places = paths.map { path -> path.pathPlaces.map { it.place } }
             return TripResponse(
                 title = trip.title,
                 startDate = trip.startDate.format_yyyy_MM_dd(),

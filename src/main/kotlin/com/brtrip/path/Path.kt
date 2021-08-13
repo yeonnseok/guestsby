@@ -12,6 +12,10 @@ class Path(
     @Column(name = "like_count")
     var likeCount: Long = 0
 ) {
-    @OneToMany(mappedBy = "path")
-    var pathPlaces: List<PathPlace>? = mutableListOf()
+    @OneToMany(mappedBy = "path", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    var pathPlaces: MutableList<PathPlace> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
 }

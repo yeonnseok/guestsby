@@ -6,7 +6,8 @@ import java.time.LocalDate
 import javax.persistence.*
 
 @Entity
-data class Trip(
+@Table(name = "trip")
+class Trip(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
@@ -25,6 +26,10 @@ data class Trip(
     @Column(name = "memo")
     var memo: String? = null
 ) : BaseEntity() {
-    @OneToMany(mappedBy = "trip", targetEntity = TripPath::class)
-    var tripPaths: List<TripPath>? = mutableListOf()
+    @OneToMany(mappedBy = "trip", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var tripPaths: MutableList<TripPath> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
 }
