@@ -1,7 +1,7 @@
 package com.brtrip.user.domain
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.like.domain.Like
+import com.brtrip.favorite.domain.Favorite
 import javax.persistence.*
 
 @Entity
@@ -28,7 +28,7 @@ data class User(
     var authProvider: AuthProvider
 ) : BaseEntity() {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var likes: MutableList<Like> = mutableListOf()
+    var favorites: MutableList<Favorite> = mutableListOf()
         set(value) {
             field.clear()
             field.addAll(value)

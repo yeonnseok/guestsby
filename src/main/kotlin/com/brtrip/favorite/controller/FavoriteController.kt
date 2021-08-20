@@ -1,12 +1,12 @@
-package com.brtrip.like.controller
+package com.brtrip.favorite.controller
 
-import com.brtrip.like.domain.LikeService
+import com.brtrip.favorite.domain.FavoriteService
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/likes")
-class LikeController(
-    private val likeService: LikeService
+class FavoriteController(
+    private val favoriteService: FavoriteService
 ) {
 }

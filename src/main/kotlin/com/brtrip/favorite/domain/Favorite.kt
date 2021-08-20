@@ -1,4 +1,4 @@
-package com.brtrip.like.domain
+package com.brtrip.favorite.domain
 
 import com.brtrip.common.BaseEntity
 import com.brtrip.path.Path
@@ -6,7 +6,7 @@ import com.brtrip.user.domain.User
 import javax.persistence.*
 
 @Entity
-class Like(
+class Favorite(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
