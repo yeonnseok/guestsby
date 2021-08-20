@@ -1,7 +1,6 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
-import com.brtrip.path.Path
 import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.path.domain.PathPlaceFinder
 import com.brtrip.place.Place

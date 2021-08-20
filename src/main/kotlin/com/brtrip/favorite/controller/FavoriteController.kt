@@ -2,10 +2,16 @@ package com.brtrip.favorite.controller
 
 import com.brtrip.auth.domain.UserPrincipal
 import com.brtrip.common.response.ApiResponse
+import com.brtrip.favorite.controller.request.FavoriteRequest
+import com.brtrip.favorite.controller.response.FavoriteCreateResponse
 import com.brtrip.favorite.domain.FavoriteService
+import com.brtrip.trip.controller.request.TripRequest
+import com.brtrip.trip.controller.response.TripCreateResponse
 import com.brtrip.user.domain.LoginUser
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import javax.validation.Valid
 
 @RestController
 @RequestMapping("/api/v1/favorites")
@@ -23,5 +29,24 @@ class FavoriteController(
                     data = favoritePaths
                 )
             )
+    }
+
+    @PostMapping
+    fun create(
+        @LoginUser userPrincipal: UserPrincipal,
+        @Valid @RequestBody request: FavoriteRequest
+    ): ResponseEntity<ApiResponse> {
+        val favoriteId = favoriteService.create(userPrincipal.getId(), request)
+
+        val location = ServletUriComponentsBuilder
+            .fromCurrentContextPath().path("/api/v1/favorites/$favoriteId")
+            .buildAndExpand(favoriteId).toUri()
+
+        return ResponseEntity.created(location).body(
+            ApiResponse(
+                statusCode = 201,
+                data = FavoriteCreateResponse(favoriteId)
+            )
+        )
     }
 }
