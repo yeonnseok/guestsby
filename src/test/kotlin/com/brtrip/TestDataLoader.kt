@@ -1,5 +1,7 @@
 package com.brtrip
 
+import com.brtrip.favorite.domain.Favorite
+import com.brtrip.favorite.domain.FavoriteRepository
 import com.brtrip.path.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceRepository
@@ -26,7 +28,8 @@ internal class TestDataLoader(
     private val pathRepository: PathRepository,
     private val placeRepository: PlaceRepository,
     private val tripPathRepository: TripPathRepository,
-    private val pathPlaceRepository: PathPlaceRepository
+    private val pathPlaceRepository: PathPlaceRepository,
+    private val favoriteRepository: FavoriteRepository
 ) {
     fun sample_trip_first(userId: Long) = tripRepository.save(
         Trip(
@@ -59,6 +62,13 @@ internal class TestDataLoader(
             path = path,
             place = place,
             sequence = sequence
+        )
+    )
+
+    fun sample_favorite(user: User, path: Path) = favoriteRepository.save(
+        Favorite(
+            user = user,
+            path = path
         )
     )
 

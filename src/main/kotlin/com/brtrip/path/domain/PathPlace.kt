@@ -11,11 +11,11 @@ class PathPlace(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "path_id")
     var path: Path,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     var place: Place,
 
