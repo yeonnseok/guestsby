@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @Transactional
 @Sql("/truncate.sql")
-internal class TripDeletorTest {
+internal class TripDeleterTest {
 
     @Autowired
     private lateinit var sut: TripDeleter

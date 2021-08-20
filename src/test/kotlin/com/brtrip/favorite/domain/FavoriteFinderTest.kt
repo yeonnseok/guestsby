@@ -1,7 +1,6 @@
-package com.brtrip.favorite
+package com.brtrip.favorite.domain
 
 import com.brtrip.TestDataLoader
-import com.brtrip.favorite.domain.FavoriteFinder
 import com.brtrip.place.Place
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test

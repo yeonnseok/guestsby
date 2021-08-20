@@ -1,9 +1,8 @@
-package com.brtrip.favorite
+package com.brtrip.favorite.domain
 
 import com.brtrip.TestDataLoader
-import com.brtrip.common.exceptions.NotFoundException
-import com.brtrip.favorite.domain.FavoriteDeleter
-import com.brtrip.favorite.domain.FavoriteRepository
+import com.brtrip.favorite.controller.request.FavoriteRequest
+import com.brtrip.favorite.domain.FavoriteCreator
 import com.brtrip.place.Place
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
@@ -15,19 +14,15 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @Transactional
 @Sql("/truncate.sql")
-internal class FavoriteDeleterTest {
-
+class FavoriteCreatorTest {
     @Autowired
-    private lateinit var sut: FavoriteDeleter
+    private lateinit var sut: FavoriteCreator
 
     @Autowired
     private lateinit var testDataLoader: TestDataLoader
 
-    @Autowired
-    private lateinit var favoriteRepository: FavoriteRepository
-
     @Test
-    fun `찜 삭제 api`() {
+    fun `찜 저장하기`() {
         // given
         val place1 = Place(
             lat = "123",
@@ -43,12 +38,18 @@ internal class FavoriteDeleterTest {
         // user 저장
         val user = testDataLoader.sample_user()
 
+        // trip 저장
+        val trip = testDataLoader.sample_trip_first(1L)
+
         // path 저장
         var path = testDataLoader.sample_path_first(1L)
 
         // place 저장
         testDataLoader.sample_place_first(place1)
         testDataLoader.sample_place_first(place2)
+
+        // tripPath 저장
+        testDataLoader.sample_trip_path_first(trip, path)
 
         // pathPlace 저장
         val pathPlace1 = testDataLoader.sample_path_place_first(path, place1, 1)
@@ -57,15 +58,26 @@ internal class FavoriteDeleterTest {
         path.pathPlaces.add(pathPlace1)
         path.pathPlaces.add(pathPlace2)
 
-        // favorite 저장
-        val favorite = testDataLoader.sample_favorite(user, path)
+        val favoriteRequest = FavoriteRequest(
+            path = path
+        )
 
         // when
-        sut.delete(favorite.id!!)
-        val deleted = favoriteRepository.findById(favorite.id!!)
-            .orElseThrow { NotFoundException("찜 목록이 없습니다.") }
+        val result = sut.create(user.id!!, favoriteRequest)
 
         // then
-        deleted.deleted shouldBe true
+        result.user.id shouldBe user.id
+        result.user.nickName shouldBe user.nickName
+        result.user.email shouldBe user.email
+        result.user.role shouldBe user.role
+        result.user.authProvider shouldBe user.authProvider
+
+        result.path.id shouldBe path.id
+
+        result.path.pathPlaces[0].id shouldBe pathPlace1.id
+        result.path.pathPlaces[0].place shouldBe pathPlace1.place
+
+        result.path.pathPlaces[1].id shouldBe pathPlace2.id
+        result.path.pathPlaces[1].place shouldBe pathPlace2.place
     }
 }
