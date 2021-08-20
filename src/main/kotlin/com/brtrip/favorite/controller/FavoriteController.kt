@@ -49,4 +49,13 @@ class FavoriteController(
             )
         )
     }
+
+    @DeleteMapping("/{id}")
+    fun delete(
+        @LoginUser userPrincipal: UserPrincipal,
+        @PathVariable id: Long
+    ): ResponseEntity<ApiResponse> {
+        favoriteService.delete(userPrincipal.getId(), id)
+        return ResponseEntity.ok(ApiResponse(data = null))
+    }
 }

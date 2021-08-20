@@ -1,7 +1,9 @@
 package com.brtrip.favorite
 
 import com.brtrip.TestDataLoader
-import com.brtrip.favorite.domain.FavoriteFinder
+import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.favorite.domain.FavoriteDeleter
+import com.brtrip.favorite.domain.FavoriteRepository
 import com.brtrip.place.Place
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
@@ -13,16 +15,19 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @Transactional
 @Sql("/truncate.sql")
-internal class FavoriteFinderTest {
+internal class FavoriteDeleterTest {
 
     @Autowired
-    private lateinit var sut: FavoriteFinder
+    private lateinit var sut: FavoriteDeleter
 
     @Autowired
     private lateinit var testDataLoader: TestDataLoader
 
+    @Autowired
+    private lateinit var favoriteRepository: FavoriteRepository
+
     @Test
-    fun `찜한 여행 목록 불러오기`() {
+    fun `찜 삭제 api`() {
         // given
         val place1 = Place(
             lat = "123",
@@ -38,18 +43,12 @@ internal class FavoriteFinderTest {
         // user 저장
         val user = testDataLoader.sample_user()
 
-        // trip 저장
-        val trip = testDataLoader.sample_trip_first(1L)
-
         // path 저장
         var path = testDataLoader.sample_path_first(1L)
 
         // place 저장
         testDataLoader.sample_place_first(place1)
         testDataLoader.sample_place_first(place2)
-
-        // tripPath 저장
-        testDataLoader.sample_trip_path_first(trip, path)
 
         // pathPlace 저장
         val pathPlace1 = testDataLoader.sample_path_place_first(path, place1, 1)
@@ -59,24 +58,14 @@ internal class FavoriteFinderTest {
         path.pathPlaces.add(pathPlace2)
 
         // favorite 저장
-        testDataLoader.sample_favorite(user, path)
+        val favorite = testDataLoader.sample_favorite(user, path)
 
         // when
-        val result = sut.findByUserId(user.id!!)
+        sut.delete(favorite.id!!)
+        val deleted = favoriteRepository.findById(favorite.id!!)
+            .orElseThrow { NotFoundException("찜 목록이 없습니다.") }
 
         // then
-        result[0].user.id shouldBe user.id
-        result[0].user.nickName shouldBe user.nickName
-        result[0].user.email shouldBe user.email
-        result[0].user.role shouldBe user.role
-        result[0].user.authProvider shouldBe user.authProvider
-
-        result[0].path.id shouldBe path.id
-
-        result[0].path.pathPlaces[0].id shouldBe pathPlace1.id
-        result[0].path.pathPlaces[0].place shouldBe pathPlace1.place
-
-        result[0].path.pathPlaces[1].id shouldBe pathPlace2.id
-        result[0].path.pathPlaces[1].place shouldBe pathPlace2.place
+        deleted.deleted shouldBe true
     }
 }
