@@ -1,8 +1,8 @@
 package com.brtrip.favorite.domain
 
-import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.favorite.controller.request.FavoriteRequest
-import com.brtrip.user.domain.UserRepository
+import com.brtrip.path.domain.PathFinder
+import com.brtrip.user.domain.UserFinder
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -10,12 +10,13 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class FavoriteCreator(
     private val favoriteRepository: FavoriteRepository,
-    private val userRepository: UserRepository
+    private val userFinder: UserFinder,
+    private val pathFinder: PathFinder
 ) {
     fun create(userId: Long, request: FavoriteRequest): Favorite {
-        val user = userRepository.findById(userId)
-            .orElseThrow { NotFoundException("유저를 찾을 수 없습니다.") }
+        val user = userFinder.findById(userId)
+        val path = pathFinder.findById(request.pathId)
 
-        return favoriteRepository.save(request.toEntity(user))
+        return favoriteRepository.save(request.toEntity(user, path))
     }
 }

@@ -5,9 +5,9 @@ import com.brtrip.path.Path
 import com.brtrip.user.domain.User
 
 class FavoriteRequest(
-    val path: Path
+    val pathId: Long
 ) {
-    fun toEntity(user: User): Favorite {
+    fun toEntity(user: User, path: Path): Favorite {
         return Favorite(
             user = user,
             path = path

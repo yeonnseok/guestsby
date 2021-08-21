@@ -59,7 +59,7 @@ class FavoriteCreatorTest {
         path.pathPlaces.add(pathPlace2)
 
         val favoriteRequest = FavoriteRequest(
-            path = path
+            pathId = path.id!!
         )
 
         // when

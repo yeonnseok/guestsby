@@ -15,7 +15,7 @@ class PathPlace(
     @JoinColumn(name = "path_id")
     var path: Path,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
     @JoinColumn(name = "place_id")
     var place: Place,
 

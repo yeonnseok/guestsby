@@ -2,6 +2,8 @@ package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
 import com.brtrip.path.controller.request.PathRequest
+import com.brtrip.path.domain.PathFinder
+import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceFinder
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceRequest
@@ -24,6 +26,9 @@ internal class TripCreatorTest {
 
     @Autowired
     private lateinit var tripPathFinder: TripPathFinder
+
+    @Autowired
+    private lateinit var pathFinder: PathFinder
 
     @Autowired
     private lateinit var pathPlaceFinder: PathPlaceFinder
@@ -77,15 +82,21 @@ internal class TripCreatorTest {
         )
 
         // path 저장
-        val path = testDataLoader.sample_path_first(1L)
+        testDataLoader.sample_path_first(1L)
 
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
-        // pathPlace 지정
-        testDataLoader.sample_path_place_first(path, place1, 1)
-        testDataLoader.sample_path_place_first(path, place2, 2)
+        val path = pathFinder.findById(1L)
+        path.pathPlaces = mutableListOf(
+            PathPlace(
+                path = path,
+                place = place1,
+                sequence = 1
+            ),
+            PathPlace(
+                path = path,
+                place = place2,
+                sequence = 2
+            )
+        )
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
@@ -155,15 +166,21 @@ internal class TripCreatorTest {
         )
 
         // path 저장
-        val path = testDataLoader.sample_path_first(1L)
+        testDataLoader.sample_path_first(1L)
 
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
-        // pathPlace 지정
-        testDataLoader.sample_path_place_first(path, place1, 1)
-        testDataLoader.sample_path_place_first(path, place2, 2)
+        val path = pathFinder.findById(1L)
+        path.pathPlaces = mutableListOf(
+            PathPlace(
+                path = path,
+                place = place1,
+                sequence = 1
+            ),
+            PathPlace(
+                path = path,
+                place = place2,
+                sequence = 2
+            )
+        )
 
         // when
         val createdTrip = sut.create(1L, tripRequest)

@@ -1,13 +1,8 @@
 package com.brtrip.place
 
 class Places(
-    places: List<Place>
+    val places: List<Place>
 ) {
-    private var places: List<Place> = listOf()
-    init {
-        this.places = places
-    }
-
     fun isChanged(placeRequests: List<PlaceRequest>): Boolean {
         if (placeRequests.size != places.size) return true
 

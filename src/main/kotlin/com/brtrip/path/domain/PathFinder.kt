@@ -49,7 +49,7 @@ class PathFinder(
             return pathPlacesList.first().first().path
         }
 
-        val path = Path()
+        val path = pathRepository.save(Path())
         places.mapIndexed { index, place ->
             val findPlace = placeRepository.findByLatAndLng(place.lat, place.lng) ?: throw NotFoundException("존재하지 않는 장소 입니다.")
             pathPlaceRepository.save(PathPlace(path = path, place = findPlace, sequence = index + 1))
