@@ -1,8 +1,6 @@
 package com.brtrip.path.domain
 
-import com.brtrip.path.Path
 import com.brtrip.path.controller.request.PathRequest
-import com.brtrip.place.Place
 import com.brtrip.place.PlaceRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

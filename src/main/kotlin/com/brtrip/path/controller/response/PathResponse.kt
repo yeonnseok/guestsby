@@ -1,6 +1,6 @@
 package com.brtrip.path.controller.response
 
-import com.brtrip.path.Path
+import com.brtrip.path.domain.Path
 import com.brtrip.place.Place
 import com.brtrip.place.dto.PlaceResponse
 

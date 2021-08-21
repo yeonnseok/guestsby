@@ -1,6 +1,6 @@
 package com.brtrip.path.controller.request
 
-import com.brtrip.path.Path
+import com.brtrip.path.domain.Path
 import com.brtrip.place.PlaceRequest
 
 class PathRequest(

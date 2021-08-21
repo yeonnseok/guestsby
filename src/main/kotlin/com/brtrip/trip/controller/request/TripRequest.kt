@@ -1,9 +1,7 @@
 package com.brtrip.trip.controller.request
 
 import com.brtrip.common.utils.yyyy_MM_dd_Formatter
-import com.brtrip.path.Path
 import com.brtrip.path.controller.request.PathRequest
-import com.brtrip.place.Place
 import com.brtrip.trip.domain.Trip
 
 data class TripRequest(

@@ -1,12 +1,10 @@
 package com.brtrip.path.domain
 
 import com.brtrip.common.exceptions.NotFoundException
-import com.brtrip.path.Path
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceRepository
 import com.brtrip.place.PlaceRequest
 import com.brtrip.trip.domain.Trip
-import com.brtrip.trip.domain.TripPath
 import com.brtrip.trip.domain.TripPathRepository
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

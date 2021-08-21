@@ -21,4 +21,11 @@ class Place(
 
     @Column(name = "content")
     var content: String? = null
-): BaseEntity()
+): BaseEntity() {
+    @OneToMany(mappedBy = "place", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    var placeCategories: MutableList<PlaceCategory> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
+}

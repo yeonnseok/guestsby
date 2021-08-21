@@ -1,6 +1,5 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.path.Path
 import com.brtrip.path.domain.*
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceFinder

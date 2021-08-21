@@ -1,4 +1,4 @@
-package com.brtrip.path
+package com.brtrip.path.domain
 
 import com.brtrip.path.domain.PathPlace
 import javax.persistence.*

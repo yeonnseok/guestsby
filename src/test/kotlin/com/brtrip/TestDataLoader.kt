@@ -1,6 +1,6 @@
 package com.brtrip
 
-import com.brtrip.path.Path
+import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceRepository
 import com.brtrip.path.domain.PathRepository

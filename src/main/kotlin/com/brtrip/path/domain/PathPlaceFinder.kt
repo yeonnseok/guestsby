@@ -1,6 +1,5 @@
 package com.brtrip.path.domain
 
-import com.brtrip.path.Path
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
