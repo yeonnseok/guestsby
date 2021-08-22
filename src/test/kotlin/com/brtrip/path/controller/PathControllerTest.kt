@@ -1,4 +1,4 @@
-package com.brtrip.path
+package com.brtrip.path.controller
 
 import com.brtrip.common.response.ResultType
 import com.brtrip.path.domain.Path
@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.restdocs.headers.HeaderDocumentation
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
+import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*
 import org.springframework.restdocs.payload.PayloadDocumentation.*
+import org.springframework.restdocs.request.RequestDocumentation.*
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
@@ -63,8 +65,12 @@ class PathControllerTest : LoginUserControllerTest() {
             .andDo(
                 document(
                     "path/recommend",
-                    HeaderDocumentation.requestHeaders(
+                    requestHeaders(
                         headerWithName("Authorization").description("인증 토큰")
+                    ),
+                    requestParameters(
+                      parameterWithName("lat").description("위도"),
+                      parameterWithName("lng").description("경도")
                     ),
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),

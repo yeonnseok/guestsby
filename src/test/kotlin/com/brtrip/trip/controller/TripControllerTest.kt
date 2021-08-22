@@ -17,8 +17,11 @@ import org.springframework.http.MediaType
 import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
 import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.payload.PayloadDocumentation.responseFields
+import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.restdocs.request.RequestDocumentation.pathParameters
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
 import org.springframework.transaction.annotation.Transactional
@@ -164,7 +167,7 @@ class TripControllerTest : LoginUserControllerTest() {
 
         // when
         val result = mockMvc.perform(
-            patch("/api/v1/trips/${trip.id}")
+            RestDocumentationRequestBuilders.patch("/api/v1/trips/{id}", trip.id)
                 .header("Authorization", "Bearer $token")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON_VALUE)
@@ -183,6 +186,9 @@ class TripControllerTest : LoginUserControllerTest() {
                     requestHeaders(
                         headerWithName("Authorization").description("인증 토큰"),
                         headerWithName("Content-Type").description("컨텐츠 타입")
+                    ),
+                    pathParameters(
+                       parameterWithName("id").description("여행일정 ID")
                     ),
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),
@@ -277,7 +283,7 @@ class TripControllerTest : LoginUserControllerTest() {
 
         // when
         val result = mockMvc.perform(
-            delete("/api/v1/trips/${trip.id}")
+            RestDocumentationRequestBuilders.delete("/api/v1/trips/{id}", trip.id)
                 .header("Authorization", "Bearer $token")
         )
 
@@ -292,6 +298,9 @@ class TripControllerTest : LoginUserControllerTest() {
                     "trip/delete",
                     requestHeaders(
                         headerWithName("Authorization").description("인증 토큰")
+                    ),
+                    pathParameters(
+                        parameterWithName("id").description("여행일정 ID")
                     ),
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),

@@ -1,6 +1,7 @@
 package com.brtrip.place
 
 import com.brtrip.common.BaseEntity
+import org.hibernate.annotations.Type
 import javax.persistence.*
 
 @Entity
@@ -15,6 +16,10 @@ class PlaceCategory(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
-    var place: Place
+    var place: Place,
+
+    @Type(type="yes_no")
+    @Column(name = "is_representative", nullable = false)
+    var isRepresentative: Boolean = false
 ): BaseEntity()
 
