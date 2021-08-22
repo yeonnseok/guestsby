@@ -5,6 +5,7 @@ import com.brtrip.place.Place
 import javax.persistence.*
 
 @Entity
+@Table(name = "path_place")
 class PathPlace(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

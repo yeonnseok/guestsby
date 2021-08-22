@@ -1,5 +1,6 @@
 package com.brtrip.path.domain
 
+import com.brtrip.place.Place
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -8,7 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 class PathPlaceFinder(
     private val pathPlaceRepository: PathPlaceRepository
 ) {
-    fun findBy(path: Path): List<PathPlace> {
-        return pathPlaceRepository.findByPath(path)
+    fun findByPath(path: Path): List<PathPlace> {
+        return pathPlaceRepository.findByPathAndDeleted(path, false)
+    }
+
+    fun findByPlace(place: Place): List<PathPlace> {
+        return pathPlaceRepository.findByPlaceAndDeleted(place, false)
     }
 }

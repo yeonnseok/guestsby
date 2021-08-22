@@ -31,5 +31,6 @@ class Trip(
         set(value) {
             field.clear()
             field.addAll(value)
+            field.sortBy { it.sequence }
         }
 }

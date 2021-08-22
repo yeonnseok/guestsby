@@ -23,12 +23,6 @@ internal class TripCreatorTest {
     private lateinit var sut: TripCreator
 
     @Autowired
-    private lateinit var tripPathFinder: TripPathFinder
-
-    @Autowired
-    private lateinit var pathPlaceFinder: PathPlaceFinder
-
-    @Autowired
     private lateinit var testDataLoader: TestDataLoader
 
     @Test
@@ -89,24 +83,10 @@ internal class TripCreatorTest {
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe path.id
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place1.lat
-        createdPathPlaces[0].place.lng shouldBe place1.lng
-        createdPathPlaces[0].place.name shouldBe place1.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place2.lat
-        createdPathPlaces[1].place.lng shouldBe place2.lng
-        createdPathPlaces[1].place.name shouldBe place2.name
     }
 
     @Test
@@ -167,23 +147,9 @@ internal class TripCreatorTest {
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe 2L
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place2.lat
-        createdPathPlaces[0].place.lng shouldBe place2.lng
-        createdPathPlaces[0].place.name shouldBe place2.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place1.lat
-        createdPathPlaces[1].place.lng shouldBe place1.lng
-        createdPathPlaces[1].place.name shouldBe place1.name
     }
 }

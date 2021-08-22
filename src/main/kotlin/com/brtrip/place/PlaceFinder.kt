@@ -13,14 +13,13 @@ class PlaceFinder(
     private val pathPlaceRepository: PathPlaceRepository
 ) {
     fun findByPosition(lat: String, lng: String): Place {
-        return placeRepository.findByLatAndLng(lat, lng)
+        return placeRepository.findByLatAndLngAndDeleted(lat, lng, false)
             ?: throw NotFoundException("장소를 찾을 수 없습니다.")
     }
 
     fun findByPath(path: Path): List<Place> {
-        val pathPlaces = pathPlaceRepository.findByPath(path)
-        return pathPlaces.map {
-            it.place
-        }
+        return pathPlaceRepository.findByPathAndDeleted(path, false)
+            .sortedBy { it.sequence }
+            .map { it.place }
     }
 }

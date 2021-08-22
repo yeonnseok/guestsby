@@ -3,5 +3,5 @@ package com.brtrip.place
 import org.springframework.data.jpa.repository.JpaRepository
 
 interface PlaceRepository : JpaRepository<Place, Long> {
-    fun findByLatAndLng(lat: String, lng: String): Place?
+    fun findByLatAndLngAndDeleted(lat: String, lng: String, deleted: Boolean): Place?
 }

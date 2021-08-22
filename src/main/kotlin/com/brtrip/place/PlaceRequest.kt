@@ -5,4 +5,13 @@ data class PlaceRequest(
     var lng: String,
     var name: String? = null,
     var content: String? = null
-)
+)  {
+    fun toEntity(): Place {
+        return Place(
+            lat = lat,
+            lng = lng,
+            name = name,
+            content = content
+        )
+    }
+}

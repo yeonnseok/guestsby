@@ -16,8 +16,8 @@ class Place(
     @Column(name = "lng", nullable = false)
     var lng: String,
 
-    @Column(name = "title", nullable = false)
-    var name: String,
+    @Column(name = "title")
+    var name: String? = null,
 
     @Column(name = "content")
     var content: String? = null
