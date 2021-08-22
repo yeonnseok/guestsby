@@ -25,15 +25,6 @@ internal class TripCreatorTest {
     private lateinit var sut: TripCreator
 
     @Autowired
-    private lateinit var tripPathFinder: TripPathFinder
-
-    @Autowired
-    private lateinit var pathFinder: PathFinder
-
-    @Autowired
-    private lateinit var pathPlaceFinder: PathPlaceFinder
-
-    @Autowired
     private lateinit var testDataLoader: TestDataLoader
 
     @Test
@@ -81,43 +72,19 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
+        // place 저장
+        testDataLoader.sample_place_first(place1)
+        testDataLoader.sample_place_first(place2)
+
         // path 저장
         testDataLoader.sample_path_first(1L)
 
-        val path = pathFinder.findById(1L)
-        path.pathPlaces = mutableListOf(
-            PathPlace(
-                path = path,
-                place = place1,
-                sequence = 1
-            ),
-            PathPlace(
-                path = path,
-                place = place2,
-                sequence = 2
-            )
-        )
-
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe path.id
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place1.lat
-        createdPathPlaces[0].place.lng shouldBe place1.lng
-        createdPathPlaces[0].place.name shouldBe place1.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place2.lat
-        createdPathPlaces[1].place.lng shouldBe place2.lng
-        createdPathPlaces[1].place.name shouldBe place2.name
     }
 
     @Test
@@ -165,42 +132,22 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
+        // place 저장
+        testDataLoader.sample_place_first(place1)
+        testDataLoader.sample_place_first(place2)
+
         // path 저장
         testDataLoader.sample_path_first(1L)
 
-        val path = pathFinder.findById(1L)
-        path.pathPlaces = mutableListOf(
-            PathPlace(
-                path = path,
-                place = place1,
-                sequence = 1
-            ),
-            PathPlace(
-                path = path,
-                place = place2,
-                sequence = 2
-            )
-        )
+//        // pathPlace 저장
+//        val pathPlace1 = testDataLoader.sample_path_place_first(path, place1, 1)
+//        val pathPlace2 = testDataLoader.sample_path_place_first(path, place2, 2)
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe 2L
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place2.lat
-        createdPathPlaces[0].place.lng shouldBe place2.lng
-        createdPathPlaces[0].place.name shouldBe place2.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place1.lat
-        createdPathPlaces[1].place.lng shouldBe place1.lng
-        createdPathPlaces[1].place.name shouldBe place1.name
     }
 }

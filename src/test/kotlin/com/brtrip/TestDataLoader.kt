@@ -2,7 +2,7 @@ package com.brtrip
 
 import com.brtrip.favorite.domain.Favorite
 import com.brtrip.favorite.domain.FavoriteRepository
-import com.brtrip.path.Path
+import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceRepository
 import com.brtrip.path.domain.PathRepository

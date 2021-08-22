@@ -1,10 +1,11 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.TestDataLoader
 import com.brtrip.path.controller.request.PathRequest
-import com.brtrip.path.domain.PathFinder
-import com.brtrip.path.domain.PathPlaceFinder
+import com.brtrip.path.domain.Path
+import com.brtrip.path.domain.PathPlace
+import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.Place
+import com.brtrip.place.PlaceRepository
 import com.brtrip.place.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
@@ -23,184 +25,109 @@ internal class TripUpdaterTest {
     private lateinit var sut: TripUpdater
 
     @Autowired
-    private lateinit var tripFinder: TripFinder
+    private lateinit var placeRepository: PlaceRepository
 
     @Autowired
-    private lateinit var tripPathFinder: TripPathFinder
+    private lateinit var pathRepository: PathRepository
 
     @Autowired
-    private lateinit var pathPlaceFinder: PathPlaceFinder
+    private lateinit var tripRepository: TripRepository
 
     @Autowired
-    private lateinit var testDataLoader: TestDataLoader
+    private lateinit var tripPathRepository: TripPathRepository
 
     @Test
-    fun `여행 일정 수정 - 바뀐 Path가 DB에 존재하는 경우`() {
+    fun `여행일정 업데이트`() {
         // given
-        val place1 = Place(
-            lat = "123",
-            lng = "456",
-            name = "central park"
+        val place1 = placeRepository.save(Place(lat = "123.123", lng = "456.456", name = "용두암"))
+        val place2 = placeRepository.save(Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"))
+        val place3 = placeRepository.save(Place(lat = "000.000", lng = "000.000", name = "공항"))
+        val path = Path()
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 2),
+            PathPlace(path = path, place = place3, sequence = 3)
         )
-        val place2 = Place(
-            lat = "789",
-            lng = "101",
-            name = "grand canyon"
+        pathRepository.save(path)
+
+        val path2 = Path()
+        path2.pathPlaces = mutableListOf(
+            PathPlace(path = path2, place = place1, sequence = 1),
+            PathPlace(path = path2, place = place3, sequence = 2)
         )
+        pathRepository.save(path2)
 
-        val trip = testDataLoader.sample_trip_first(1L)
-
-        // path 2개 저장
-        var path1 = testDataLoader.sample_path_first(1L)
-        var path2 = testDataLoader.sample_path_first(2L)
-
-        // place 2개 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
-        // 기존 trip은 path1을 가짐
-        testDataLoader.sample_trip_path_first(trip, path1)
-
-        // path1(as-is)에 대한 pathPlace 지정
-        testDataLoader.sample_path_place_first(path1, place1, 1)
-        testDataLoader.sample_path_place_first(path1, place2, 2)
-
-        // path2(to-be)에 대한 pathPlace 지정
-        testDataLoader.sample_path_place_first(path2, place2, 1)
-        testDataLoader.sample_path_place_first(path2, place1, 2)
-
-        // request
-        val requestPathExist = TripRequest(
-            title = "new trip",
-            startDate = "2021-08-05",
-            endDate = "2021-08-08",
+        val trip = Trip(title = "first trip", startDate = LocalDate.of(2021,7,21), endDate = LocalDate.of(2021,7,23), userId = 1)
+        trip.tripPaths = mutableListOf(
+            TripPath(trip = trip, path = path, sequence = 1),
+            TripPath(trip = trip, path = path2, sequence = 2)
+        )
+        tripRepository.save(trip)
+        val tripRequest = TripRequest(
+            title = "change",
+            startDate = "2021-08-21",
+            endDate = "2021-08-23",
+            memo = "null",
             paths = listOf(
                 PathRequest(
-                    id = 1,
+                    id = path.id,
                     places = listOf(
-                        PlaceRequest(
-                            lat = "789",
-                            lng = "101",
-                            name = "grand canyon"
-                        ),
-                        PlaceRequest(
-                            lat = "123",
-                            lng = "456",
-                            name = "central park"
-                        )
+                        PlaceRequest(lat = "54321.54321", lng = "12345.12345", name = "수정")
                     )
                 )
             )
         )
 
         // when
-        sut.update(trip.id!!, requestPathExist)
+        val updated = sut.update(trip.id!!, tripRequest)
 
         // then
-        val updatedTrip = tripFinder.findById(trip.id!!)
-        val updatedTripPaths = tripPathFinder.findBy(updatedTrip)
-        val updatedPathPlaces = pathPlaceFinder.findBy(updatedTripPaths[0].path)
-
-        // 1. trip
-        updatedTrip.title shouldBe "new trip"
-        updatedTrip.memo shouldBe null
-
-        // 2. tripPath
-        updatedTripPaths[0].trip.id shouldBe trip.id
-        updatedTripPaths[0].trip.title shouldBe "new trip"
-        updatedTripPaths[0].path.id shouldBe path2.id
-
-        // 3. pathPlace
-        updatedPathPlaces[0].sequence shouldBe 1
-        updatedPathPlaces[0].place.lat shouldBe place2.lat
-        updatedPathPlaces[0].place.lng shouldBe place2.lng
-        updatedPathPlaces[0].place.name shouldBe place2.name
-
-        updatedPathPlaces[1].sequence shouldBe 2
-        updatedPathPlaces[1].place.lat shouldBe place1.lat
-        updatedPathPlaces[1].place.lng shouldBe place1.lng
-        updatedPathPlaces[1].place.name shouldBe place1.name
+        updated.tripPaths.size shouldBe 1
+        updated.tripPaths.first().path.pathPlaces.size shouldBe 1
+        updated.tripPaths.first().path.pathPlaces.first().place.name shouldBe "수정"
+        updated.tripPaths.first().path.likeCount shouldBe 1
     }
 
     @Test
-    fun `여행 일정 수정 - 바뀐 Path가 DB에 없는 경우`() {
+    fun `여행 일정 업데이트 - 장소 변경 없을 때`() {
         // given
-        val place1 = Place(
-            lat = "123",
-            lng = "456",
-            name = "central park"
+        val place1 = placeRepository.save(Place(lat = "123.123", lng = "456.456", name = "용두암"))
+        val place2 = placeRepository.save(Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"))
+        val place3 = placeRepository.save(Place(lat = "000.000", lng = "000.000", name = "공항"))
+        val path = Path()
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 2),
+            PathPlace(path = path, place = place3, sequence = 3)
         )
-        val place2 = Place(
-            lat = "789",
-            lng = "101",
-            name = "grand canyon"
+        pathRepository.save(path)
+
+        val trip = Trip(title = "first trip", startDate = LocalDate.of(2021,7,21), endDate = LocalDate.of(2021,7,23), userId = 1)
+        trip.tripPaths = mutableListOf(
+            TripPath(trip = trip, path = path, sequence = 1)
         )
-
-        val trip = testDataLoader.sample_trip_first(1L)
-
-        // path 1개 저장 (1L)
-        var path1 = testDataLoader.sample_path_first(1L)
-
-        // place: 2개 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
-        // tripPath: trip은 path1을 가짐
-        testDataLoader.sample_trip_path_first(trip, path1)
-
-        // pathPlace: path1에 대한 place 지정
-        testDataLoader.sample_path_place_first(path1, place1, 1)
-        testDataLoader.sample_path_place_first(path1, place2, 2)
-
-        // request
-        val requestPathNotExist = TripRequest(
-            title = "new trip2",
-            startDate = "2021-08-05",
-            endDate = "2021-08-08",
+        tripRepository.save(trip)
+        val tripRequest = TripRequest(
+            title = "change",
+            startDate = "2021-08-21",
+            endDate = "2021-08-23",
+            memo = "null",
             paths = listOf(
                 PathRequest(
-                    id = 1,
+                    id = path.id,
                     places = listOf(
-                        PlaceRequest(
-                            lat = "789",
-                            lng = "101",
-                            name = "grand canyon"
-                        ),
-                        PlaceRequest(
-                            lat = "123",
-                            lng = "456",
-                            name = "central park"
-                        )
+                        PlaceRequest(lat = "123.123", lng = "456.456", name = "용두암"),
+                        PlaceRequest(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"),
+                        PlaceRequest(lat = "000.000", lng = "000.000", name = "공항")
                     )
                 )
             )
         )
 
         // when
-        sut.update(trip.id!!, requestPathNotExist)
+        val updated = sut.update(trip.id!!, tripRequest)
 
         // then
-        val updatedTrip = tripFinder.findById(trip.id!!)
-        val updatedTripPaths = tripPathFinder.findBy(updatedTrip)
-        val updatedPathPlaces = pathPlaceFinder.findBy(updatedTripPaths[0].path)
-
-        // 1. trip
-        updatedTrip.title shouldBe "new trip2"
-        updatedTrip.memo shouldBe null
-
-        // 2. tripPath
-        updatedTripPaths[0].trip.id shouldBe trip.id
-        updatedTripPaths[0].trip.title shouldBe "new trip2"
-
-        // 3. pathPlace
-        updatedPathPlaces[0].sequence shouldBe 1
-        updatedPathPlaces[0].place.lat shouldBe place2.lat
-        updatedPathPlaces[0].place.lng shouldBe place2.lng
-        updatedPathPlaces[0].place.name shouldBe place2.name
-
-        updatedPathPlaces[1].sequence shouldBe 2
-        updatedPathPlaces[1].place.lat shouldBe place1.lat
-        updatedPathPlaces[1].place.lng shouldBe place1.lng
-        updatedPathPlaces[1].place.name shouldBe place1.name
+        updated.tripPaths.first().path.likeCount shouldBe 0
     }
 }

@@ -16,9 +16,16 @@ class Place(
     @Column(name = "lng", nullable = false)
     var lng: String,
 
-    @Column(name = "title", nullable = false)
+    @Column(name = "title")
     var name: String,
 
     @Column(name = "content")
     var content: String? = null
-): BaseEntity()
+): BaseEntity() {
+    @OneToMany(mappedBy = "place", cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+    var placeCategories: MutableList<PlaceCategory> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
+}

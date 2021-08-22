@@ -1,21 +1,20 @@
-package com.brtrip.favorite.domain
+package com.brtrip.place
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.path.domain.Path
-import com.brtrip.user.domain.User
 import javax.persistence.*
 
 @Entity
-class Favorite(
+class PlaceCategory(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    var user: User,
+    @JoinColumn(name = "category_id")
+    var category: Category,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "path_id")
-    var path: Path
+    @JoinColumn(name = "place_id")
+    var place: Place
 ): BaseEntity()
+

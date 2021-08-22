@@ -1,7 +1,7 @@
 package com.brtrip.favorite.controller.request
 
 import com.brtrip.favorite.domain.Favorite
-import com.brtrip.path.Path
+import com.brtrip.path.domain.Path
 import com.brtrip.user.domain.User
 
 class FavoriteRequest(

@@ -5,7 +5,7 @@ import com.brtrip.place.Place
 data class PlaceResponse(
     val lat: String,
     val lng: String,
-    val name: String
+    val name: String?
 ) {
     companion object {
         fun of(place: Place): PlaceResponse {

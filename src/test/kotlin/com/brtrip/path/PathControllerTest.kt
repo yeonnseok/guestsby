@@ -1,6 +1,7 @@
 package com.brtrip.path
 
 import com.brtrip.common.response.ResultType
+import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.Place

@@ -1,11 +1,11 @@
 package com.brtrip.path.domain
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.path.Path
 import com.brtrip.place.Place
 import javax.persistence.*
 
 @Entity
+@Table(name = "path_place")
 class PathPlace(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +15,7 @@ class PathPlace(
     @JoinColumn(name = "path_id")
     var path: Path,
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.ALL))
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     var place: Place,
 
