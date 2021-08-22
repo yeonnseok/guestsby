@@ -41,7 +41,7 @@ class TripControllerTest : LoginUserControllerTest() {
         // given
         val place1 = placeRepository.save(Place(lat = "123.123", lng = "456.456", name = "용두암"))
         val place2 = placeRepository.save(Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"))
-        val path = Path(likeCount = 0)
+        val path = Path()
         path.pathPlaces = mutableListOf(
             PathPlace(path = path, place = place1, sequence = 1),
             PathPlace(path = path, place = place2, sequence = 2)
@@ -59,11 +59,13 @@ class TripControllerTest : LoginUserControllerTest() {
                     "places" to listOf(
                         mapOf(
                             "lat" to "123.123",
-                            "lng" to "456.456"
+                            "lng" to "456.456",
+                            "name" to "용두암"
                         ),
                         mapOf(
                             "lat" to "789.789",
-                            "lng" to "321.321"
+                            "lng" to "321.321",
+                            "name" to "한라산 국립 공원"
                         )
                     )
                 )
@@ -142,15 +144,18 @@ class TripControllerTest : LoginUserControllerTest() {
                     "places" to listOf(
                         mapOf(
                             "lat" to "123.123",
-                            "lng" to "456.456"
+                            "lng" to "456.456",
+                            "name" to "용두암"
                         ),
                         mapOf(
                             "lat" to "000.000",
-                            "lng" to "000.000"
+                            "lng" to "000.000",
+                            "name" to "공항"
                         ),
                         mapOf(
                             "lat" to "789.789",
-                            "lng" to "321.321"
+                            "lng" to "321.321",
+                            "name" to "한라산 국립 공원"
                         )
                     )
                 )

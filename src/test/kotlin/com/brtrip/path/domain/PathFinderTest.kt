@@ -45,9 +45,9 @@ internal class PathCreatorTest {
         pathRepository.save(otherPath)
 
         val places: List<PlaceRequest> = listOf(
-            PlaceRequest(lat = "123.123", lng = "456.456"),
-            PlaceRequest(lat = "789.789", lng = "321.321"),
-            PlaceRequest(lat = "000.000", lng = "000.000")
+            PlaceRequest(lat = "123.123", lng = "456.456", "용두암"),
+            PlaceRequest(lat = "789.789", lng = "321.321", "한라산 국립 공원"),
+            PlaceRequest(lat = "000.000", lng = "000.000", "공항")
         )
 
         // when
@@ -79,9 +79,9 @@ internal class PathCreatorTest {
         pathRepository.save(otherPath)
 
         val places: List<PlaceRequest> = listOf(
-            PlaceRequest(lat = "123.123", lng = "456.456"),
-            PlaceRequest(lat = "789.789", lng = "321.321"),
-            PlaceRequest(lat = "135.135", lng = "135.135")
+            PlaceRequest(lat = "123.123", lng = "456.456", "용두암"),
+            PlaceRequest(lat = "789.789", lng = "321.321", "한라산 국립 공원"),
+            PlaceRequest(lat = "135.135", lng = "135.135", "카페")
         )
 
         // when
