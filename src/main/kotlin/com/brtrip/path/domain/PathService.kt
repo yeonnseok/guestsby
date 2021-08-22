@@ -13,16 +13,14 @@ class PathService(
     private val placeFinder: PlaceFinder
 ) {
     fun create(request: PathRequest): Long {
-        val path = pathCreator.create(request)
+        val path = pathCreator.create(request.places)
         return path.id!!
     }
 
-    fun recommendPaths(lat: String, lng: String): List<PathResponse> {
+    // TODO : 추천 고도화
+    fun recommend(lat: String, lng: String): List<PathResponse> {
         val place = placeFinder.findByPosition(lat, lng)
-        val paths = pathFinder.findByPlacesToCheckPath(place)
-        return paths.map {
-            val places = placeFinder.findByPath(it).map { place -> PlaceResponse.of(place) }
-            PathResponse(places, it.likeCount)
-        }
+        return pathFinder.findByPlace(place)
+            .map { PathResponse.of(it, placeFinder.findByPath(it)) }
     }
 }

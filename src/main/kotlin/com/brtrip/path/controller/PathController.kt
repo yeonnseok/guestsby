@@ -31,7 +31,7 @@ class PathController(
         @RequestParam lat: String,
         @RequestParam lng: String
     ): ResponseEntity<ApiResponse> {
-        val paths = pathService.recommendPaths(lat, lng)
+        val paths = pathService.recommend(lat, lng)
         return ResponseEntity
             .ok(
                 ApiResponse(

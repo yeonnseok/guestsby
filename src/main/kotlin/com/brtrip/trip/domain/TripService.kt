@@ -13,8 +13,6 @@ class TripService(
     private val tripUpdater: TripUpdater,
     private val tripDeleter: TripDeleter,
 ) {
-    private val log = LoggerFactory.getLogger(javaClass)
-
     fun create(userId: Long, request: TripRequest): Long {
         val trip = tripCreator.create(userId, request)
         return trip.id!!

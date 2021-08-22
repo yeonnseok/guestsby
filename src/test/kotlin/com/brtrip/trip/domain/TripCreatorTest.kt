@@ -1,10 +1,13 @@
 package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
-import com.brtrip.path.Path
 import com.brtrip.path.controller.request.PathRequest
+import com.brtrip.path.domain.Path
+import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceFinder
+import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.Place
+import com.brtrip.place.PlaceRepository
 import com.brtrip.place.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
@@ -24,28 +27,25 @@ internal class TripCreatorTest {
     private lateinit var sut: TripCreator
 
     @Autowired
-    private lateinit var tripPathFinder: TripPathFinder
+    private lateinit var pathRepository: PathRepository
 
     @Autowired
-    private lateinit var pathPlaceFinder: PathPlaceFinder
-
-    @Autowired
-    private lateinit var testDataLoader: TestDataLoader
+    private lateinit var placeRepository: PlaceRepository
 
     @Test
     fun `여행 일정 저장 - 추천 받은 Path가 안 바뀌었을 경우`() {
         // given
-        val place1 = Place(
+        val place1 = placeRepository.save(Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        )
+        ))
 
-        val place2 = Place(
+        val place2 = placeRepository.save(Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        )
+        ))
 
         val tripRequest = TripRequest(
             title = "first trip",
@@ -78,52 +78,37 @@ internal class TripCreatorTest {
         )
 
         // path 저장
-        val path = testDataLoader.sample_path_first(1L)
-
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
+        val path = Path(id = 1, likeCount = 1)
 
         // pathPlace 지정
-        testDataLoader.sample_path_place_first(path, place1, 1)
-        testDataLoader.sample_path_place_first(path, place2, 2)
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 1)
+        )
+        pathRepository.save(path)
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe path.id
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place1.lat
-        createdPathPlaces[0].place.lng shouldBe place1.lng
-        createdPathPlaces[0].place.name shouldBe place1.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place2.lat
-        createdPathPlaces[1].place.lng shouldBe place2.lng
-        createdPathPlaces[1].place.name shouldBe place2.name
     }
 
     @Test
     fun `여행 일정 저장 - 추천 받은 Path를 바꿨을 경우`() {
         // given
-        val place1 = Place(
+        val place1 = placeRepository.save(Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        )
+        ))
 
-        val place2 = Place(
+        val place2 = placeRepository.save(Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        )
+        ))
 
         val tripRequest = TripRequest(
             title = "first trip",
@@ -156,35 +141,20 @@ internal class TripCreatorTest {
         )
 
         // path 저장
-        val path = testDataLoader.sample_path_first(1L)
-
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
+        val path = Path(id = 1, likeCount = 1)
 
         // pathPlace 지정
-        testDataLoader.sample_path_place_first(path, place1, 1)
-        testDataLoader.sample_path_place_first(path, place2, 2)
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 1)
+        )
+        pathRepository.save(path)
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
-        val createdTripPaths = tripPathFinder.findBy(createdTrip)
-        val createdPathPlaces = pathPlaceFinder.findBy(createdTripPaths[0].path)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
-
-        createdTripPaths[0].path.id shouldBe 2L
-
-        createdPathPlaces[0].sequence shouldBe 1
-        createdPathPlaces[0].place.lat shouldBe place2.lat
-        createdPathPlaces[0].place.lng shouldBe place2.lng
-        createdPathPlaces[0].place.name shouldBe place2.name
-
-        createdPathPlaces[1].sequence shouldBe 2
-        createdPathPlaces[1].place.lat shouldBe place1.lat
-        createdPathPlaces[1].place.lng shouldBe place1.lng
-        createdPathPlaces[1].place.name shouldBe place1.name
     }
 }
