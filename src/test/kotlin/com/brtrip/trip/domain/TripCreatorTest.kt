@@ -2,10 +2,12 @@ package com.brtrip.trip.domain
 
 import com.brtrip.TestDataLoader
 import com.brtrip.path.controller.request.PathRequest
-import com.brtrip.path.domain.PathFinder
+import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathPlaceFinder
+import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.Place
+import com.brtrip.place.PlaceRepository
 import com.brtrip.place.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
@@ -25,22 +27,25 @@ internal class TripCreatorTest {
     private lateinit var sut: TripCreator
 
     @Autowired
-    private lateinit var testDataLoader: TestDataLoader
+    private lateinit var pathRepository: PathRepository
+
+    @Autowired
+    private lateinit var placeRepository: PlaceRepository
 
     @Test
     fun `여행 일정 저장 - 추천 받은 Path가 안 바뀌었을 경우`() {
         // given
-        val place1 = Place(
+        val place1 = placeRepository.save(Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        )
+        ))
 
-        val place2 = Place(
+        val place2 = placeRepository.save(Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        )
+        ))
 
         val tripRequest = TripRequest(
             title = "first trip",
@@ -72,12 +77,15 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
         // path 저장
-        testDataLoader.sample_path_first(1L)
+        val path = Path(id = 1, likeCount = 1)
+
+        // pathPlace 지정
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 1)
+        )
+        pathRepository.save(path)
 
         // when
         val createdTrip = sut.create(1L, tripRequest)
@@ -90,17 +98,17 @@ internal class TripCreatorTest {
     @Test
     fun `여행 일정 저장 - 추천 받은 Path를 바꿨을 경우`() {
         // given
-        val place1 = Place(
+        val place1 = placeRepository.save(Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        )
+        ))
 
-        val place2 = Place(
+        val place2 = placeRepository.save(Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        )
+        ))
 
         val tripRequest = TripRequest(
             title = "first trip",
@@ -132,16 +140,15 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
         // path 저장
-        testDataLoader.sample_path_first(1L)
+        val path = Path(id = 1, likeCount = 1)
 
-//        // pathPlace 저장
-//        val pathPlace1 = testDataLoader.sample_path_place_first(path, place1, 1)
-//        val pathPlace2 = testDataLoader.sample_path_place_first(path, place2, 2)
+        // pathPlace 지정
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 1)
+        )
+        pathRepository.save(path)
 
         // when
         val createdTrip = sut.create(1L, tripRequest)

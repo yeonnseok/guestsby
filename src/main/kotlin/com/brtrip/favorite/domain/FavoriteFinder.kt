@@ -1,6 +1,6 @@
 package com.brtrip.favorite.domain
 
-import com.brtrip.common.exceptions.NotFoundException
+import com.brtrip.user.domain.User
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 
@@ -9,12 +9,11 @@ import org.springframework.transaction.annotation.Transactional
 class FavoriteFinder(
     private val favoriteRepository: FavoriteRepository
 ) {
-    fun findByUserId(userId: Long): List<Favorite> {
-        return favoriteRepository.findByUserIdAndDeleted(userId, false)
+    fun findByUser(user: User): List<Favorite> {
+        return favoriteRepository.findByUserAndDeleted(user, false)
     }
 
     fun findById(favoriteId: Long): Favorite {
         return favoriteRepository.findByIdAndDeleted(favoriteId, false)
-            ?: throw NotFoundException("찜한 경로가 없습니다.")
     }
 }

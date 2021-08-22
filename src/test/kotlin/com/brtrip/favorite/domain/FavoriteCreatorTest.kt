@@ -2,14 +2,21 @@ package com.brtrip.favorite.domain
 
 import com.brtrip.TestDataLoader
 import com.brtrip.favorite.controller.request.FavoriteRequest
-import com.brtrip.favorite.domain.FavoriteCreator
+import com.brtrip.path.domain.Path
+import com.brtrip.path.domain.PathPlace
+import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.Place
+import com.brtrip.place.PlaceRepository
+import com.brtrip.trip.domain.Trip
+import com.brtrip.trip.domain.TripPath
+import com.brtrip.trip.domain.TripRepository
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 
 @SpringBootTest
 @Transactional
@@ -19,45 +26,53 @@ class FavoriteCreatorTest {
     private lateinit var sut: FavoriteCreator
 
     @Autowired
+    private lateinit var placeRepository: PlaceRepository
+
+    @Autowired
+    private lateinit var pathRepository: PathRepository
+
+    @Autowired
+    private lateinit var tripRepository: TripRepository
+
+    @Autowired
     private lateinit var testDataLoader: TestDataLoader
 
     @Test
     fun `찜 저장하기`() {
         // given
-        val place1 = Place(
-            lat = "123",
-            lng = "456",
-            name = "central park"
+        // place 저장
+        val place1 = placeRepository.save(Place(lat = "123.123", lng = "456.456", name = "용두암"))
+        val place2 = placeRepository.save(Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"))
+        val place3 = placeRepository.save(Place(lat = "000.000", lng = "000.000", name = "공항"))
+
+        // path(+pathPlace) 저장
+        val path = Path()
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = place1, sequence = 1),
+            PathPlace(path = path, place = place2, sequence = 2),
+            PathPlace(path = path, place = place3, sequence = 3)
         )
-        val place2 = Place(
-            lat = "789",
-            lng = "101",
-            name = "grand canyon"
+        pathRepository.save(path)
+
+        val path2 = Path()
+        path2.pathPlaces = mutableListOf(
+            PathPlace(path = path2, place = place1, sequence = 1),
+            PathPlace(path = path2, place = place3, sequence = 2)
         )
+        pathRepository.save(path2)
+
+        // trip(+tripPath) 저장
+        val trip = Trip(title = "first trip", startDate = LocalDate.of(2021,7,21), endDate = LocalDate.of(2021,7,23), userId = 1)
+        trip.tripPaths = mutableListOf(
+            TripPath(trip = trip, path = path, sequence = 1),
+            TripPath(trip = trip, path = path2, sequence = 2)
+        )
+        tripRepository.save(trip)
 
         // user 저장
         val user = testDataLoader.sample_user()
 
-        // trip 저장
-        val trip = testDataLoader.sample_trip_first(1L)
-
-        // path 저장
-        var path = testDataLoader.sample_path_first(1L)
-
-        // place 저장
-        testDataLoader.sample_place_first(place1)
-        testDataLoader.sample_place_first(place2)
-
-        // tripPath 저장
-        testDataLoader.sample_trip_path_first(trip, path)
-
-        // pathPlace 저장
-        val pathPlace1 = testDataLoader.sample_path_place_first(path, place1, 1)
-        val pathPlace2 = testDataLoader.sample_path_place_first(path, place2, 2)
-
-        path.pathPlaces.add(pathPlace1)
-        path.pathPlaces.add(pathPlace2)
-
+        // request
         val favoriteRequest = FavoriteRequest(
             pathId = path.id!!
         )
@@ -74,10 +89,16 @@ class FavoriteCreatorTest {
 
         result.path.id shouldBe path.id
 
-        result.path.pathPlaces[0].id shouldBe pathPlace1.id
-        result.path.pathPlaces[0].place shouldBe pathPlace1.place
+        result.path.pathPlaces[0].id shouldBe path.pathPlaces[0].id
+        result.path.pathPlaces[0].place shouldBe path.pathPlaces[0].place
+        result.path.pathPlaces[0].sequence shouldBe path.pathPlaces[0].sequence
 
-        result.path.pathPlaces[1].id shouldBe pathPlace2.id
-        result.path.pathPlaces[1].place shouldBe pathPlace2.place
+        result.path.pathPlaces[1].id shouldBe path.pathPlaces[1].id
+        result.path.pathPlaces[1].place shouldBe path.pathPlaces[1].place
+        result.path.pathPlaces[1].sequence shouldBe path.pathPlaces[1].sequence
+
+        result.path.pathPlaces[2].id shouldBe path.pathPlaces[2].id
+        result.path.pathPlaces[2].place shouldBe path.pathPlaces[2].place
+        result.path.pathPlaces[2].sequence shouldBe path.pathPlaces[2].sequence
     }
 }

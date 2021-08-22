@@ -1,12 +1,13 @@
 package com.brtrip.place
 
+import com.brtrip.place.dto.PlaceDetailResponse
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
-@Transactional
 class PlaceService(
-    private val placeRepository: PlaceRepository
+    private val placeFinder: PlaceFinder
 ) {
-
+    fun findById(id: Long): PlaceDetailResponse {
+        return PlaceDetailResponse.of(placeFinder.findById(id))
+    }
 }

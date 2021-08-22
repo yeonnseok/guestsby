@@ -69,3 +69,10 @@ operation::trip/delete[snippets='http-request,http-response,request-headers,path
 [[resources-path-recommend]]
 === 경로 추천
 operation::path/recommend[snippets='http-request,http-response,request-parameters,response-fields']
+
+[[resources-place]]
+== 장소 관리
+
+[[resources-place-find]]
+=== 장소 상세 조회
+operation::place/find[snippets='http-request,http-response,path-parameters,response-fields']
