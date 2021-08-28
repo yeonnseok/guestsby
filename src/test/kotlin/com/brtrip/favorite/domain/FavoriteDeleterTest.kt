@@ -89,7 +89,7 @@ internal class FavoriteDeleterTest {
             authProvider = AuthProvider.KAKAO
         )
         user.favorites = mutableListOf(
-            Favorite(id = 1L, user = user, path = path)
+            Favorite(user = user, path = path)
         )
         userRepository.save(user)
 

@@ -75,7 +75,7 @@ internal class FavoriteFinderTest {
 
         // user(+favorite) 저장
         val user = User(
-            id = 1L,
+            id = 2L,
             nickName = "여행가",
             email = "trip@com",
             password = "test123",
@@ -83,7 +83,7 @@ internal class FavoriteFinderTest {
             authProvider = AuthProvider.KAKAO
         )
         user.favorites = mutableListOf(
-            Favorite(id = 1L, user = user, path = path)
+            Favorite(user = user, path = path)
         )
         userRepository.save(user)
 

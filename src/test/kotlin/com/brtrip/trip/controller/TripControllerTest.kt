@@ -193,6 +193,7 @@ class TripControllerTest : LoginUserControllerTest() {
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),
                         fieldWithPath("statusCode").description("상태 코드"),
+                        fieldWithPath("data.id").description("일정 id"),
                         fieldWithPath("data.title").description("일정 제목"),
                         fieldWithPath("data.startDate").description("시작 일자"),
                         fieldWithPath("data.endDate").description("종료 일자"),
@@ -247,6 +248,7 @@ class TripControllerTest : LoginUserControllerTest() {
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),
                         fieldWithPath("statusCode").description("상태 코드"),
+                        fieldWithPath("data[].id").description("일정 id"),
                         fieldWithPath("data[].title").description("일정 제목"),
                         fieldWithPath("data[].startDate").description("시작 일자"),
                         fieldWithPath("data[].endDate").description("종료 일자"),
