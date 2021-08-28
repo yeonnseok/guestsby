@@ -3,6 +3,7 @@ package com.brtrip.trip.domain
 import com.brtrip.path.domain.PathCreator
 import com.brtrip.path.domain.PathFinder
 import com.brtrip.place.PlaceFinder
+import com.brtrip.place.Places
 import com.brtrip.trip.controller.request.TripRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

@@ -1,6 +1,5 @@
 package com.brtrip
 
-import com.brtrip.place.Place
 import com.brtrip.user.domain.AuthProvider
 import com.brtrip.user.domain.RoleType
 import com.brtrip.user.domain.User

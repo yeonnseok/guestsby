@@ -20,6 +20,7 @@ import java.time.LocalDate
 @Transactional
 @Sql("/truncate.sql")
 internal class TripUpdaterTest {
+
     @Autowired
     private lateinit var sut: TripUpdater
 
@@ -31,9 +32,6 @@ internal class TripUpdaterTest {
 
     @Autowired
     private lateinit var tripRepository: TripRepository
-
-    @Autowired
-    private lateinit var tripPathRepository: TripPathRepository
 
     @Test
     fun `여행일정 업데이트`() {
@@ -62,6 +60,7 @@ internal class TripUpdaterTest {
             TripPath(trip = trip, path = path2, sequence = 2)
         )
         tripRepository.save(trip)
+
         val tripRequest = TripRequest(
             title = "change",
             startDate = "2021-08-21",

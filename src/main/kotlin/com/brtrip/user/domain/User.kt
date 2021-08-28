@@ -1,6 +1,7 @@
 package com.brtrip.user.domain
 
 import com.brtrip.common.BaseEntity
+import com.brtrip.favorite.domain.Favorite
 import javax.persistence.*
 
 @Entity
@@ -25,4 +26,11 @@ data class User(
     @Enumerated(EnumType.STRING)
     @Column(name = "auth_provider")
     var authProvider: AuthProvider
-) : BaseEntity()
+) : BaseEntity() {
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var favorites: MutableList<Favorite> = mutableListOf()
+        set(value) {
+            field.clear()
+            field.addAll(value)
+        }
+}
