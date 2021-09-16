@@ -36,7 +36,7 @@ jobs:
         with:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
 
   deploy:
