@@ -5,7 +5,7 @@ COPY build.gradle.kts .
 COPY settings.gradle.kts .
 COPY src src
 RUN chmod +x ./gradlew
-RUN ./gradlew clean build
+RUN ./gradlew clean bootJar
 
 FROM openjdk:11-jdk-slim
 COPY --from=builder build/libs/brtrip-0.0.1-SNAPSHOT.jar brtrip.jar
