@@ -51,5 +51,5 @@ jobs:
           password: ${{ secrets.CR_PAT }}
       - name: Docker run
         run: |
-          docker ps -q --filter "name=ghcr.io/mingukang-kr/brtrip" | grep -q . && docker stop ghcr.io/mingukang-kr/brtrip && docker rm -fv ghcr.io/mingukang-kr/brtrip
+          docker ps -q --filter "name=brtrip" | grep -q . && docker stop brtrip && docker rm -fv brtrip
           docker run -d -p 8080:8080 --name cicd --restart always ${{ env.DOCKER_IMAGE }}:${{ env.VERSION }}
