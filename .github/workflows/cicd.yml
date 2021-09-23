@@ -4,7 +4,7 @@ on:
   push:
     branches: [ feat/establish-docker-dev-env ]
 env:
-  DOCKER_IMAGE: ghcr.io/brtrip
+  DOCKER_IMAGE: ghcr.io/mingukang-kr/brtrip
   VERSION: ${{ github.sha }}
 
 jobs:
