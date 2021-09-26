@@ -488,7 +488,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/auth/check HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 28
+Content-Length: 30
 Host: localhost:8080
 
 {
@@ -506,7 +506,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 88
+Content-Length: 94
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -613,7 +613,7 @@ X-Frame-Options: DENY
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/auth/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 138
+Content-Length: 144
 Host: localhost:8080
 
 {
@@ -636,7 +636,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Location: http://localhost:8080/api/v1/user/me
 Content-Type: application/json
-Content-Length: 252
+Content-Length: 258
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -648,7 +648,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 201,
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM2LCJleHAiOjE2Mjk2MjA5MzZ9.R2_i0tgL6DXxeXIvFXqG8Ac0yKtKRnXm8G9LenU1N-c"
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ3LCJleHAiOjE2MzI1NjY0NDd9.RY-0FL5TsPfAmEl6vcY4D6shCk_zz8_vMD-ZVj7b0ns"
   }
 }</code></pre>
 </div>
@@ -763,7 +763,7 @@ X-Frame-Options: DENY
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/auth/login HTTP/1.1
 Content-Type: application/json;charset=UTF-8
 Accept: application/json
-Content-Length: 54
+Content-Length: 57
 Host: localhost:8080
 
 {
@@ -782,7 +782,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 252
+Content-Length: 258
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -794,7 +794,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 200,
   "data" : {
-    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM2LCJleHAiOjE2Mjk2MjA5MzZ9.ZnSLhksW0g8qlkEcg7jTe7sbo7S9UMDB9CIxj_fWPC0"
+    "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ3LCJleHAiOjE2MzI1NjY0NDd9.p1dY8dIJWb_dy3xKebDf4dHYkuXFsqwcAzLYfu-lUOE"
   }
 }</code></pre>
 </div>
@@ -897,7 +897,7 @@ X-Frame-Options: DENY
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/users/me HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.ARcGYts8Ad9eyx_u3CSTBJLle82EwMwOBoaAQB1UoNg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.yFimJszEK30Y0_9W2UEz8S2ETsb4q0k12BLe1PC4_AA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -912,7 +912,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 ETag: "03df8c02c9d041214b5f353d200c04ea9"
-Content-Length: 149
+Content-Length: 157
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1006,9 +1006,9 @@ X-Frame-Options: DENY
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/v1/users/me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.bvPThBbmh_MGh6urZxYAz2goy_Lun4uR9yn_VBV97c8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.8FuMCkarJ0Lm4zKR0OG0L5riVzZMQ7-nrPJfVSXxTK8
 Accept: application/json
-Content-Length: 30
+Content-Length: 32
 Host: localhost:8080
 
 {
@@ -1064,7 +1064,7 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/v1/users/me HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.bvPThBbmh_MGh6urZxYAz2goy_Lun4uR9yn_VBV97c8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.8FuMCkarJ0Lm4zKR0OG0L5riVzZMQ7-nrPJfVSXxTK8
 Accept: application/json
 Host: localhost:8080</code></pre>
 </div>
@@ -1122,9 +1122,9 @@ X-Frame-Options: DENY</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">POST /api/v1/trips HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.ARcGYts8Ad9eyx_u3CSTBJLle82EwMwOBoaAQB1UoNg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.8FuMCkarJ0Lm4zKR0OG0L5riVzZMQ7-nrPJfVSXxTK8
 Accept: application/json
-Content-Length: 346
+Content-Length: 363
 Host: localhost:8080
 
 {
@@ -1158,7 +1158,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Location: http://localhost:8080/api/v1/trips/1
 Content-Type: application/json
-Content-Length: 83
+Content-Length: 89
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1215,7 +1215,7 @@ X-Frame-Options: DENY
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/trips/my HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.ARcGYts8Ad9eyx_u3CSTBJLle82EwMwOBoaAQB1UoNg
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.8FuMCkarJ0Lm4zKR0OG0L5riVzZMQ7-nrPJfVSXxTK8
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1229,8 +1229,8 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-ETag: "0beb4bf0e8e8caf36554cdb4cf74bfa4b"
-Content-Length: 450
+ETag: "0f290416aa39a09f4e1a9479bccfdb2f3"
+Content-Length: 486
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1242,6 +1242,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 200,
   "data" : [ {
+    "id" : 1,
     "title" : "first trip",
     "startDate" : "2021-08-11",
     "endDate" : "2021-08-13",
@@ -1311,6 +1312,11 @@ X-Frame-Options: DENY
 <td class="tableblock halign-left valign-top"><p class="tableblock">상태 코드</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">일정 id</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data[].title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">일정 제목</p></td>
@@ -1362,9 +1368,9 @@ X-Frame-Options: DENY
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">PATCH /api/v1/trips/2 HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.bvPThBbmh_MGh6urZxYAz2goy_Lun4uR9yn_VBV97c8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ3LCJleHAiOjE2MzI1NjY0NDd9.RY-0FL5TsPfAmEl6vcY4D6shCk_zz8_vMD-ZVj7b0ns
 Accept: application/json
-Content-Length: 435
+Content-Length: 456
 Host: localhost:8080
 
 {
@@ -1401,7 +1407,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 454
+Content-Length: 490
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1413,6 +1419,7 @@ X-Frame-Options: DENY
   "result" : "SUCCESS",
   "statusCode" : 200,
   "data" : {
+    "id" : 2,
     "title" : "수정된 일정",
     "startDate" : "2021-08-11",
     "endDate" : "2021-08-13",
@@ -1520,6 +1527,11 @@ X-Frame-Options: DENY
 <td class="tableblock halign-left valign-top"><p class="tableblock">상태 코드</p></td>
 </tr>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">일정 id</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>data.title</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">일정 제목</p></td>
@@ -1570,7 +1582,7 @@ X-Frame-Options: DENY
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">DELETE /api/v1/trips/2 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTM1LCJleHAiOjE2Mjk2MjA5MzV9.bvPThBbmh_MGh6urZxYAz2goy_Lun4uR9yn_VBV97c8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ4LCJleHAiOjE2MzI1NjY0NDh9.yFimJszEK30Y0_9W2UEz8S2ETsb4q0k12BLe1PC4_AA
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1584,7 +1596,7 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
-Content-Length: 65
+Content-Length: 69
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1690,7 +1702,7 @@ X-Frame-Options: DENY
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http hljs" data-lang="http">GET /api/v1/paths/recommend?lat=789.789&amp;lng=321.321 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjI5NjE3OTMzLCJleHAiOjE2Mjk2MjA5MzN9.SOUJ80oB7Ch5KEXfkLGpiD-0JeRivJcn4UTtsMvOj3s
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6eyJhdXRob3JpdHkiOiJST0xFX1VTRVIifSwiaWF0IjoxNjMyNTYzNDQ1LCJleHAiOjE2MzI1NjY0NDV9.SSiiRJesY9eS5WeJLgJR9tfKPcJEkpSnw4DKTZicI5o
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1705,7 +1717,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 ETag: "0559b7eb06ad4826b9a6430c011e60683"
-Content-Length: 607
+Content-Length: 637
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1848,7 +1860,7 @@ Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Content-Type: application/json
 ETag: "0f28547ad4071a2ea356e8a66b5d61765"
-Content-Length: 159
+Content-Length: 168
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -1947,7 +1959,7 @@ X-Frame-Options: DENY
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-08-22 16:35:00 +0900
+Last updated 2021-08-29 16:49:41 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/github.min.css">

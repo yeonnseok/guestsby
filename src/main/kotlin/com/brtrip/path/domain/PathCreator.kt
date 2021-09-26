@@ -5,6 +5,10 @@ import com.brtrip.place.PlaceCreator
 import com.brtrip.place.PlaceRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
+
+@JvmField val prefixList = listOf("행복한", "즐거운", "신나는", "기대되는", "짜릿한")
+@JvmField val nameList = listOf("여행길", "바람길", "나빗길", "유람길", "사랑길")
 
 @Component
 @Transactional
@@ -27,9 +31,15 @@ class PathCreator(
                 pathPlaces = places.mapIndexed { index, place ->
                     PathPlace(path = this, place = place, sequence = index + 1)
                 }.toMutableList()
+                this.name = makePathName() // 이름 생성
                 pathRepository.save(this)
             }
         }
         return pathFinder.findById(result.first()!!)
+    }
+
+    private fun makePathName(): String {
+        return prefixList[Random().nextInt(prefixList.size)] + " " +
+                nameList[Random().nextInt(nameList.size)]
     }
 }
