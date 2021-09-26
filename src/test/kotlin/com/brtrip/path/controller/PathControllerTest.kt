@@ -75,6 +75,7 @@ class PathControllerTest : LoginUserControllerTest() {
                     responseFields(
                         fieldWithPath("result").description("응답 결과"),
                         fieldWithPath("statusCode").description("상태 코드"),
+                        fieldWithPath("data[].id").description("경로 id"),
                         fieldWithPath("data[].name").description("경로 이름"),
                         fieldWithPath("data[].likeCount").description("경로 좋아요 수"),
                         fieldWithPath("data[].places[].lat").description("경도"),
