@@ -88,7 +88,7 @@ class SecurityConfig(
         val configuration = CorsConfiguration()
 
         configuration.setAllowCredentials(true)
-        configuration.addAllowedOrigin("http://localhost:3000")
+        configuration.addAllowedOrigin("https://main.dj5ls8e687yg9.amplifyapp.com")
         configuration.addAllowedHeader("*")
         configuration.addAllowedMethod("*")
 
