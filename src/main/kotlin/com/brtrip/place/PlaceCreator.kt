@@ -9,7 +9,15 @@ class PlaceCreator(
     private val placeRepository: PlaceRepository
 ) {
     fun create(request: PlaceRequest): Place {
-        return placeRepository.findByLatAndLngAndDeleted(request.lat, request.lng, false)
-            ?: placeRepository.save(request.toEntity())
+        val placeExist = placeRepository.findByLatAndLngAndDeleted(request.lat, request.lng, false)
+        if (placeExist == null) {
+            val place = request.toEntity()
+            request.keywords!!.map {
+                PlaceCategory(null, Category(null, it!!), place, false)
+            }?.toMutableList().also { place.placeCategories = it!! }
+
+            return placeRepository.save(place)
+        }
+        return placeExist
     }
 }

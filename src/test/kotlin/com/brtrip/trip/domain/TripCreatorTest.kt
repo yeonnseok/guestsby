@@ -1,14 +1,10 @@
 package com.brtrip.trip.domain
 
-import com.brtrip.TestDataLoader
 import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
-import com.brtrip.path.domain.PathPlaceFinder
 import com.brtrip.path.domain.PathRepository
-import com.brtrip.place.Place
-import com.brtrip.place.PlaceRepository
-import com.brtrip.place.PlaceRequest
+import com.brtrip.place.*
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
@@ -35,18 +31,59 @@ internal class TripCreatorTest {
     @Test
     fun `여행 일정 저장 - 추천 받은 Path가 안 바뀌었을 경우`() {
         // given
-        val place1 = placeRepository.save(Place(
+        // 1번 Place
+        val place1 = Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        ))
+        )
+        place1.placeCategories = mutableListOf(
+            PlaceCategory(
+                null,
+                Category(
+                    null, "힐링"
+                ),
+                place1,
+                false
+            ),
+            PlaceCategory(
+                null,
+                Category(
+                    null, "관광"
+                ),
+                place1,
+                false
+            )
+        )
+        val savedPlace1 = placeRepository.save(place1)
 
-        val place2 = placeRepository.save(Place(
+        // 2번 Place
+        val place2 = Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        ))
+        )
+        place2.placeCategories = mutableListOf(
+            PlaceCategory(
+                null,
+                Category(
+                    null, "명승지"
+                ),
+                place2,
+                false
+            )
+        )
+        val savedPlace2 = placeRepository.save(place2)
 
+        // path
+        val path = Path(null, 1)
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = savedPlace1, sequence = 1),
+            PathPlace(path = path, place = savedPlace2, sequence = 2)
+        )
+        pathRepository.save(path)
+
+        // tripRequest
         val tripRequest = TripRequest(
             title = "first trip",
             startDate = "2021-08-05",
@@ -58,18 +95,19 @@ internal class TripCreatorTest {
                         PlaceRequest(
                             lat = "123",
                             lng = "456",
-                            name = "central park"
+                            name = "central park",
+                            keywords = arrayOf("힐링", "관광")
                         ),
                         PlaceRequest(
                             lat = "789",
                             lng = "101",
-                            name = "grand canyon"
+                            name = "grand canyon",
+                            keywords = arrayOf("명승지")
                         )
                     )
                 )
             )
         )
-
         val trip = Trip(
             userId = 1L,
             title = "first trip",
@@ -77,39 +115,72 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
-        // path 저장
-        val path = Path(id = 1, likeCount = 1)
-
-        // pathPlace 지정
-        path.pathPlaces = mutableListOf(
-            PathPlace(path = path, place = place1, sequence = 1),
-            PathPlace(path = path, place = place2, sequence = 1)
-        )
-        pathRepository.save(path)
-
         // when
         val createdTrip = sut.create(1L, tripRequest)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
+        createdTrip.tripPaths[0].path.pathPlaces[0].place.placeCategories[0].category.name shouldBe
+                place1.placeCategories[0].category.name // category check
     }
 
     @Test
     fun `여행 일정 저장 - 추천 받은 Path를 바꿨을 경우`() {
         // given
-        val place1 = placeRepository.save(Place(
+        // 1번 Place
+        val place1 = Place(
             lat = "123",
             lng = "456",
             name = "central park"
-        ))
+        )
+        place1.placeCategories = mutableListOf(
+            PlaceCategory(
+                null,
+                Category(
+                    null, "힐링"
+                ),
+                place1,
+                false
+            ),
+            PlaceCategory(
+                null,
+                Category(
+                    null, "관광"
+                ),
+                place1,
+                false
+            )
+        )
+        val savedPlace1 = placeRepository.save(place1)
 
-        val place2 = placeRepository.save(Place(
+        // 2번 Place
+        val place2 = Place(
             lat = "789",
             lng = "101",
             name = "grand canyon"
-        ))
+        )
+        place2.placeCategories = mutableListOf(
+            PlaceCategory(
+                null,
+                Category(
+                    null, "명승지"
+                ),
+                place2,
+                false
+            )
+        )
+        val savedPlace2 = placeRepository.save(place2)
 
+        // path
+        val path = Path(null, 1)
+        path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = savedPlace1, sequence = 1),
+            PathPlace(path = path, place = savedPlace2, sequence = 2)
+        )
+        pathRepository.save(path)
+
+        // tripRequest
         val tripRequest = TripRequest(
             title = "first trip",
             startDate = "2021-08-05",
@@ -121,12 +192,14 @@ internal class TripCreatorTest {
                         PlaceRequest(
                             lat = "789",
                             lng = "101",
-                            name = "grand canyon"
+                            name = "grand canyon",
+                            keywords = arrayOf("명승지")
                         ),
                         PlaceRequest(
                             lat = "123",
                             lng = "456",
-                            name = "central park"
+                            name = "central park",
+                            keywords = arrayOf("힐링", "관광")
                         )
                     )
                 )
@@ -140,21 +213,13 @@ internal class TripCreatorTest {
             endDate = LocalDate.of(2021,8,8)
         )
 
-        // path 저장
-        val path = Path(id = 1, likeCount = 1)
-
-        // pathPlace 지정
-        path.pathPlaces = mutableListOf(
-            PathPlace(path = path, place = place1, sequence = 1),
-            PathPlace(path = path, place = place2, sequence = 1)
-        )
-        pathRepository.save(path)
-
         // when
         val createdTrip = sut.create(1L, tripRequest)
 
         // then
         createdTrip.title shouldBe trip.title
         createdTrip.userId shouldBe trip.userId
+        createdTrip.tripPaths[0].path.pathPlaces[0].place.placeCategories[0].category.name shouldBe
+                place1.placeCategories[0].category.name // category check
     }
 }
