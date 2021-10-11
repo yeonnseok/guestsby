@@ -70,7 +70,7 @@ internal class TripUpdaterTest {
                 PathRequest(
                     id = path.id,
                     places = listOf(
-                        PlaceRequest(lat = "54321.54321", lng = "12345.12345", name = "수정")
+                        PlaceRequest(lat = "54321.54321", lng = "12345.12345", name = "수정", keywords = arrayOf("수정"))
                     )
                 )
             )
@@ -114,9 +114,9 @@ internal class TripUpdaterTest {
                 PathRequest(
                     id = path.id,
                     places = listOf(
-                        PlaceRequest(lat = "123.123", lng = "456.456", name = "용두암"),
-                        PlaceRequest(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"),
-                        PlaceRequest(lat = "000.000", lng = "000.000", name = "공항")
+                        PlaceRequest(lat = "123.123", lng = "456.456", name = "용두암", keywords = arrayOf("힐링")),
+                        PlaceRequest(lat = "789.789", lng = "321.321", name = "한라산 국립 공원", keywords = arrayOf("관광")),
+                        PlaceRequest(lat = "000.000", lng = "000.000", name = "공항", keywords = arrayOf("주요시설"))
                     )
                 )
             )

@@ -1,7 +1,6 @@
 package com.brtrip.place
 
 import com.brtrip.common.BaseEntity
-import com.brtrip.path.domain.PathPlace
 import javax.persistence.*
 
 @Entity
