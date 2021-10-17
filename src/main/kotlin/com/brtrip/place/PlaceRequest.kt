@@ -1,7 +1,5 @@
 package com.brtrip.place
 
-import com.brtrip.place.Place
-
 data class PlaceRequest(
     var lat: String,
     var lng: String,

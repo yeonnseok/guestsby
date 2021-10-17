@@ -14,15 +14,16 @@ import org.springframework.transaction.annotation.Transactional
 @SpringBootTest
 @Transactional
 @Sql("/truncate.sql")
-internal class RecommendTest {
-    @Autowired
-    private lateinit var recommendation: Recommendation
+internal class RecommendationTest {
 
     @Autowired
     private lateinit var placeRepository: PlaceRepository
 
     @Autowired
     private lateinit var pathRepository: PathRepository
+
+    @Autowired
+    private lateinit var sut: Recommendation
 
     @Test
     fun `경로 추천`() {
@@ -46,7 +47,7 @@ internal class RecommendTest {
         pathRepository.save(otherPath)
 
         // when
-        val pathResponse = recommendation.run(place1)
+        val pathResponse = sut.run(place1)
 
         // then
         println(pathResponse[0].id)
