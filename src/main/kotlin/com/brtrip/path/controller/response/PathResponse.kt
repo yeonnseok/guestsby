@@ -11,7 +11,7 @@ class PathResponse(
     val name: String
 ) {
     companion object {
-        fun of(path: Path, places: List<Place>): PathResponse {
+        @JvmStatic fun of(path: Path, places: List<Place>): PathResponse {
             return PathResponse(
                 id = path.id!!,
                 places = places.map { PlaceResponse.of(it) },
@@ -20,4 +20,7 @@ class PathResponse(
             )
         }
     }
+
+    override fun toString(): String = "id: " + id.toString() +
+            ", places: " + places + ", likeCount: " + likeCount + ", name: " + name
 }
