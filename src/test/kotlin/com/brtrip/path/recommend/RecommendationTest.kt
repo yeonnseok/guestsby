@@ -32,82 +32,37 @@ internal class RecommendationTest {
     fun `경로 추천`() {
         // given
         // 1번 Place
-        val place1 = Place(
-            lat = "123.123", lng = "456.456", name = "용두암"
-        )
+        val place1 = Place(lat = "123.123", lng = "456.456", name = "용두암")
         place1.placeCategories = mutableListOf(
-            PlaceCategory(
-                null,
-                Category(
-                    null, "힐링"
-                ),
-                place1,
-                false
-            )
+            PlaceCategory(null, Category(null, "힐링"), place1, false)
         )
         val savedPlace1 = placeRepository.save(place1)
 
         // 2번 Place
-        val place2 = Place(
-            lat = "789.789", lng = "321.321", name = "한라산 국립 공원"
-        )
+        val place2 = Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원")
         place2.placeCategories = mutableListOf(
-            PlaceCategory(
-                null,
-                Category(
-                    null, "관광"
-                ),
-                place2,
-                false
-            )
+            PlaceCategory(null, Category(null, "관광"), place2, false)
         )
         val savedPlace2 = placeRepository.save(place2)
 
         // 3번 Place
-        val place3 = Place(
-            lat = "131.131", lng = "454.454", name = "카페"
-        )
+        val place3 = Place(lat = "131.131", lng = "454.454", name = "카페")
         place3.placeCategories = mutableListOf(
-            PlaceCategory(
-                null,
-                Category(
-                    null, "일반시설"
-                ),
-                place3,
-                false
-            )
+            PlaceCategory(null, Category(null, "일반시설"), place3, false)
         )
         val savedPlace3 = placeRepository.save(place3)
 
         // 4번 Place
-        val place4 = Place(
-            lat = "787.787", lng = "323.323", name = "해변"
-        )
+        val place4 = Place(lat = "787.787", lng = "323.323", name = "해변")
         place4.placeCategories = mutableListOf(
-            PlaceCategory(
-                null,
-                Category(
-                    null, "힐링"
-                ),
-                place4,
-                false
-            )
+            PlaceCategory(null, Category(null, "힐링"), place4, false)
         )
         val savedPlace4 = placeRepository.save(place4)
 
         // 5번 Place
-        val place5 = Place(
-            lat = "999.999", lng = "888.888", name = "절벽"
-        )
+        val place5 = Place(lat = "999.999", lng = "888.888", name = "절벽")
         place5.placeCategories = mutableListOf(
-            PlaceCategory(
-                null,
-                Category(
-                    null, "휴식"
-                ),
-                place5,
-                false
-            )
+            PlaceCategory(null, Category(null, "휴식"), place5, false)
         )
         val savedPlace5 = placeRepository.save(place5)
 

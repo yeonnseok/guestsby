@@ -48,9 +48,9 @@ public class Recommendation {
 
         List<PlaceRequest> placeRequestList = new ArrayList<>();
         for (String finalPlace : placeSet) {
-            Place p = placeFinder.findById(Integer.parseInt(finalPlace));
-            PlaceRequest placeReq = new PlaceRequest(p.getLat(), p.getLng(), p.getName(), p.getContent(),
-                    p.getPlaceCategories().stream().map(x -> x.getCategory().getName()).toArray(String[]::new));
+            Place findPlace = placeFinder.findById(Integer.parseInt(finalPlace));
+            PlaceRequest placeReq = new PlaceRequest(findPlace.getLat(), findPlace.getLng(), findPlace.getName(), findPlace.getContent(),
+                    findPlace.getPlaceCategories().stream().map(x -> x.getCategory().getName()).toArray(String[]::new));
             placeRequestList.add(placeReq);
         }
 
@@ -58,7 +58,10 @@ public class Recommendation {
         placeRequestList.stream().map(PlaceRequest::toEntity).forEach(places::add);
 
         List<PathResponse> pathResponses = new ArrayList<>();
-        pathResponses.add(PathResponse.of(pathCreator.create(placeRequestList), places));
+        Path path = pathCreator.create(placeRequestList);
+
+        PathResponse pathResponse = PathResponse.of(path, places);
+        pathResponses.add(pathResponse);
 
         return pathResponses;
     }
