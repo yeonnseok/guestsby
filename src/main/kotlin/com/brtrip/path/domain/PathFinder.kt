@@ -17,6 +17,6 @@ class PathFinder(
     }
 
     fun findById(id: Long): Path {
-        return pathRepository.findByIdAndDeleted(id, false) ?: throw NotFoundException("Path가 존재하지 않습니다.")
+        return pathRepository.findByIdAndDeleted(id, false) ?: throw NotFoundException("경로가 존재하지 않습니다.")
     }
 }
