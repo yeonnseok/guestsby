@@ -17,24 +17,25 @@ import java.util.*;
 @Transactional
 @Component
 public class Recommendation {
-
-    @Autowired
     private PathFinder pathFinder;
-
-    @Autowired
     private PlaceFinder placeFinder;
+    private PathCreator pathCreator;
 
     @Autowired
-    private PathCreator pathCreator;
+    public Recommendation(PathFinder pathFinder, PlaceFinder placeFinder, PathCreator pathCreator) {
+        this.pathFinder = pathFinder;
+        this.placeFinder = placeFinder;
+        this.pathCreator = pathCreator;
+    }
 
     public List<PathResponse> run(Place place) {
         Set<Set<String>> transactions = getTransactions(place);
-        Float minSupport = (float)0.5; // 최소지지도: 0.5
+        Float minSupport = 0.5F; // 최소지지도: 0.5
         Apriori apriori = new Apriori(minSupport, transactions);
         apriori.run();
 
         String metric = "lift";
-        Float minLift = (float)1.0; // 최소향상도: 1.0
+        Float minLift = 1.0F; // 최소향상도: 1.0
         AssociationRule associationRule = new AssociationRule(apriori.getResult(), metric, minLift);
         associationRule.run();
 

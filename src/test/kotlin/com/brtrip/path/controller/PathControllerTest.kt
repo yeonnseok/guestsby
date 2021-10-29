@@ -32,7 +32,7 @@ class PathControllerTest : LoginUserControllerTest() {
     private lateinit var pathRepository: PathRepository
 
     @Test
-    fun `여행 경로 추천 API`() {
+    fun `여행 경로 추천`() {
         // given
         // 1번 Place
         val place1 = Place(
@@ -66,13 +66,6 @@ class PathControllerTest : LoginUserControllerTest() {
         )
         val savedPlace2 = placeRepository.save(place2)
 
-        val path = Path(likeCount = 0)
-        path.pathPlaces = mutableListOf(
-            PathPlace(path = path, place = savedPlace1, sequence = 1),
-            PathPlace(path = path, place = savedPlace2, sequence = 2)
-        )
-        pathRepository.save(path)
-
         // 3번 Place
         val place3 = Place(
             lat = "131.131", lng = "454.454", name = "카페"
@@ -105,13 +98,33 @@ class PathControllerTest : LoginUserControllerTest() {
         )
         val savedPlace4 = placeRepository.save(place4)
 
-        val path2 = Path(likeCount = 0)
+        val path = Path(likeCount = 0)
         path.pathPlaces = mutableListOf(
+            PathPlace(path = path, place = savedPlace1, sequence = 1),
+            PathPlace(path = path, place = savedPlace2, sequence = 2)
+        )
+        pathRepository.save(path)
+        val path2 = Path(likeCount = 0)
+        path2.pathPlaces = mutableListOf(
             PathPlace(path = path2, place = savedPlace2, sequence = 1),
             PathPlace(path = path2, place = savedPlace3, sequence = 2),
             PathPlace(path = path2, place = savedPlace4, sequence = 3)
         )
         pathRepository.save(path2)
+        val path3 = Path(likeCount = 0)
+        path3.pathPlaces = mutableListOf(
+            PathPlace(path = path3, place = savedPlace1, sequence = 1),
+            PathPlace(path = path3, place = savedPlace2, sequence = 2),
+            PathPlace(path = path3, place = savedPlace4, sequence = 3)
+        )
+        pathRepository.save(path3)
+        val path4 = Path(likeCount = 0)
+        path4.pathPlaces = mutableListOf(
+            PathPlace(path = path4, place = savedPlace3, sequence = 1),
+            PathPlace(path = path4, place = savedPlace2, sequence = 2),
+            PathPlace(path = path4, place = savedPlace1, sequence = 3)
+        )
+        pathRepository.save(path4)
 
         // when
         val result = mockMvc.perform(

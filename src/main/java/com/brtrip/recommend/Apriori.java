@@ -1,6 +1,7 @@
 package com.brtrip.recommend;
 
 import com.google.common.collect.Sets;
+
 import java.util.*;
 
 public class Apriori {
@@ -25,14 +26,13 @@ public class Apriori {
         Integer maxLevel = itemset.size();
 
         while (level < maxLevel) {
+            if (itemset.size() < level) break;
             Set<Set<String>> combinations = getCombinations(itemset, level);
             Map<Set<String>, Float> supportedItemset = getSupportedItemset(combinations);
             result.putAll(supportedItemset);
             itemset = createSet(supportedItemset.keySet());
             level++;
-            if (itemset.size() <= 1) { // means current itemsets are all pruned
-                break;
-            }
+            if (itemset.size() <= 1) break;
         }
     }
 
