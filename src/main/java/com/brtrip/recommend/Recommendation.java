@@ -53,13 +53,12 @@ public class Recommendation {
                     p.getPlaceCategories().stream().map(x -> x.getCategory().getName()).toArray(String[]::new));
             placeRequestList.add(placeReq);
         }
-        Path path = pathCreator.create(placeRequestList);
 
         List<Place> places = new ArrayList<>();
         placeRequestList.stream().map(PlaceRequest::toEntity).forEach(places::add);
 
         List<PathResponse> pathResponses = new ArrayList<>();
-        pathResponses.add(PathResponse.of(path, places));
+        pathResponses.add(PathResponse.of(pathCreator.create(placeRequestList), places));
 
         return pathResponses;
     }
