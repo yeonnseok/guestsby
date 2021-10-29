@@ -14,7 +14,7 @@ class PlaceFinder(
 ) {
     fun findByPosition(lat: String, lng: String): Place {
         return placeRepository.findByLatAndLngAndDeleted(lat, lng, false)
-            ?: throw NotFoundException("장소를 찾을 수 없습니다.")
+            ?: throw NotFoundException("cannot find that place")
     }
 
     fun findByPath(path: Path): List<Place> {

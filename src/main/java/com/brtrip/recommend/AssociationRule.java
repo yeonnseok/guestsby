@@ -1,10 +1,9 @@
-package com.brtrip.path.recommend;
+package com.brtrip.recommend;
 
 import com.google.common.collect.Sets;
 import java.util.*;
 
 public class AssociationRule {
-
     private Map<Set<String>, Float> itemset;
     private String metric;
     private Float min_threshold;

@@ -1,6 +1,5 @@
-package com.brtrip.path.controller
+package com.brtrip.path.recommend
 
-import com.brtrip.common.response.ResultType
 import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathRepository
@@ -8,22 +7,17 @@ import com.brtrip.place.Category
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceCategory
 import com.brtrip.place.PlaceRepository
-import com.brtrip.restdocs.LoginUserControllerTest
+import com.brtrip.recommend.Recommendation
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
-import org.springframework.restdocs.headers.HeaderDocumentation
-import org.springframework.restdocs.headers.HeaderDocumentation.headerWithName
-import org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders
-import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.*
-import org.springframework.restdocs.payload.PayloadDocumentation.*
-import org.springframework.restdocs.request.RequestDocumentation.*
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 
+@SpringBootTest
 @Transactional
-class PathControllerTest : LoginUserControllerTest() {
+@Sql("/truncate.sql")
+internal class RecommendationTest {
 
     @Autowired
     private lateinit var placeRepository: PlaceRepository
@@ -31,8 +25,11 @@ class PathControllerTest : LoginUserControllerTest() {
     @Autowired
     private lateinit var pathRepository: PathRepository
 
+    @Autowired
+    private lateinit var sut: Recommendation
+
     @Test
-    fun `여행 경로 추천`() {
+    fun `경로 추천`() {
         // given
         // 1번 Place
         val place1 = Place(lat = "123.123", lng = "456.456", name = "용두암")
@@ -126,38 +123,12 @@ class PathControllerTest : LoginUserControllerTest() {
         pathRepository.save(path6)
 
         // when
-        val result = mockMvc.perform(
-            get("/api/v1/paths/recommend?lat=789.789&lng=321.321")
-                .header("Authorization", "Bearer $token")
-        )
+        val pathResponse = sut.run(savedPlace2)
 
         // then
-        result
-            .andExpect(status().isOk)
-            .andExpect(jsonPath("result").value(ResultType.SUCCESS.name))
-            .andExpect(jsonPath("statusCode").value(HttpStatus.OK.value()))
-            .andDo(
-                document(
-                    "path/recommend",
-                    requestHeaders(
-                        headerWithName("Authorization").description("인증 토큰")
-                    ),
-                    requestParameters(
-                      parameterWithName("lat").description("위도"),
-                      parameterWithName("lng").description("경도")
-                    ),
-                    responseFields(
-                        fieldWithPath("result").description("응답 결과"),
-                        fieldWithPath("statusCode").description("상태 코드"),
-                        fieldWithPath("data[].id").description("경로 id"),
-                        fieldWithPath("data[].name").description("경로 이름"),
-                        fieldWithPath("data[].likeCount").description("경로 좋아요 수"),
-                        fieldWithPath("data[].places[].lat").description("경도"),
-                        fieldWithPath("data[].places[].lng").description("위도"),
-                        fieldWithPath("data[].places[].name").description("장소 이름"),
-                        fieldWithPath("data[].places[].keywords").description("카테고리")
-                    )
-                )
-            )
+        println(pathResponse[0].id)
+        println(pathResponse[0].likeCount)
+        println(pathResponse[0].name)
+        println(pathResponse[0].places)
     }
 }

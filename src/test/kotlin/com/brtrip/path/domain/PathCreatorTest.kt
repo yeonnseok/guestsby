@@ -29,6 +29,7 @@ internal class PathCreatorTest {
         val place1 = placeRepository.save(Place(lat = "123.123", lng = "456.456", name = "용두암"))
         val place2 = placeRepository.save(Place(lat = "789.789", lng = "321.321", name = "한라산 국립 공원"))
         val place3 = placeRepository.save(Place(lat = "000.000", lng = "000.000", name = "공항"))
+
         val path = Path()
         path.pathPlaces = mutableListOf(
             PathPlace(path = path, place = place1, sequence = 1),
@@ -36,7 +37,6 @@ internal class PathCreatorTest {
             PathPlace(path = path, place = place3, sequence = 3)
         )
         pathRepository.save(path)
-
         val otherPath = Path()
         otherPath.pathPlaces = mutableListOf(
             PathPlace(path = otherPath, place = place1, sequence = 1),
