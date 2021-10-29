@@ -2,7 +2,7 @@ package com.brtrip.path.domain
 
 import com.brtrip.path.controller.request.PathRequest
 import com.brtrip.path.controller.response.PathResponse
-import com.brtrip.path.recommend.Recommendation
+import com.brtrip.recommend.Recommendation
 import com.brtrip.place.PlaceFinder
 import org.springframework.stereotype.Service
 

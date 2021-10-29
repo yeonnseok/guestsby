@@ -1,3 +1,4 @@
+/*
 package com.brtrip.path.recommend
 
 import com.brtrip.path.domain.Path
@@ -56,3 +57,4 @@ internal class RecommendationTest {
         println(pathResponse[0].places)
     }
 }
+ */

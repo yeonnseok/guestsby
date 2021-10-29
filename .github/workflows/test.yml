@@ -1,0 +1,24 @@
+name: CI/CD test workflow
+
+on:
+  push:
+    branches: [ fix/recommend ]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v2
+
+      - name: JDK 11 설치
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.8
+
+      - name: gradlew 권한 설정
+        run: chmod +x gradlew
+
+      - name: 빌드
+        run: ./gradlew build

@@ -1,4 +1,4 @@
-package com.brtrip.path.recommend;
+package com.brtrip.recommend;
 
 import com.google.common.collect.Sets;
 import java.util.*;

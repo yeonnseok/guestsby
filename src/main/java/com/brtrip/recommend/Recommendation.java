@@ -1,4 +1,4 @@
-package com.brtrip.path.recommend;
+package com.brtrip.recommend;
 
 import com.brtrip.path.controller.response.PathResponse;
 import com.brtrip.path.domain.Path;
@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Component
 @Transactional
+@Component
 public class Recommendation {
 
     @Autowired
