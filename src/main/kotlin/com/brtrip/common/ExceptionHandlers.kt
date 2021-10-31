@@ -1,6 +1,7 @@
 package com.brtrip.common
 
 import com.brtrip.common.exceptions.BadRequestException
+import com.brtrip.common.exceptions.NotFoundException
 import com.brtrip.common.response.ApiResponse
 import com.brtrip.common.response.ErrorResponse
 import com.brtrip.common.response.ResultType
@@ -33,5 +34,15 @@ class ExceptionHandlers {
             data = ErrorResponse(e.message ?: "서버에 문제가 발생했습니다")
         )
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error)
+    }
+
+    @ExceptionHandler(NotFoundException::class)
+    fun notFoundErrorHandler(e: RuntimeException): ResponseEntity<ApiResponse> {
+        val error = ApiResponse(
+            result = ResultType.FAIL,
+            statusCode = HttpStatus.NOT_FOUND.value(),
+            data = ErrorResponse(e.message ?: "요청하신 장소를 찾을 수 없습니다")
+        )
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error)
     }
 }
