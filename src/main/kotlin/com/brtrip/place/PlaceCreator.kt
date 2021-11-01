@@ -12,8 +12,10 @@ class PlaceCreator(
         val placeExist = placeRepository.findByLatAndLngAndDeleted(request.lat, request.lng, false)
         if (placeExist == null) {
             val place = request.toEntity()
-            request.keywords.map {
-                PlaceCategory(null, Category(null, it!!), place, false)
+            var isRepresentative = true
+            request.keywords.mapIndexed { index, data ->
+                if (index != 0) isRepresentative = false
+                PlaceCategory(null, Category(null, data!!), place, isRepresentative)
             }.toMutableList().also { place.placeCategories = it }
 
             return placeRepository.save(place)
