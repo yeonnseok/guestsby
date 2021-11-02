@@ -2,7 +2,7 @@ name: CI/CD test workflow
 
 on:
   push:
-    branches: [ fix/recommend ]
+    branches: [ feat/convert-multi-module ]
 
 jobs:
   build:
