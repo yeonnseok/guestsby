@@ -1,5 +1,7 @@
 package com.brtrip.place
 
+import com.brtrip.place.controller.request.PlaceRequest
+
 class Places(
     val places: List<Place>
 ) {

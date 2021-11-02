@@ -2,7 +2,7 @@ package com.brtrip.path.controller.response
 
 import com.brtrip.path.domain.Path
 import com.brtrip.place.Place
-import com.brtrip.place.dto.PlaceResponse
+import com.brtrip.place.controller.response.PlaceResponse
 
 class PathResponse(
     val id: Long,

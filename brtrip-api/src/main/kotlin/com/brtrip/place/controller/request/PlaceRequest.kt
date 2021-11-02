@@ -1,5 +1,8 @@
-package com.brtrip.place
+package com.brtrip.place.controller.request
 
+import com.brtrip.place.Category
+import com.brtrip.place.Place
+import com.brtrip.place.PlaceCategory
 import java.util.stream.IntStream
 
 data class PlaceRequest(

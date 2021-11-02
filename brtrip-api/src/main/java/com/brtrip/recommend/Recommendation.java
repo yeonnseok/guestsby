@@ -7,7 +7,7 @@ import com.brtrip.path.domain.PathFinder;
 import com.brtrip.path.domain.PathPlace;
 import com.brtrip.place.Place;
 import com.brtrip.place.PlaceFinder;
-import com.brtrip.place.PlaceRequest;
+import com.brtrip.place.controller.request.PlaceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

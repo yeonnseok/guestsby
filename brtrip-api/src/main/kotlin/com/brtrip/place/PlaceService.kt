@@ -1,6 +1,6 @@
 package com.brtrip.place
 
-import com.brtrip.place.dto.PlaceDetailResponse
+import com.brtrip.place.controller.response.PlaceDetailResponse
 import org.springframework.stereotype.Service
 
 @Service

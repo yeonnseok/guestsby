@@ -5,6 +5,7 @@ import com.brtrip.path.domain.Path
 import com.brtrip.path.domain.PathPlace
 import com.brtrip.path.domain.PathRepository
 import com.brtrip.place.*
+import com.brtrip.place.controller.request.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test

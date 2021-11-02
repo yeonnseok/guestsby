@@ -2,7 +2,7 @@ package com.brtrip.path.domain
 
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceCreator
-import com.brtrip.place.PlaceRequest
+import com.brtrip.place.controller.request.PlaceRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.util.*

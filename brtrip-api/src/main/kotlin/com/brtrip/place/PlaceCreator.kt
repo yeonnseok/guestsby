@@ -1,5 +1,6 @@
 package com.brtrip.place
 
+import com.brtrip.place.controller.request.PlaceRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 

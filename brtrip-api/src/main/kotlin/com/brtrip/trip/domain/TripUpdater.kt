@@ -4,7 +4,7 @@ import com.brtrip.path.domain.*
 import com.brtrip.place.Place
 import com.brtrip.place.PlaceFinder
 import com.brtrip.place.PlaceRepository
-import com.brtrip.place.PlaceRequest
+import com.brtrip.place.controller.request.PlaceRequest
 import com.brtrip.trip.controller.request.TripRequest
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional

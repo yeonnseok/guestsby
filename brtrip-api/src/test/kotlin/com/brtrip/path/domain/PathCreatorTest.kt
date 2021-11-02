@@ -1,6 +1,7 @@
 package com.brtrip.path.domain
 
 import com.brtrip.place.*
+import com.brtrip.place.controller.request.PlaceRequest
 import io.kotlintest.matchers.collections.shouldNotBeOneOf
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test

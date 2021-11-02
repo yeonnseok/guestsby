@@ -1,4 +1,4 @@
-package com.brtrip.place.dto
+package com.brtrip.place.controller.response
 
 import com.brtrip.place.Place
 

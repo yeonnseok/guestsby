@@ -1,7 +1,7 @@
 package com.brtrip.place.domain
 
 import com.brtrip.place.PlaceCreator
-import com.brtrip.place.PlaceRequest
+import com.brtrip.place.controller.request.PlaceRequest
 import io.kotlintest.shouldBe
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
