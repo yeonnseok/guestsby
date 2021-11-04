@@ -26,7 +26,7 @@ jobs:
       run: chmod +x gradlew
       
     - name: 빌드
-      run: ./gradlew build
+      run: ./gradlew brtrip-api:build
       
     - name: 소스코드 업로드
       uses: actions/upload-artifact@v2
