@@ -5,9 +5,9 @@ name: CI with Gradle
 
 on:
   push:
-    branches: [ master, hotfix ]
-  pull_request:
     branches: [ master ]
+  pull_request:
+    branches: [ master, hotfix ]
 
 jobs:
   build:
