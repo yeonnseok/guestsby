@@ -5,9 +5,9 @@ name: CI with Gradle
 
 on:
   push:
-    branches: [ master, feat/add-docker-env ]
-  pull_request:
     branches: [ master ]
+  pull_request:
+    branches: [ master, develop ]
 
 jobs:
   build:
