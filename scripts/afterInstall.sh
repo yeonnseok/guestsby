@@ -2,7 +2,7 @@
 
 APP_NAME=brtrip
 
-echo "> Build new docker image"
+echo "> Build new app image"
 docker build -t $APP_NAME .
 
 echo "> Deploy new app container"
