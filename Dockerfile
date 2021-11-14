@@ -1,3 +1,4 @@
+# Build phase
 FROM openjdk:11-jdk-slim as builder
 
 COPY gradlew .
@@ -9,15 +10,15 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar
 
+# Run phase
 FROM openjdk:11-jdk-slim
 
-ENV REPOSITORY /home/ubuntu/server
-ENV JAR_NAME $(ls $REPOSITORY/build/libs/ | grep '.jar' | tail -n 1)
-ENV JAR_PATH $REPOSITORY/build/libs/$JAR_NAME
-ENV JVM_OPTS -Dspring.profiles.active=live -Dspring.config.location=$REPOSITORY/application-oauth.yml,$REPOSITORY/application.yml
+COPY --from=builder build/libs/brtrip-0.0.1-SNAPSHOT.jar /app/brtrip.jar
+COPY --from=builder src/test/resources/application.yml /app/application.yml
+COPY --from=builder src/test/resources/application-oauth.yml /app/application-oauth.yml
 
-COPY --from=builder build/libs/brtrip-0.0.1-SNAPSHOT.jar brtrip.jar
-VOLUME ["/var/log"]
+WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["java", "$JVM_OPTS", "-jar", "$JAR_PATH", ">>", "/home/ubuntu/deploy.log 2>&1 &"]
+
+ENTRYPOINT ["nohup", "java", "-jar", "brtrip.jar", "-Dspring.profiles.active=live", "-Dspring.config.location=application-oauth.yml, application.yml"]
