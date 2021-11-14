@@ -9,5 +9,10 @@ if [ -d $REPOSITORY/build ]; then
 fi
 
 echo "> Down and remove the existing container and image"
-docker stop app
-docker rm app
+
+if [ ! "$(docker ps -q -f name=app)" ]; then
+    if [ "$(docker ps -aq -f status=exited -f name=app)" ]; then
+        docker rm app
+    fi
+    docker stop app
+fi
