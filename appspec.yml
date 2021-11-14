@@ -14,6 +14,6 @@ hooks:
     - location: scripts/beforeInstall.sh
       runas: root
   AfterInstall:
-    - location: scripts/deploy.sh
+    - location: scripts/afterInstall.sh
       timeout: 60
       runas: root
