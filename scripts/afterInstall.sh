@@ -1,6 +1,6 @@
 #!/bin/bash
 
-APP_NAME=brtrip
+APP_NAME=guestsby
 
 echo "> Build new app image"
 docker build -t $APP_NAME .

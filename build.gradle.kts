@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.5.0"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	id("org.asciidoctor.convert") version "1.5.12"
 	kotlin("jvm") version "1.5.10"
 	kotlin("plugin.spring") version "1.5.10"
 	kotlin("plugin.jpa") version "1.5.10"
@@ -44,7 +43,6 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")
-	asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -67,21 +65,5 @@ val snippetsDir = file("build/generated-snippets")
 tasks {
 	test {
 		outputs.dir(snippetsDir)
-	}
-
-	asciidoctor {
-		inputs.dir(snippetsDir)
-		dependsOn(test)
-	}
-
-	asciidoctor {
-		copy {
-			from("${asciidoctor.get().outputDir}/html5")
-			into("src/main/resources/static/docs")
-		}
-	}
-
-	build {
-		dependsOn(asciidoctor)
 	}
 }
