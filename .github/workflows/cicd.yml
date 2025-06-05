@@ -52,7 +52,7 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: S3 upload
-        run: aws deploy push --application-name brtrip-deploy --s3-location s3://brtrip/deploy/build.zip --source .
+        run: aws deploy push --application-name guestsby-deploy --s3-location s3://guestsby/deploy/build.zip --source .
 
       - name: code deploy
-        run: aws deploy create-deployment --application-name brtrip-deploy --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name brtrip-deploy-group --s3-location bucket=brtrip,bundleType=zip,key=deploy/build.zip
+        run: aws deploy create-deployment --application-name guestsby-deploy --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name guestsby-deploy-group --s3-location bucket=guestsby,bundleType=zip,key=deploy/build.zip

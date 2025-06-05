@@ -1,87 +1,137 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
 
 plugins {
-	id("org.springframework.boot") version "2.5.0"
-	id("io.spring.dependency-management") version "1.0.11.RELEASE"
-	id("org.asciidoctor.convert") version "1.5.12"
-	kotlin("jvm") version "1.5.10"
-	kotlin("plugin.spring") version "1.5.10"
-	kotlin("plugin.jpa") version "1.5.10"
+    val kotlinVersion = "1.9.22"
+    kotlin("jvm") version kotlinVersion
+    kotlin("plugin.allopen") version kotlinVersion
+    kotlin("plugin.noarg") version kotlinVersion
+    kotlin("kapt") version kotlinVersion
+    kotlin("plugin.spring") version kotlinVersion
+
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
+    id("org.springframework.boot") version "3.1.8"
+    id("jacoco")
+    id("org.jlleitschuh.gradle.ktlint") version "11.3.1"
+    idea
 }
 
-group = "com"
-version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+group = "kr.co.guestsby"
+version = "1.0-SNAPSHOT"
 
-configurations {
-	compileOnly {
-		extendsFrom(configurations.annotationProcessor.get())
-	}
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-sourceSets {
-	main {
-		java.srcDirs("src/main/java", "src/main/kotlin")
-	}
+object TestVersions {
+    const val kotestVersion = "5.4.2"
+    const val mockkVersion = "1.12.7"
 }
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation("io.jsonwebtoken:jjwt:0.9.1")
-	implementation("com.google.code.gson:gson:2.8.6")
-	implementation("com.google.guava:guava:30.1.1-jre")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	runtimeOnly("com.h2database:h2")
-	runtimeOnly("mysql:mysql-connector-java")
-	asciidoctor("org.springframework.restdocs:spring-restdocs-asciidoctor")
-	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testImplementation("io.kotlintest:kotlintest-runner-junit5:3.3.2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.security:spring-security-test")
-}
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
-	}
-}
-
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
-val snippetsDir = file("build/generated-snippets")
 
 tasks {
-	test {
-		outputs.dir(snippetsDir)
-	}
+    test {
+        useJUnitPlatform()
+    }
 
-	asciidoctor {
-		inputs.dir(snippetsDir)
-		dependsOn(test)
-	}
+    // 단독 실행 가능한 jar 파일 생성 여부
+    bootJar {
+        enabled = false
+    }
 
-	asciidoctor {
-		copy {
-			from("${asciidoctor.get().outputDir}/html5")
-			into("src/main/resources/static/docs")
-		}
-	}
+    jacocoTestReport {
+        dependsOn(test)
+        reports {
+            html.required.set(false)
+            xml.required.set(true)
+        }
+    }
+}
 
-	build {
-		dependsOn(asciidoctor)
-	}
+allprojects {
+    repositories {
+        mavenCentral()
+        maven(url = "https://plugins.gradle.org/m2/")
+        mavenLocal()
+        gradlePluginPortal()
+    }
+
+    tasks {
+        withType<Assemble> {
+            dependsOn("ktlintFormat")
+        }
+
+        withType<KotlinCompile> {
+            kotlinOptions {
+                freeCompilerArgs = listOf("-Xjsr305=strict")
+                jvmTarget = "17"
+            }
+        }
+
+        withType<Test> {
+            useJUnitPlatform()
+            systemProperty("file.encoding", "UTF-8")
+        }
+    }
+}
+
+subprojects {
+    apply {
+        plugin("idea")
+        plugin("kotlin")
+        plugin("kotlin-kapt")
+        plugin("org.jlleitschuh.gradle.ktlint")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
+        plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.jetbrains.kotlin.plugin.allopen")
+        plugin("org.jetbrains.kotlin.plugin.noarg")
+        plugin("jacoco")
+    }
+
+    // 그룹이 동일하면 같은 이름의 모듈(ex. :common:api-model, :hashtag:api-model)이 dependency에 함께 추가되는 경우에
+    // conflict(Circular dependency)가 발생할 수 있어서 그룹을 다르게 만든다.
+    group = "kr.co.guestsby.${path.split(":")[1]}"
+    version = "0.0.1-SNAPSHOT"
+
+    tasks {
+        withType<Jar> {
+            // 기본 설정에서는 jar 파일 이름도 동일하게 생성될 수 있다. 동일한 jar 이름을 갖는 여러 dependency를 추가하면 오류가 발생하므로
+            // 각각의 이름을 다르게 만들어준다.
+            archiveFileName.set(
+                project.path.split(":").drop(1).joinToString(separator = "-", postfix = "-") + project.version + ".jar"
+            )
+        }
+
+        withType<Test> {
+            useJUnitPlatform()
+        }
+
+        jacocoTestReport {
+            dependsOn(test)
+            reports {
+                html.required.set(false)
+                xml.required.set(true)
+            }
+        }
+    }
+
+    dependencies {
+        // Kotlin
+        implementation(kotlin("reflect"))
+        implementation(kotlin("stdlib-jdk8"))
+        // implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+        // implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactive:1.6.4")
+
+        // kotest
+        testImplementation("io.kotest:kotest-runner-junit5:${TestVersions.kotestVersion}")
+        testImplementation("io.kotest:kotest-assertions-core:${TestVersions.kotestVersion}")
+        testImplementation("io.mockk:mockk:${TestVersions.mockkVersion}")
+    }
+
+    configure<KtlintExtension> {
+        filter {
+            exclude { element -> element.file.path.contains("generated/") }
+        }
+    }
 }
