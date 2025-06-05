@@ -1,13 +1,18 @@
-## Project
-**MAPPIN** - *방구석 여행객 플래너*
-  - 사용자가 특정 여행지를 선택하면, 해당 여행지를 포함하는 여행 경로를 추천해주는 서비스 
+# spring-sample-archetype
+=======
+## Service Name
+서비스 역할을 정의합니다.
 
-## Skills
-**Dev**
-  - Spring(Boot, Security, Data JPA, Rest Docs), Java/Kotlin, Gradle, MySQL
+### 환경별 주소
+<!-- 배포 후 서버에 접근할 수 있는 주소를 환경별로 명시해주세요. -->
 
-**Ops**
-  - Docker, Github Action, AWS(EC2, S3, CodeDeploy)
+| env   | url |
+|-------|-----|
+| prod  | -   |
+| dev   | -   |
+| stage | -   |
 
-## Architecture
-  - 업데이트 예정
+docs: API 문서가 있다면 주소를 적어주세요.
+
+
+### how to deploy

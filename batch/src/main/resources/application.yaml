@@ -1,0 +1,3 @@
+logging:
+  level:
+    co.kr.guestsby.batch: debug
